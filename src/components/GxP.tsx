@@ -1,13 +1,13 @@
-import React from 'react';
+// import React from 'react';
 import {
   Award,
   ShieldCheck,
-  CheckCircle2,
+  // CheckCircle2,
   BarChart3,
   Lock,
   FileCheck2,
   GitPullRequest,
-  Sparkles,
+  // Sparkles,
   Database,
   Activity,
   FileSpreadsheet

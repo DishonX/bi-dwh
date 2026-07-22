@@ -13,12 +13,12 @@ import {
   UserCheck,
   FileWarning,
   History,
-  PlusCircle,
+  // PlusCircle,
   X,
   Send,
   CheckCircle2,
-  ChevronRight,
-  ArrowRight,
+  // ChevronRight,
+  // ArrowRight,
   Info
 } from 'lucide-react';
 

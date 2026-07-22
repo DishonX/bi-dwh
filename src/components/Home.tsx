@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import {
   Cpu,
   Layers,
@@ -28,7 +28,7 @@ import {
   BookOpen,
   Server,
   Sparkles,
-  Activity,
+  // Activity,
   Stethoscope,
   LayoutDashboard,
   Rocket,

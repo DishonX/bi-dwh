@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import  { useState, useMemo } from "react";
 import { 
   AlertTriangle, 
   Search, 
@@ -8,11 +8,11 @@ import {
   Check, 
   Filter, 
   X, 
-  Send, 
+  // Send, 
   ChevronRight, 
-  PhoneCall, 
+  // PhoneCall, 
   ShieldAlert, 
-  Clock, 
+  // Clock, 
   ExternalLink,
   Laptop
 } from "lucide-react";
