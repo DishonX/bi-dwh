@@ -12,7 +12,7 @@ import {
   Clock,
   Users,
   X,
-  CheckCircle2,
+  // CheckCircle2,
   HelpCircle
 } from 'lucide-react';
 
@@ -21,14 +21,14 @@ export type PlatformType = 'qlik' | 'snowflake' | 'talend';
 export const AccessManagement: React.FC = () => {
   const [activePlatform, setActivePlatform] = useState<PlatformType>('qlik');
   const [isSupportModalOpen, setIsSupportModalOpen] = useState(false);
-  const [toastMessage, setToastMessage] = useState<string | null>(null);
+  // const [toastMessage, setToastMessage] = useState<string | null>(null);
 
-  const showToast = (msg: string) => {
-    setToastMessage(msg);
-    setTimeout(() => {
-      setToastMessage(null);
-    }, 4000);
-  };
+  // const showToast = (msg: string) => {
+  //   setToastMessage(msg);
+  //   setTimeout(() => {
+  //     setToastMessage(null);
+  //   }, 4000);
+  // };
 
   // Content configuration based on platform
   const getPlatformDetails = () => {
@@ -36,8 +36,19 @@ export const AccessManagement: React.FC = () => {
       case 'qlik':
         return {
           title: 'Qlik Access',
-          description: 'Raise requests for Qlik user access and modifications.',
-          icon: <Users className="w-6 h-6 text-blue-600" />,
+          description: 'Raise requests for Qlik user access, stream publishing, and license authorizations.',
+          bannerGradient: 'bg-gradient-to-r from-[#004D25] via-[#00873D] to-[#00A84B]',
+          badgeLogo: (
+            <div className="bg-white px-5 py-2.5 rounded-full shadow-lg flex items-center gap-2.5 border border-white/60 shrink-0">
+              <div className="w-6 h-6 rounded-full border-[2.5px] border-[#009845] flex items-center justify-center p-0.5">
+                <div className="w-2.5 h-2.5 rounded-full bg-[#009845]" />
+              </div>
+              <span className="font-extrabold text-slate-900 tracking-tight text-xl font-sans">
+                Qlik
+              </span>
+            </div>
+          ),
+          icon: <Users className="w-6 h-6 text-emerald-600" />,
           notes: [
             'Bulk access requests should be routed through Qlik Support.',
             'Provide complete business justification.',
@@ -60,7 +71,16 @@ export const AccessManagement: React.FC = () => {
         return {
           title: 'Snowflake Access',
           description: 'Raise requests for Snowflake warehouse roles, database privileges, and user access.',
-          icon: <Snowflake className="w-6 h-6 text-blue-600" />,
+          bannerGradient: 'bg-gradient-to-r from-[#091E3A] via-[#0076C5] to-[#29B5E8]',
+          badgeLogo: (
+            <div className="bg-white px-5 py-2.5 rounded-full shadow-lg flex items-center gap-2.5 border border-white/60 shrink-0">
+              <Snowflake className="w-6 h-6 text-[#29B5E8]" />
+              <span className="font-extrabold text-slate-900 tracking-tight text-xl font-sans">
+                snowflake
+              </span>
+            </div>
+          ),
+          icon: <Snowflake className="w-6 h-6 text-sky-600" />,
           notes: [
             'Account roles require manager and security custodian approval.',
             'Provide database/schema name and required privilege level (Read/Write/Admin).',
@@ -83,7 +103,16 @@ export const AccessManagement: React.FC = () => {
         return {
           title: 'Talend Access',
           description: 'Raise requests for Talend TAC/Management Console access, project permissions, and deployment rights.',
-          icon: <Share2 className="w-6 h-6 text-blue-600" />,
+          bannerGradient: 'bg-gradient-to-r from-[#20102B] via-[#E93E3A] to-[#FF6B35]',
+          badgeLogo: (
+            <div className="bg-white px-5 py-2.5 rounded-full shadow-lg flex items-center gap-2.5 border border-white/60 shrink-0">
+              <Share2 className="w-6 h-6 text-[#FF5D5B]" />
+              <span className="font-extrabold text-slate-900 tracking-tight text-xl font-sans">
+                talend
+              </span>
+            </div>
+          ),
+          icon: <Share2 className="w-6 h-6 text-rose-600" />,
           notes: [
             'Production job execution rights require Senior Lead approval.',
             'TAC project access requires specific Git repository permissions.',
@@ -109,12 +138,12 @@ export const AccessManagement: React.FC = () => {
   return (
     <div className="min-h-screen bg-[#F4F7FC] text-slate-800 font-sans pb-16 antialiased">
       {/* Light Blue Glassmorphism Hero Top Header */}
-      <div className="relative bg-gradient-to-r from-sky-100/90 via-blue-100/80 to-indigo-100/90 border-b border-sky-200/80 pt-6 sm:pt-8 pb-8 sm:pb-10 shadow-xs overflow-hidden">
+      {/* <div className="relative bg-gradient-to-r from-sky-100/90 via-blue-100/80 to-indigo-100/90 border-b border-sky-200/80 pt-6 sm:pt-8 pb-8 sm:pb-10 shadow-xs overflow-hidden"> */}
         {/* Soft Ambient Light Glows */}
-        <div className="absolute top-[-30px] left-12 w-64 h-64 bg-sky-300/40 rounded-full blur-2xl pointer-events-none"></div>
-        <div className="absolute bottom-[-30px] right-12 w-64 h-64 bg-blue-300/40 rounded-full blur-2xl pointer-events-none"></div>
+        {/* <div className="absolute top-[-30px] left-12 w-64 h-64 bg-sky-300/40 rounded-full blur-2xl pointer-events-none"></div> */}
+        {/* <div className="absolute bottom-[-30px] right-12 w-64 h-64 bg-blue-300/40 rounded-full blur-2xl pointer-events-none"></div> */}
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 mt-6 sm:px-6 lg:px-8 relative z-10">
           <div className="bg-gradient-to-r from-sky-200/60 via-blue-200/50 to-indigo-200/60 backdrop-blur-xl border border-sky-300/70 rounded-2xl p-5 sm:p-7 shadow-md shadow-sky-500/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
             
             {/* Title & Branding */}
@@ -134,70 +163,74 @@ export const AccessManagement: React.FC = () => {
 
           </div>
         </div>
-      </div>
+      {/* </div> */}
 
       {/* Top Tab Navigation */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 sm:-mt-7 relative z-20">
-        <div className="flex items-center justify-start gap-3 sm:gap-4 overflow-x-auto pb-3 pt-1 scrollbar-none">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 sm:mt-8 relative z-20">
+        <div className="flex items-center justify-start gap-3 sm:gap-4 overflow-x-auto pb-2 pt-1 scrollbar-none">
           {/* Qlik Access Tab */}
           <button
             onClick={() => setActivePlatform('qlik')}
-            className={`flex items-center gap-2 sm:gap-2.5 px-5 sm:px-7 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 shadow-md cursor-pointer whitespace-nowrap ${
+            className={`flex items-center gap-2 sm:gap-2.5 px-5 sm:px-7 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 shadow-sm cursor-pointer whitespace-nowrap ${
               activePlatform === 'qlik'
-                ? 'bg-[#1D70F5] text-white ring-2 ring-blue-400/30 shadow-blue-500/25'
-                : 'bg-white text-slate-700 hover:bg-slate-50 border border-slate-200/90 hover:text-blue-600'
+                ? 'bg-[#00873D] text-white ring-2 ring-[#00873D]/40 shadow-md shadow-emerald-700/20 font-bold'
+                : 'bg-white text-slate-700 hover:bg-emerald-50/80 border border-slate-200/90 hover:text-[#00873D] hover:border-emerald-300'
             }`}
           >
-            <BarChart3 className="w-4 h-4" />
+            <BarChart3 className={`w-4 h-4 ${activePlatform === 'qlik' ? 'text-white' : 'text-[#00873D]'}`} />
             <span>Qlik Access</span>
           </button>
 
           {/* Snowflake Access Tab */}
           <button
             onClick={() => setActivePlatform('snowflake')}
-            className={`flex items-center gap-2 sm:gap-2.5 px-5 sm:px-7 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 shadow-md cursor-pointer whitespace-nowrap ${
+            className={`flex items-center gap-2 sm:gap-2.5 px-5 sm:px-7 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 shadow-sm cursor-pointer whitespace-nowrap ${
               activePlatform === 'snowflake'
-                ? 'bg-[#1D70F5] text-white ring-2 ring-blue-400/30 shadow-blue-500/25'
-                : 'bg-white text-slate-700 hover:bg-slate-50 border border-slate-200/90 hover:text-blue-600'
+                ? 'bg-[#0076C5] text-white ring-2 ring-[#0076C5]/40 shadow-md shadow-sky-700/20 font-bold'
+                : 'bg-white text-slate-700 hover:bg-sky-50/80 border border-slate-200/90 hover:text-[#0076C5] hover:border-sky-300'
             }`}
           >
-            <Snowflake className="w-4 h-4" />
+            <Snowflake className={`w-4 h-4 ${activePlatform === 'snowflake' ? 'text-white' : 'text-[#0076C5]'}`} />
             <span>Snowflake Access</span>
           </button>
 
           {/* Talend Access Tab */}
           <button
             onClick={() => setActivePlatform('talend')}
-            className={`flex items-center gap-2 sm:gap-2.5 px-5 sm:px-7 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 shadow-md cursor-pointer whitespace-nowrap ${
+            className={`flex items-center gap-2 sm:gap-2.5 px-5 sm:px-7 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 shadow-sm cursor-pointer whitespace-nowrap ${
               activePlatform === 'talend'
-                ? 'bg-[#1D70F5] text-white ring-2 ring-blue-400/30 shadow-blue-500/25'
-                : 'bg-white text-slate-700 hover:bg-slate-50 border border-slate-200/90 hover:text-blue-600'
+                ? 'bg-[#E93E3A] text-white ring-2 ring-[#E93E3A]/40 shadow-md shadow-rose-700/20 font-bold'
+                : 'bg-white text-slate-700 hover:bg-rose-50/80 border border-slate-200/90 hover:text-[#E93E3A] hover:border-rose-300'
             }`}
           >
-            <Share2 className="w-4 h-4" />
+            <Share2 className={`w-4 h-4 ${activePlatform === 'talend' ? 'text-white' : 'text-[#E93E3A]'}`} />
             <span>Talend Access</span>
           </button>
         </div>
       </div>
 
       {/* Main Content Card Container */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-2 sm:mt-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 sm:mt-8">
         <div className="bg-white rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-200/70 p-6 sm:p-8 lg:p-10 space-y-10 sm:space-y-12">
 
-          {/* Card Sub-Header */}
-          <div className="bg-[#F8FAFC] border border-slate-200/80 rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-full bg-blue-100/80 flex items-center justify-center shrink-0 border border-blue-200/60 shadow-xs">
-                {platformInfo.icon}
-              </div>
-              <div>
-                <h2 className="text-xl sm:text-2xl font-bold text-slate-800 tracking-tight">
-                  {platformInfo.title}
-                </h2>
-                <p className="text-slate-500 text-sm mt-0.5 font-normal">
-                  {platformInfo.description}
-                </p>
-              </div>
+          {/* Card Sub-Header Banner */}
+          <div className={`${platformInfo.bannerGradient} rounded-2xl p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-md relative overflow-hidden transition-all duration-300`}>
+            {/* Soft background ambient overlay */}
+            <div className="absolute -top-12 -left-12 w-48 h-48 bg-white/10 rounded-full blur-2xl pointer-events-none" />
+            
+            {/* Title & Description */}
+            <div className="relative z-10 text-center sm:text-left">
+              <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-white drop-shadow-xs">
+                {platformInfo.title}
+              </h2>
+              <p className="text-white/85 text-xs sm:text-sm mt-1.5 font-medium max-w-xl">
+                {platformInfo.description}
+              </p>
+            </div>
+
+            {/* Brand Cloud Badge on Right */}
+            <div className="relative z-10 shrink-0">
+              {platformInfo.badgeLogo}
             </div>
           </div>
 
@@ -451,12 +484,12 @@ export const AccessManagement: React.FC = () => {
       )}
 
       {/* --- TOAST NOTIFICATION --- */}
-      {toastMessage && (
+      {/* {toastMessage && (
         <div className="fixed bottom-6 right-6 z-50 bg-slate-900 text-white text-xs font-medium px-4 py-3 rounded-xl shadow-xl flex items-center gap-2 border border-slate-800 animate-bounce">
           <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
           <span>{toastMessage}</span>
         </div>
-      )}
+      )} */}
     </div>
   );
 };

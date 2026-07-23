@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, type ComponentType } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { 
   ChevronDown, 
   Menu, 
@@ -11,31 +11,54 @@ import {
   BookOpen, 
   HelpCircle, 
   Activity,
-  Sparkles
+  Database,
+  PhoneCall,
+  Layers,
+  CalendarCheck2
 } from "lucide-react";
 
 // Types for navigation items
 interface DropdownItem {
   title: string;
-  description: string;
   to: string;
   icon: ComponentType<{ className?: string }>;
   badge?: string;
+  iconBg: string;
+  iconColor: string;
 }
 
 interface NavItem {
   id: string;
   label: string;
   to?: string;
+  icon?: ComponentType<{ className?: string }>;
+  iconBg?: string;
+  iconColor?: string;
   dropdownItems?: DropdownItem[];
 }
 
-export default function Header() {
+interface HeaderProps {
+  onNavigate?: (path: string) => void;
+}
+
+export default function Header({ onNavigate }: HeaderProps) {
+  const location = useLocation();
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileDropdownOpen, setMobileDropdownOpen] = useState<string | null>(null);
-  const [_scrolled, setScrolled] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const headerRef = useRef<HTMLDivElement>(null);
+
+  // Helper to check if a navigation item (or any of its dropdown items) is currently active
+  const isItemActive = (item: NavItem) => {
+    if (item.to) {
+      return location.pathname === item.to;
+    }
+    if (item.dropdownItems) {
+      return item.dropdownItems.some((sub) => sub.to === location.pathname);
+    }
+    return false;
+  };
 
   // Close dropdowns on clicking outside
   useEffect(() => {
@@ -69,66 +92,82 @@ export default function Header() {
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  // Navigation config (exactly matching your list, mapped with react-router paths)
+  // Navigation config with vibrant colorful icons
   const navigationItems: NavItem[] = [
     {
       id: "Operations",
       label: "Operations",
+      icon: Layers,
+      iconBg: "bg-blue-100 text-blue-600 border border-blue-200/80",
+      iconColor: "text-blue-600",
       dropdownItems: [
         {
           title: "Access Management",
-          description: "High-grade security, collaboration spaces, and compliance modules.",
           to: "/access-management",
           icon: ShieldCheck,
+          iconBg: "bg-blue-100/90 text-blue-700 border border-blue-200/80",
+          iconColor: "text-blue-700",
         },
         {
           title: "Report an Incident",
-          description: "Robust AI reasoning and model fine-tuning directly in your codebase.",
           to: "/report-an-incident",
           icon: Terminal,
+          iconBg: "bg-amber-100/90 text-amber-700 border border-amber-200/80",
+          iconColor: "text-amber-700",
           badge: "New",
         },
         {
           title: "Change Management",
-          description: "Real-time metric streams, query auditing, and structured reports.",
           to: "/change-management",
           icon: BarChart3,
+          iconBg: "bg-emerald-100/90 text-emerald-700 border border-emerald-200/80",
+          iconColor: "text-emerald-700",
         },
         {
           title: "Release Management",
-          description: "Connect your entire app workspace with zero-latency triggers.",
           to: "/release_management",
           icon: Cpu,
+          iconBg: "bg-purple-100/90 text-purple-700 border border-purple-200/80",
+          iconColor: "text-purple-700",
         },
         {
           title: "Inventory of Data and Databoards",
-          description: "Connect your entire app workspace with zero-latency triggers.",
           to: "/data-inventory",
           icon: Activity,
+          iconBg: "bg-sky-100/90 text-sky-700 border border-sky-200/80",
+          iconColor: "text-sky-700",
         },
       ]
     },
     {
       id: "resources",
       label: "Audit Schedule and Activities",
+      icon: CalendarCheck2,
+      iconBg: "bg-emerald-100 text-emerald-600 border border-emerald-200/80",
+      iconColor: "text-emerald-600",
       dropdownItems: [
         {
           title: "Sox Audit and activities",
-          description: "Comprehensive integration guides, fast tutorials, and references.",
           to: "/sox-audit",
           icon: BookOpen,
+          iconBg: "bg-indigo-100/90 text-indigo-700 border border-indigo-200/80",
+          iconColor: "text-indigo-700",
         },
         {
           title: "GxP",
-          description: "Access our expert support team and extensive self-help archives.",
           to: "/gxp",
           icon: HelpCircle,
+          iconBg: "bg-rose-100/90 text-rose-700 border border-rose-200/80",
+          iconColor: "text-rose-700",
         }
       ]
     },
     {
       id: "pricing",
       label: "Emergency Contact",
+      icon: PhoneCall,
+      iconBg: "bg-rose-100 text-rose-600 border border-rose-200/80",
+      iconColor: "text-rose-600",
       to: "/emergency-contact"
     }
   ];
@@ -141,29 +180,51 @@ export default function Header() {
     setMobileDropdownOpen(mobileDropdownOpen === id ? null : id);
   };
 
+  const handleLinkClick = (to: string) => {
+    setActiveDropdown(null);
+    setMobileMenuOpen(false);
+    if (onNavigate) {
+      onNavigate(to);
+    }
+  };
+
   return (
     <header 
       ref={headerRef}
-      className="relative z-50 bg-white dark:bg-zinc-950 border-b border-zinc-200/80 dark:border-zinc-800/80 shadow-sm transition-all duration-300"
+      className={`sticky top-0 z-50 bg-white border-b border-slate-200/90 transition-all duration-200 ${
+        scrolled ? "shadow-md bg-white/95 backdrop-blur-md" : "shadow-xs"
+      }`}
     >
+      {/* Header Container */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           
-          {/* Logo Brand area */}
-          <NavLink to="/" className="flex items-center gap-2 cursor-pointer focus:outline-none">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 via-violet-600 to-fuchsia-500 flex items-center justify-center text-white shadow-md shadow-indigo-200 dark:shadow-none">
-              <Sparkles className="w-5 h-5" />
+          {/* Logo Brand area with Blue Theme */}
+          <NavLink 
+            to="/" 
+            onClick={() => handleLinkClick("/")}
+            className="flex items-center gap-3 cursor-pointer focus:outline-none group"
+          >
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-md shadow-blue-500/25 group-hover:scale-105 transition-all duration-200 shrink-0">
+              <Database className="w-5 h-5 text-white" />
             </div>
-            <span className="font-display text-lg font-bold tracking-tight bg-gradient-to-r from-zinc-900 to-zinc-700 dark:from-white dark:to-zinc-300 bg-clip-text text-transparent">
-              BI DWH Operations
-            </span>
+            <div className="flex flex-col">
+              <span className="font-extrabold text-lg sm:text-xl tracking-tight text-slate-900 group-hover:text-blue-600 transition-colors duration-200">
+                BI Operations
+              </span>
+              <span className="text-[11px] font-semibold text-slate-400 tracking-wide uppercase -mt-0.5 hidden xs:block">
+                Enterprise Data Governance
+              </span>
+            </div>
           </NavLink>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-1" aria-label="Main Navigation">
+          {/* Desktop Navigation in Blue Theme */}
+          <nav className="hidden md:flex items-center space-x-1.5" aria-label="Main Navigation">
             {navigationItems.map((item) => {
               const hasDropdown = !!item.dropdownItems;
               const isOpen = activeDropdown === item.id;
+              const isActive = isItemActive(item);
+              const ItemIcon = item.icon;
 
               return (
                 <div key={item.id} className="relative">
@@ -172,35 +233,46 @@ export default function Header() {
                       onClick={() => handleDropdownTriggerClick(item.id)}
                       aria-expanded={isOpen}
                       aria-haspopup="true"
-                      className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 ${
-                        isOpen
-                          ? "text-indigo-600 dark:text-indigo-400 bg-indigo-50/50 dark:bg-indigo-950/30"
-                          : "text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100/60 dark:hover:bg-zinc-800/40"
+                      className={`px-3.5 py-2 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-blue-500/30 cursor-pointer ${
+                        isOpen || isActive
+                          ? "text-blue-700 bg-blue-50 border border-blue-200/90 shadow-2xs font-bold"
+                          : "text-slate-700 hover:text-blue-600 hover:bg-blue-50/60"
                       }`}
                     >
-                      {item.label}
+                      {ItemIcon && (
+                        <div className={`p-1 rounded-md shrink-0 flex items-center justify-center transition-colors ${item.iconBg || "bg-blue-100 text-blue-600"}`}>
+                          <ItemIcon className="w-3.5 h-3.5" />
+                        </div>
+                      )}
+                      <span>{item.label}</span>
                       <ChevronDown 
                         className={`w-4 h-4 transition-transform duration-300 ${
-                          isOpen ? "rotate-180 text-indigo-500" : "text-zinc-400"
+                          isOpen ? "rotate-180 text-blue-600" : isActive ? "text-blue-600" : "text-slate-400"
                         }`} 
                       />
                     </button>
                   ) : (
                     <NavLink
                       to={item.to || "/"}
-                      className={({ isActive }) => `px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 ${
-                        isActive
-                          ? "text-indigo-600 dark:text-indigo-400 bg-indigo-50/50 dark:bg-indigo-950/30"
-                          : "text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100/60 dark:hover:bg-zinc-800/40"
+                      onClick={() => handleLinkClick(item.to || "/")}
+                      className={({ isActive: isLinkActive }) => `px-3.5 py-2 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-blue-500/30 ${
+                        isLinkActive
+                          ? "text-blue-700 bg-blue-50 border border-blue-200/90 shadow-2xs font-bold"
+                          : "text-slate-700 hover:text-blue-600 hover:bg-blue-50/60"
                       }`}
                     >
-                      {item.label}
+                      {ItemIcon && (
+                        <div className={`p-1 rounded-md shrink-0 flex items-center justify-center transition-colors ${item.iconBg || "bg-rose-100 text-rose-600"}`}>
+                          <ItemIcon className="w-3.5 h-3.5" />
+                        </div>
+                      )}
+                      <span>{item.label}</span>
                     </NavLink>
                   )}
 
                   {/* Dropdown Menu (Desktop) */}
                   {hasDropdown && isOpen && (
-                    <div className="absolute left-1/2 -translate-x-1/2 mt-2 w-96 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80 shadow-xl shadow-zinc-200/40 dark:shadow-none p-4 grid grid-cols-1 gap-2 z-50 animate-in fade-in duration-200">
+                    <div className="absolute left-1/2 -translate-x-1/2 mt-2 w-80 rounded-2xl bg-white border border-slate-200/90 shadow-xl shadow-blue-950/10 p-2 grid grid-cols-1 gap-1 z-50 animate-in fade-in duration-200">
                       {item.dropdownItems?.map((subItem) => {
                         const SubIcon = subItem.icon;
 
@@ -208,33 +280,31 @@ export default function Header() {
                           <NavLink
                             key={subItem.title}
                             to={subItem.to}
-                            onClick={() => setActiveDropdown(null)}
-                            className={({ isActive }) => `flex items-start gap-3 p-2.5 rounded-xl text-left transition-all duration-200 group focus:outline-none focus:ring-2 focus:ring-indigo-500/20 ${
-                              isActive
-                                ? "bg-indigo-50/80 dark:bg-indigo-950/40 text-indigo-900 dark:text-indigo-100"
-                                : "hover:bg-zinc-50 dark:hover:bg-zinc-800/50 text-zinc-700 dark:text-zinc-300"
+                            onClick={() => handleLinkClick(subItem.to)}
+                            className={({ isActive: isSubActive }) => `flex items-center gap-3 px-3 py-2.5 rounded-xl text-left transition-all duration-200 group focus:outline-none focus:ring-2 focus:ring-blue-500/20 ${
+                              isSubActive
+                                ? "bg-blue-50 text-blue-950 font-bold border border-blue-200/80"
+                                : "hover:bg-slate-50 text-slate-700 hover:text-blue-600"
                             }`}
                           >
-                            {({ isActive }) => (
+                            {({ isActive: isSubActive }) => (
                               <>
-                                <div className={`p-2 rounded-lg transition-colors duration-200 ${
-                                  isActive
-                                    ? "bg-indigo-100 dark:bg-indigo-900/60 text-indigo-600 dark:text-indigo-400"
-                                    : "bg-zinc-100 dark:bg-zinc-800 text-zinc-500 group-hover:bg-indigo-50 dark:group-hover:bg-indigo-950/40 group-hover:text-indigo-600 dark:group-hover:text-indigo-400"
+                                <div className={`p-2 rounded-lg transition-all duration-200 shrink-0 ${
+                                  isSubActive
+                                    ? "bg-blue-600 text-white shadow-xs shadow-blue-500/30"
+                                    : subItem.iconBg || "bg-blue-50 text-blue-600 group-hover:bg-blue-600 group-hover:text-white"
                                 }`}>
-                                  <SubIcon className="w-5 h-5" />
+                                  <SubIcon className="w-4 h-4" />
                                 </div>
-                                <div className="flex-1">
-                                  <div className="flex items-center gap-1.5 font-semibold text-sm">
-                                    <span className={isActive ? "text-indigo-900 dark:text-indigo-300" : "text-zinc-900 dark:text-zinc-100 group-hover:text-indigo-600 dark:group-hover:text-indigo-400"}>
-                                      {subItem.title}
+                                <div className="flex-1 min-w-0 flex items-center justify-between gap-1.5">
+                                  <span className={`text-sm font-bold ${isSubActive ? "text-blue-900" : "text-slate-800 group-hover:text-blue-600"}`}>
+                                    {subItem.title}
+                                  </span>
+                                  {subItem.badge && (
+                                    <span className="text-[9px] px-1.5 py-0.5 rounded font-extrabold bg-amber-100 text-amber-800 border border-amber-300">
+                                      {subItem.badge}
                                     </span>
-                                    {/* {subItem.badge && (
-                                      <span className="text-[10px] px-1.5 py-0.5 rounded-full font-bold bg-indigo-100 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 border border-indigo-200/50 dark:border-indigo-900/40">
-                                        {subItem.badge}
-                                      </span>
-                                    )} */}
-                                  </div>
+                                  )}
                                 </div>
                               </>
                             )}
@@ -248,36 +318,30 @@ export default function Header() {
             })}
           </nav>
 
-          {/* Desktop Right Actions - Simplified for Information Site */}
-          {/* <div className="hidden md:flex items-center space-x-3">
-            <span className="text-xs font-mono text-zinc-400 dark:text-zinc-500">
-              VERTEX INFO HUB
-            </span>
-          </div> */}
-
           {/* Mobile Menu Button */}
           <div className="flex items-center md:hidden gap-2">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800/60 transition-colors focus:outline-none"
+              className="p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors focus:outline-none cursor-pointer"
               aria-expanded={mobileMenuOpen}
               aria-label="Toggle mobile menu"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {mobileMenuOpen ? <X className="w-6 h-6 text-slate-800" /> : <Menu className="w-6 h-6 text-slate-800" />}
             </button>
           </div>
 
         </div>
       </div>
 
-      {/* Mobile Drawer Navigation */}
+      {/* Mobile Drawer Navigation in Blue Theme */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-white dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800 shadow-lg">
+        <div className="md:hidden bg-white border-b border-slate-200 shadow-xl">
           <div className="px-4 py-4 space-y-3 max-h-[85vh] overflow-y-auto">
             
             {navigationItems.map((item) => {
               const hasDropdown = !!item.dropdownItems;
               const isDropdownOpen = mobileDropdownOpen === item.id;
+              const ItemIcon = item.icon;
 
               return (
                 <div key={item.id} className="space-y-1">
@@ -285,23 +349,30 @@ export default function Header() {
                     <div>
                       <button
                         onClick={() => toggleMobileDropdown(item.id)}
-                        className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-left text-sm font-semibold transition-colors ${
+                        className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-left text-sm font-bold transition-colors cursor-pointer ${
                           isDropdownOpen
-                            ? "bg-zinc-50 dark:bg-zinc-800 text-indigo-600 dark:text-indigo-400"
-                            : "text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800/40"
+                            ? "bg-blue-50 text-blue-700 border border-blue-200/80"
+                            : "text-slate-800 hover:bg-slate-50"
                         }`}
                       >
-                        <span>{item.label}</span>
+                        <div className="flex items-center gap-2.5">
+                          {ItemIcon && (
+                            <div className={`p-1.5 rounded-lg shrink-0 flex items-center justify-center ${item.iconBg || "bg-blue-100 text-blue-600"}`}>
+                              <ItemIcon className="w-3.5 h-3.5" />
+                            </div>
+                          )}
+                          <span>{item.label}</span>
+                        </div>
                         <ChevronDown 
                           className={`w-4 h-4 transition-transform duration-300 ${
-                            isDropdownOpen ? "rotate-180 text-indigo-500" : "text-zinc-400"
+                            isDropdownOpen ? "rotate-180 text-blue-600" : "text-slate-400"
                           }`} 
                         />
                       </button>
 
                       {/* Collapsible Mobile Submenu */}
                       {isDropdownOpen && (
-                        <div className="pl-3 pr-1 py-1 mt-1 space-y-1 bg-zinc-50/50 dark:bg-zinc-950/20 rounded-xl">
+                        <div className="pl-2 pr-1 py-1.5 mt-1 space-y-1 bg-slate-50/70 rounded-xl border border-slate-200/60">
                           {item.dropdownItems?.map((subItem) => {
                             const SubIcon = subItem.icon;
 
@@ -309,31 +380,29 @@ export default function Header() {
                               <NavLink
                                 key={subItem.title}
                                 to={subItem.to}
-                                onClick={() => setMobileMenuOpen(false)}
-                                className={({ isActive }) => `w-full flex items-center gap-3 p-2 rounded-lg text-left transition-colors ${
+                                onClick={() => handleLinkClick(subItem.to)}
+                                className={({ isActive }) => `w-full flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-left transition-colors ${
                                   isActive
-                                    ? "bg-indigo-50 dark:bg-indigo-950/40 text-indigo-900 dark:text-indigo-300 font-medium"
-                                    : "text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200"
+                                    ? "bg-blue-100/80 text-blue-900 font-bold"
+                                    : "text-slate-700 hover:text-blue-600 hover:bg-white"
                                 }`}
                               >
                                 {({ isActive }) => (
                                   <>
-                                    <div className={`p-1.5 rounded-md ${
+                                    <div className={`p-1.5 rounded-md shrink-0 ${
                                       isActive 
-                                        ? "bg-indigo-100 dark:bg-indigo-900/60 text-indigo-600 dark:text-indigo-400" 
-                                        : "bg-zinc-100 dark:bg-zinc-800 text-zinc-500"
+                                        ? "bg-blue-600 text-white" 
+                                        : subItem.iconBg || "bg-blue-50 text-blue-600"
                                     }`}>
                                       <SubIcon className="w-4 h-4" />
                                     </div>
-                                    <div className="flex-1 min-w-0">
-                                      <div className="flex items-center gap-1.5">
-                                        <span className="text-xs font-semibold">{subItem.title}</span>
-                                        {/* {subItem.badge && (
-                                          <span className="text-[9px] px-1 rounded bg-indigo-100 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400">
-                                            {subItem.badge}
-                                          </span>
-                                        )} */}
-                                      </div>
+                                    <div className="flex-1 min-w-0 flex items-center justify-between gap-1.5">
+                                      <span className="text-xs font-bold">{subItem.title}</span>
+                                      {subItem.badge && (
+                                        <span className="text-[9px] px-1.5 py-0.2 rounded font-extrabold bg-amber-100 text-amber-800 border border-amber-200">
+                                          {subItem.badge}
+                                        </span>
+                                      )}
                                     </div>
                                   </>
                                 )}
@@ -346,23 +415,27 @@ export default function Header() {
                   ) : (
                     <NavLink
                       to={item.to || "/"}
-                      onClick={() => setMobileMenuOpen(false)}
-                      className={({ isActive }) => `w-full flex items-center px-3 py-2.5 rounded-xl text-left text-sm font-semibold transition-colors ${
+                      onClick={() => handleLinkClick(item.to || "/")}
+                      className={({ isActive }) => `w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-left text-sm font-bold transition-colors ${
                         isActive
-                          ? "bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400"
-                          : "text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800/40"
+                          ? "bg-blue-50 text-blue-700 border border-blue-200/80"
+                          : "text-slate-800 hover:bg-slate-50"
                       }`}
                     >
-                      {item.label}
+                      {ItemIcon && (
+                        <div className={`p-1.5 rounded-lg shrink-0 flex items-center justify-center ${item.iconBg || "bg-rose-100 text-rose-600"}`}>
+                          <ItemIcon className="w-3.5 h-3.5" />
+                        </div>
+                      )}
+                      <span>{item.label}</span>
                     </NavLink>
                   )}
                 </div>
               );
             })}
 
-            {/* Simplified footer indicator in mobile menu */}
-            <div className="pt-2 text-center text-[10px] font-mono text-zinc-400 dark:text-zinc-500">
-              VERTEX INFORMATION PORTAL
+            <div className="pt-2 text-center text-[10px] font-bold tracking-wider uppercase text-slate-400">
+              BI Enterprise Operations Portal
             </div>
 
           </div>
@@ -371,3 +444,4 @@ export default function Header() {
     </header>
   );
 }
+

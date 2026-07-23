@@ -39,6 +39,41 @@ import {
   Sliders
 } from 'lucide-react';
 
+
+// Custom high-fidelity Insmed logo matching the official design
+  const InsmedLogo = () => (
+    <div className="flex flex-col items-center justify-center select-none py-0.5">
+      <div className="flex items-center gap-0.5 justify-center mb-0.5">
+        <span className="w-1.5 h-1.5 rounded-full bg-[#00b050]" />
+        <span className="w-1.5 h-1.5 rounded-full bg-[#00a2ed]" />
+        <span className="w-1.5 h-1.5 rounded-full bg-purple-500" />
+      </div>
+      <span className="text-xs font-bold tracking-tight text-[#1b365d] font-sans">
+        insmed
+      </span>
+    </div>
+  );
+
+  // Exact Connector Components that span the absolute gap width and touch the borders perfectly
+  const ConnectorRight = ({ width }: { width: number }) => (
+    <div 
+      style={{ width: `${width}px` }} 
+      className="h-[2px] bg-[#00a2ed] relative flex-shrink-0 self-center"
+    >
+      <div className="absolute right-0 top-1/2 -translate-y-1/2 border-t-[5px] border-t-transparent border-b-[5px] border-b-transparent border-l-[8px] border-l-[#00a2ed]" />
+    </div>
+  );
+
+  const ConnectorLeft = ({ width }: { width: number }) => (
+    <div 
+      style={{ width: `${width}px` }} 
+      className="h-[2px] bg-[#00a2ed] relative flex-shrink-0 self-center"
+    >
+      <div className="absolute left-0 top-1/2 -translate-y-1/2 border-t-[5px] border-t-transparent border-b-[5px] border-b-transparent border-r-[8px] border-r-[#00a2ed]" />
+    </div>
+  );
+
+
 export const ChangeMnagement: React.FC = () => {
   const [isSubmitModalOpen, setIsSubmitModalOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -141,6 +176,321 @@ export const ChangeMnagement: React.FC = () => {
       {/* Main Content Area Container */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 sm:mt-8">
         <div className="bg-white rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-200/70 p-6 sm:p-10 lg:p-12 space-y-12">
+
+            <div className="border-b border-slate-100 pb-1 mb-4">
+              <h3 className="text-lg sm:text-xl font-bold text-[#1D70F5] tracking-tight mb-4">
+                Overview
+              </h3>
+            </div>
+
+      <p className='mb-2'>We follow the Change Management process to review, approve, implement, and track all changes in a controlled and compliant manner.</p>
+
+        {/* ----------------- PIXEL-PERFECT FLOWCHART ----------------- */}
+        <div className="mb-6 mt-4 overflow-x-auto pb-4 scrollbar-thin" id="flowchart-container">
+          <div className="w-[1000px] py-4 px-2 flex flex-col select-none">
+            
+            {/* ROW 1: Intake (Right Arrow Flow) */}
+            <div className="flex h-[110px] w-[1000px] flex-shrink-0">
+              
+              {/* Box 1: Custom ServiceNow / JIRA + Email Box */}
+              <div className="w-[170px] h-[110px] border-2 border-slate-400 dark:border-slate-600 rounded-lg flex flex-col overflow-hidden bg-white dark:bg-slate-950 flex-shrink-0 shadow-sm">
+                <div className="bg-slate-50 dark:bg-slate-900 h-1/2 p-2 flex flex-col justify-center text-center border-b border-slate-200 dark:border-slate-800">
+                  <span className="text-[10px] font-bold text-slate-800 dark:text-slate-200 leading-tight">
+                    Change request from
+                  </span>
+                  <span className="text-[9px] font-semibold text-slate-500 dark:text-slate-400 mt-0.5">
+                    ServiceNow / JIRA
+                  </span>
+                </div>
+                <div className="h-1/2 p-1.5 flex flex-col items-center justify-center bg-white dark:bg-slate-950">
+                  <InsmedLogo />
+                  <span className="text-[8px] font-semibold text-blue-600 dark:text-blue-400 mt-0.5">
+                    Email • Insmed
+                  </span>
+                </div>
+              </div>
+
+              <ConnectorRight width={37.5} />
+
+              {/* Box 2: Acknowledge & Update Smartsheet */}
+              <div className="w-[170px] h-[110px] border-2 border-[#00a2ed] bg-white dark:bg-slate-950 rounded-lg p-3 flex flex-col justify-between text-center flex-shrink-0 shadow-sm hover:border-blue-500 transition-colors">
+                <span className="text-[11px] font-bold text-slate-800 dark:text-slate-200 leading-snug mt-1">
+                  Acknowledge & Update Smartsheet
+                </span>
+                <span className="text-[9px] font-bold text-[#00a2ed] tracking-wide">
+                  Development Team
+                </span>
+              </div>
+
+              <ConnectorRight width={37.5} />
+
+              {/* Box 3: Requirement Gathering */}
+              <div className="w-[170px] h-[110px] border-2 border-[#00a2ed] bg-white dark:bg-slate-950 rounded-lg p-3 flex flex-col justify-between text-center flex-shrink-0 shadow-sm hover:border-blue-500 transition-colors">
+                <span className="text-[11px] font-bold text-slate-800 dark:text-slate-200 leading-snug mt-2">
+                  Requirement Gathering
+                </span>
+                <span className="text-[9px] font-bold text-[#00a2ed] tracking-wide">
+                  Development Team
+                </span>
+              </div>
+
+              <ConnectorRight width={37.5} />
+
+              {/* Box 4: Analyze / Clarifying */}
+              <div className="w-[170px] h-[110px] border-2 border-[#00a2ed] bg-white dark:bg-slate-950 rounded-lg p-3 flex flex-col justify-between text-center flex-shrink-0 shadow-sm hover:border-blue-500 transition-colors">
+                <span className="text-[11px] font-bold text-slate-800 dark:text-slate-200 leading-snug">
+                  Analyze / Clarifying questions with requester
+                </span>
+                <span className="text-[9px] font-bold text-[#00a2ed] tracking-wide">
+                  Development Team
+                </span>
+              </div>
+
+              <ConnectorRight width={37.5} />
+
+              {/* Box 5: Create Technical Documents */}
+              <div className="w-[170px] h-[110px] border-2 border-[#00a2ed] bg-white dark:bg-slate-950 rounded-lg p-3 flex flex-col justify-between text-center flex-shrink-0 shadow-sm hover:border-blue-500 transition-colors">
+                <span className="text-[11px] font-bold text-slate-800 dark:text-slate-200 leading-snug mt-2">
+                  Create Technical documents
+                </span>
+                <span className="text-[9px] font-bold text-[#00a2ed] tracking-wide">
+                  Development Team
+                </span>
+              </div>
+
+            </div>
+
+            {/* VERTICAL CONNECTOR: ROW 1 -> ROW 2 */}
+            <div className="w-[1000px] h-10 relative flex-shrink-0">
+              <div className="absolute" style={{ left: '914px', top: '0px' }}>
+                <svg width="2" height="40" className="text-[#00a2ed] overflow-visible">
+                  <line x1="0" y1="0" x2="0" y2="40" stroke="currentColor" strokeWidth="2" />
+                  <path d="M-4 34 L0 40 L4 34" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </div>
+            </div>
+
+            {/* ROW 2: Development & Design (Left Arrow Flow) */}
+            <div className="flex h-[110px] w-[1000px] flex-shrink-0">
+              
+              {/* Box 9: Testing */}
+              <div className="w-[170px] h-[110px] border-2 border-[#00a2ed] bg-white dark:bg-slate-950 rounded-lg p-3 flex flex-col justify-between text-center flex-shrink-0 shadow-sm hover:border-blue-500 transition-colors">
+                <span className="text-[11px] font-bold text-slate-800 dark:text-slate-200 leading-snug mt-2">
+                  Testing
+                </span>
+                <span className="text-[9px] font-bold text-[#00a2ed] tracking-wide">
+                  Development Team
+                </span>
+              </div>
+
+              <ConnectorLeft width={37.5} />
+
+              {/* Box 8: Development */}
+              <div className="w-[170px] h-[110px] border-2 border-[#00a2ed] bg-white dark:bg-slate-950 rounded-lg p-3 flex flex-col justify-between text-center flex-shrink-0 shadow-sm hover:border-blue-500 transition-colors">
+                <span className="text-[11px] font-bold text-slate-800 dark:text-slate-200 leading-snug mt-2">
+                  Development
+                </span>
+                <span className="text-[9px] font-bold text-[#00a2ed] tracking-wide">
+                  Development Team
+                </span>
+              </div>
+
+              <ConnectorLeft width={37.5} />
+
+              {/* Box 7: Split Design Sign off (Users & Insmed) */}
+              <div className="w-[170px] h-[110px] flex gap-2 flex-shrink-0">
+                <div className="w-[81px] border-2 border-[#00a2ed] bg-white dark:bg-slate-950 rounded-lg p-1.5 flex flex-col justify-between text-center shadow-sm">
+                  <span className="text-[9.5px] font-bold text-slate-800 dark:text-slate-200 leading-tight">
+                    Design Sign off
+                  </span>
+                  <span className="text-[8.5px] font-bold text-[#00a2ed]">
+                    Users
+                  </span>
+                </div>
+                <div className="w-[81px] border-2 border-[#00a2ed] bg-white dark:bg-slate-950 rounded-lg p-1.5 flex flex-col justify-between text-center shadow-sm">
+                  <span className="text-[9.5px] font-bold text-slate-800 dark:text-slate-200 leading-tight">
+                    Design Sign off
+                  </span>
+                  <span className="text-[8.5px] font-bold text-[#00a2ed]">
+                    Insmed
+                  </span>
+                </div>
+              </div>
+
+              <ConnectorLeft width={245} />
+
+              {/* Box 6: Design and Mockup */}
+              <div className="w-[170px] h-[110px] border-2 border-[#00a2ed] bg-white dark:bg-slate-950 rounded-lg p-3 flex flex-col justify-between text-center flex-shrink-0 shadow-sm hover:border-blue-500 transition-colors">
+                <span className="text-[11px] font-bold text-slate-800 dark:text-slate-200 leading-snug mt-2">
+                  Design and Mockup
+                </span>
+                <span className="text-[9px] font-bold text-[#00a2ed] tracking-wide">
+                  Development Team
+                </span>
+              </div>
+
+            </div>
+
+            {/* ROW-TO-ROW CONNECTOR: ROW 2 -> ROW 3 (Left-to-Right Loop back) */}
+            <div className="w-[1000px] h-10 relative flex-shrink-0">
+              <svg className="absolute inset-0 w-full h-full text-[#00a2ed]" xmlns="http://www.w3.org/2000/svg">
+                {/* Center of Box 9 is at x=85, center of Box 10 is at x=915 */}
+                <path 
+                  d="M 85 0 L 85 20 L 914 20 L 914 40" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  strokeWidth="2" 
+                />
+                <path 
+                  d="M 910 34 L 914 40 L 918 34" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  strokeWidth="2" 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                />
+              </svg>
+            </div>
+
+            {/* ROW 3: UAT & QA (Left Arrow Flow) */}
+            <div className="flex h-[110px] w-[1000px] flex-shrink-0">
+              
+              {/* Box 13: UAT Signoff */}
+              <div className="w-[170px] h-[110px] border-2 border-[#00a2ed] bg-white dark:bg-slate-950 rounded-lg p-3 flex flex-col justify-between text-center flex-shrink-0 shadow-sm hover:border-blue-500 transition-colors">
+                <span className="text-[11px] font-bold text-slate-800 dark:text-slate-200 leading-snug mt-2">
+                  UAT Signoff
+                </span>
+                <span className="text-[9px] font-bold text-[#00a2ed] tracking-wide">
+                  User
+                </span>
+              </div>
+
+              <ConnectorLeft width={37.5} />
+
+              {/* Box 12: UAT Review */}
+              <div className="w-[170px] h-[110px] border-2 border-[#00a2ed] bg-white dark:bg-slate-950 rounded-lg p-3 flex flex-col justify-between text-center flex-shrink-0 shadow-sm hover:border-blue-500 transition-colors">
+                <span className="text-[11px] font-bold text-slate-800 dark:text-slate-200 leading-snug mt-2">
+                  UAT Review
+                </span>
+                <span className="text-[9px] font-bold text-[#00a2ed] tracking-wide">
+                  Users
+                </span>
+              </div>
+
+              <ConnectorLeft width={37.5} />
+
+              {/* Box 11: UAT Deployment */}
+              <div className="w-[170px] h-[110px] border-2 border-[#00a2ed] bg-white dark:bg-slate-950 rounded-lg p-3 flex flex-col justify-between text-center flex-shrink-0 shadow-sm hover:border-blue-500 transition-colors">
+                <span className="text-[11px] font-bold text-slate-800 dark:text-slate-200 leading-snug mt-2">
+                  UAT Deployment
+                </span>
+                <span className="text-[9px] font-bold text-[#00a2ed] tracking-wide">
+                  Admin
+                </span>
+              </div>
+
+              <ConnectorLeft width={245} />
+
+              {/* Box 10: Prepare UAT Document */}
+              <div className="w-[170px] h-[110px] border-2 border-[#00a2ed] bg-white dark:bg-slate-950 rounded-lg p-2.5 flex flex-col justify-between text-center flex-shrink-0 shadow-sm hover:border-blue-500 transition-colors">
+                <span className="text-[10px] font-bold text-slate-800 dark:text-slate-200 leading-tight">
+                  Prepare UAT Deployment Document and get a review from team member
+                </span>
+                <span className="text-[8.5px] font-bold text-[#00a2ed] tracking-wide">
+                  Development Team
+                </span>
+              </div>
+
+            </div>
+
+            {/* ROW-TO-ROW CONNECTOR: ROW 3 -> ROW 4 (Left-to-Right Loop back) */}
+            <div className="w-[1000px] h-10 relative flex-shrink-0">
+              <svg className="absolute inset-0 w-full h-full text-[#00a2ed]" xmlns="http://www.w3.org/2000/svg">
+                {/* Center of Box 13 is at x=85, center of Box 14 is at x=915 */}
+                <path 
+                  d="M 85 0 L 85 20 L 914 20 L 914 40" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  strokeWidth="2" 
+                />
+                <path 
+                  d="M 910 34 L 914 40 L 918 34" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  strokeWidth="2" 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                />
+              </svg>
+            </div>
+
+            {/* ROW 4: Production Release & Smoke Testing (Left Arrow Flow) */}
+            <div className="flex h-[110px] w-[1000px] flex-shrink-0">
+              
+              {/* Box 18: Update Smartsheet & ServiceNow */}
+              <div className="w-[170px] h-[110px] border-2 border-[#00a2ed] bg-white dark:bg-slate-950 rounded-lg p-3 flex flex-col justify-between text-center flex-shrink-0 shadow-sm hover:border-blue-500 transition-colors">
+                <span className="text-[10px] font-bold text-slate-800 dark:text-slate-200 leading-tight">
+                  Update Smartsheet and ServiceNow
+                </span>
+                <span className="text-[9px] font-bold text-[#00a2ed] tracking-wide">
+                  Development Team
+                </span>
+              </div>
+
+              <ConnectorLeft width={37.5} />
+
+              {/* Box 17: Communicate */}
+              <div className="w-[170px] h-[110px] border-2 border-[#00a2ed] bg-white dark:bg-slate-950 rounded-lg p-3 flex flex-col justify-between text-center flex-shrink-0 shadow-sm hover:border-blue-500 transition-colors">
+                <span className="text-[11px] font-bold text-slate-800 dark:text-slate-200 leading-snug mt-1">
+                  Communicate to User and Sign off
+                </span>
+                <span className="text-[9px] font-bold text-[#00a2ed] tracking-wide">
+                  Development Team
+                </span>
+              </div>
+
+              <ConnectorLeft width={37.5} />
+
+              {/* Box 16: Smoke Testing */}
+              <div className="w-[170px] h-[110px] border-2 border-[#00a2ed] bg-white dark:bg-slate-950 rounded-lg p-2 flex flex-col justify-between text-center flex-shrink-0 shadow-sm hover:border-blue-500 transition-colors">
+                <span className="text-[11px] font-bold text-slate-800 dark:text-slate-200 leading-snug">
+                  Smoke Testing
+                </span>
+                <span className="text-[8.5px] font-bold text-[#00a2ed] leading-tight">
+                  Development Team / Delivery Management Team
+                </span>
+              </div>
+
+              <ConnectorLeft width={37.5} />
+
+              {/* Box 15: PROD Deployment */}
+              <div className="w-[170px] h-[110px] border-2 border-[#00a2ed] bg-white dark:bg-slate-950 rounded-lg p-3 flex flex-col justify-between text-center flex-shrink-0 shadow-sm hover:border-blue-500 transition-colors">
+                <span className="text-[11px] font-bold text-slate-800 dark:text-slate-200 leading-snug mt-2">
+                  PROD Deployment
+                </span>
+                <span className="text-[9px] font-bold text-[#00a2ed] tracking-wide">
+                  Admin
+                </span>
+              </div>
+
+              <ConnectorLeft width={37.5} />
+
+              {/* Box 14: KT to Ops */}
+              <div className="w-[170px] h-[110px] border-2 border-[#00a2ed] bg-white dark:bg-slate-950 rounded-lg p-2 flex flex-col justify-between text-center flex-shrink-0 shadow-sm hover:border-blue-500 transition-colors">
+                <span className="text-[9.5px] font-bold text-slate-800 dark:text-slate-200 leading-snug">
+                  KT to Ops Team Prepare PROD Deployment Document and get a review from team member
+                </span>
+                <span className="text-[8.5px] font-bold text-[#00a2ed] tracking-wide">
+                  Development Team
+                </span>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+        {/* ----------------- END OF FLOWCHART ----------------- */}
+
 
           {/* SECTION 2: CHANGE REQUEST SOURCES (INFINITE AUTO MARQUEE SLIDER) */}
           <div className="space-y-4 pt-2">

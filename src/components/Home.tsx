@@ -1,4 +1,5 @@
 import  { useState } from 'react';
+import { NavLink } from "react-router-dom";
 import {
   Cpu,
   Layers,
@@ -78,7 +79,8 @@ export default function Home({ onNavigate }: BiDwhOperationsProps) {
             {/* Branding & Header */}
             <div className="flex items-center gap-3.5">
               <div className="p-3 bg-blue-600/15 border border-blue-400/30 rounded-xl text-blue-700 shadow-inner">
-                    <Cpu className="w-6 h-6 sm:w-8 sm:h-8" />
+                    {/* <Cpu className="w-6 h-6 sm:w-8 sm:h-8" /> */}
+                    <Database className="w-7 h-7 sm:w-8 sm:h-8" />
               </div>
               <div>
                 <h1 className="text-2xl sm:text-3xl font-extrabold text-[#1D70F5] tracking-tight">
@@ -285,8 +287,9 @@ export default function Home({ onNavigate }: BiDwhOperationsProps) {
             </div>
 
             <div className="space-y-3">
-              <button
-                onClick={() => onNavigate?.('inventory')}
+              <NavLink   
+               to='/data-inventory'
+                // onClick={() => onNavigate?.('inventory')}
                 className="w-full flex items-center justify-between p-3.5 bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white rounded-xl text-xs font-bold shadow-md shadow-blue-500/20 transition group cursor-pointer border border-blue-500/30"
               >
                 <div className="flex items-center gap-3">
@@ -296,7 +299,7 @@ export default function Home({ onNavigate }: BiDwhOperationsProps) {
                   <span className="text-left">Inventory of Dashboards and Data Assets</span>
                 </div>
                 <ChevronRight className="w-4 h-4 text-blue-200 group-hover:translate-x-1 transition-transform" />
-              </button>
+              </NavLink>
 
               <button
                 onClick={() => onNavigate?.('release')}
@@ -373,7 +376,7 @@ export default function Home({ onNavigate }: BiDwhOperationsProps) {
                   <div className={`p-2 rounded-lg border ${item.color} group-hover:scale-105 transition-transform`}>
                     <IconComponent className="w-4 h-4" />
                   </div>
-                  <span className="font-bold text-xs text-slate-800 group-hover:text-[#1D70F5] transition">
+                  <span className="font-bold text-sm text-slate-800 group-hover:text-[#1D70F5] transition">
                     {item.name}
                   </span>
                 </div>

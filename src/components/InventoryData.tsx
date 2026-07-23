@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import {
   LayoutDashboard,
   Database,
@@ -373,7 +373,7 @@ export default function InventoryData() {
           <div className="space-y-6">
             
             {/* KPI Metrics Strip */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {/* <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div className="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-2xs space-y-1">
                 <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Total Dashboards</span>
                 <div className="text-2xl font-black text-slate-900">42 Cataloged</div>
@@ -399,10 +399,10 @@ export default function InventoryData() {
                 <div className="text-2xl font-black text-emerald-600">99.2% On-Time</div>
                 <span className="text-[11px] text-emerald-600 font-bold">Daily Auto-Refresh</span>
               </div>
-            </div>
+            </div> */}
 
             {/* Filter & Search Bar */}
-            <div className="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-5 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+            {/* <div className="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-5 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
               
               <div className="relative flex-1">
                 <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
@@ -446,7 +446,7 @@ export default function InventoryData() {
                 </div>
               </div>
 
-            </div>
+            </div> */}
 
             {/* Dashboard Asset Table View */}
             <div className="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
@@ -547,8 +547,8 @@ export default function InventoryData() {
         {activeTab === 'data_assets' && (
           <div className="space-y-6">
             
-            {/* KPI Metrics Strip */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        
+            {/* <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div className="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-2xs space-y-1">
                 <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Managed Data Tables</span>
                 <div className="text-2xl font-black text-slate-900">128 Schema Objects</div>
@@ -574,7 +574,7 @@ export default function InventoryData() {
               </div>
             </div>
 
-            {/* Search & Filter Bar */}
+        
             <div className="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-5 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
               <div className="relative flex-1">
                 <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
@@ -601,7 +601,7 @@ export default function InventoryData() {
                   <option value="Analytical View">Analytical View</option>
                 </select>
               </div>
-            </div>
+            </div> */}
 
             {/* Data Assets Table View */}
             <div className="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
