@@ -36,11 +36,11 @@ import {
   History
 } from 'lucide-react';
 
-interface BiDwhOperationsProps {
-  onNavigate?: (page: 'inventory' | 'release' | 'change' | 'incident' | 'access' | 'operations') => void;
-}
+// interface BiDwhOperationsProps {
+//   onNavigate?: (page: 'inventory' | 'release' | 'change' | 'incident' | 'access' | 'operations') => void;
+// }
 
-export default function Home({ onNavigate }: BiDwhOperationsProps) {
+export default function Home( ) {
   const [copiedEmail, setCopiedEmail] = useState<string | null>(null);
 
   const handleCopyEmail = (email: string) => {

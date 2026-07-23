@@ -1,36 +1,36 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   LayoutDashboard,
   Database,
   Search,
-  Filter,
-  PlusCircle,
-  ExternalLink,
+  // Filter,
+  // PlusCircle,
+  // ExternalLink,
   CheckCircle2,
-  AlertTriangle,
-  Clock,
-  ShieldCheck,
-  Server,
-  Layers,
-  FileText,
-  UserCheck,
-  Tag,
-  BarChart3,
-  RefreshCw,
-  Eye,
-  ChevronRight,
+  // AlertTriangle,
+  // Clock,
+  // ShieldCheck,
+  // Server,
+  // Layers,
+  // FileText,
+  // UserCheck,
+  // Tag,
+  // BarChart3,
+  // RefreshCw,
+  // Eye,
+  // ChevronRight,
   X,
-  TrendingUp,
-  Table,
-  Cpu,
-  Lock,
-  Sparkles,
-  Zap,
-  Info,
+  // TrendingUp,
+  // Table,
+  // Cpu,
+  // Lock,
+  // Sparkles,
+  // Zap,
+  // Info,
   Globe,
-  MapPin,
-  Building2,
-  Flag
+  // MapPin,
+  // Building2,
+  // Flag
 } from 'lucide-react';
 
 interface DashboardAsset {
@@ -71,14 +71,14 @@ export default function InventoryData() {
   // Dashboard state & filters
   const [dashSearch, setDashSearch] = useState('');
   const [dashDomainFilter, setDashDomainFilter] = useState('All');
-  const [dashPlatformFilter, setDashPlatformFilter] = useState('All');
+  const [dashPlatformFilter, _setDashPlatformFilter] = useState('All');
   const [geoFilter, setGeoFilter] = useState<'All' | 'US' | 'EMEA' | 'Japan'>('All');
-  const [geoViewMode, setGeoViewMode] = useState<'columns' | 'table'>('columns');
+  const [geoViewMode, _setGeoViewMode] = useState<'columns' | 'table'>('columns');
 
   // Data Assets state & filters
   const [dataSearch, setDataSearch] = useState('');
-  const [dataTypeFilter, setDataTypeFilter] = useState('All');
-  const [gridAssetCategory, setGridAssetCategory] = useState<'All' | 'Dashboards' | 'Data Assets'>('All');
+  const [dataTypeFilter, _setDataTypeFilter] = useState('All');
+  const [gridAssetCategory, _setGridAssetCategory] = useState<'All' | 'Dashboards' | 'Data Assets'>('All');
 
   // Registration Modal State
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);

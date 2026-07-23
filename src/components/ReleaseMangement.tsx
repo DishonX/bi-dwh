@@ -1,30 +1,30 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { 
   Rocket, 
   Calendar as CalendarIcon, 
   CheckCircle2, 
   Clock, 
-  Layers, 
-  ShieldCheck, 
-  Inbox, 
+  // Layers, 
+  // ShieldCheck, 
+  // Inbox, 
   GitBranch, 
   Plus, 
-  Search, 
-  Filter, 
+  // Search, 
+  // Filter, 
   ChevronRight, 
   ChevronLeft,
-  Server, 
-  FileText, 
+  // Server, 
+  // FileText, 
   UserCheck, 
-  AlertCircle,
-  Tag,
-  ArrowUpRight,
+  // AlertCircle,
+  // Tag,
+  // ArrowUpRight,
   ArrowRight,
   ArrowLeft,
   ArrowDown,
-  Code,
-  Eye,
-  MessageSquare,
+  // Code,
+  // Eye,
+  // MessageSquare,
   X,
   Share2,
   Link2,
@@ -68,8 +68,8 @@ interface CalendarDayItem {
 
 export default function ReleaseMangement() {
   const [activeTab, setActiveTab] = useState<'process' | 'calendar'>('process');
-  const [searchQuery, setSearchQuery] = useState('');
-  const [statusFilter, setStatusFilter] = useState<string>('All');
+  // const [searchQuery, setSearchQuery] = useState('');
+  // const [statusFilter, setStatusFilter] = useState<string>('All');
   const [isNewReleaseModalOpen, setIsNewReleaseModalOpen] = useState(false);
   const [selectedRelease, setSelectedRelease] = useState<ReleaseItem | null>(null);
   const [selectedDayName, setSelectedDayName] = useState<string>('Tue, Jul 1');
@@ -211,56 +211,56 @@ export default function ReleaseMangement() {
   const selectedDayObj = calendarDays.find(d => d.displayDayName === selectedDayName) || calendarDays[3];
 
   // Sample Release Calendar Process List
-  const releases: ReleaseItem[] = [
-    {
-      id: 'REL-2026-08',
-      version: 'v4.12.0',
-      title: 'Q3 Enterprise BI Data Warehouse Patch & Schema Upgrade',
-      type: 'Major Release',
-      environment: 'PROD',
-      scheduledDate: '2026-08-01',
-      timeWindow: '02:00 AM - 05:00 AM EST',
-      owner: 'BI Operations Team',
-      status: 'Scheduled',
-      changesCount: 12
-    },
-    {
-      id: 'REL-2026-07',
-      version: 'v4.11.3',
-      title: 'Commercial Analytics Dashboard Performance Optimization',
-      type: 'Minor Release',
-      environment: 'PROD',
-      scheduledDate: '2026-07-25',
-      timeWindow: '11:00 PM - 01:00 AM EST',
-      owner: 'Analytics Delivery Lead',
-      status: 'In Progress',
-      changesCount: 5
-    },
-    {
-      id: 'REL-2026-06',
-      version: 'v4.11.2-hotfix',
-      title: 'Financial Reporting API Connection Emergency Patch',
-      type: 'Emergency Fix',
-      environment: 'PROD',
-      scheduledDate: '2026-07-20',
-      timeWindow: '04:00 AM - 05:00 AM EST',
-      owner: 'Platform Engineering',
-      status: 'Completed',
-      changesCount: 1
-    },
-    {
-      id: 'REL-2026-09',
-      version: 'v4.13.0-rc1',
-      title: 'Supply Chain Forecast Model UAT Validation Deployment',
-      type: 'Major Release',
-      environment: 'UAT',
-      scheduledDate: '2026-08-10',
-      timeWindow: '09:00 AM - 12:00 PM EST',
-      owner: 'Supply Chain SME Team',
-      status: 'Pending Approval',
-      changesCount: 8
-    }
-  ];
+  // const releases: ReleaseItem[] = [
+  //   {
+  //     id: 'REL-2026-08',
+  //     version: 'v4.12.0',
+  //     title: 'Q3 Enterprise BI Data Warehouse Patch & Schema Upgrade',
+  //     type: 'Major Release',
+  //     environment: 'PROD',
+  //     scheduledDate: '2026-08-01',
+  //     timeWindow: '02:00 AM - 05:00 AM EST',
+  //     owner: 'BI Operations Team',
+  //     status: 'Scheduled',
+  //     changesCount: 12
+  //   },
+  //   {
+  //     id: 'REL-2026-07',
+  //     version: 'v4.11.3',
+  //     title: 'Commercial Analytics Dashboard Performance Optimization',
+  //     type: 'Minor Release',
+  //     environment: 'PROD',
+  //     scheduledDate: '2026-07-25',
+  //     timeWindow: '11:00 PM - 01:00 AM EST',
+  //     owner: 'Analytics Delivery Lead',
+  //     status: 'In Progress',
+  //     changesCount: 5
+  //   },
+  //   {
+  //     id: 'REL-2026-06',
+  //     version: 'v4.11.2-hotfix',
+  //     title: 'Financial Reporting API Connection Emergency Patch',
+  //     type: 'Emergency Fix',
+  //     environment: 'PROD',
+  //     scheduledDate: '2026-07-20',
+  //     timeWindow: '04:00 AM - 05:00 AM EST',
+  //     owner: 'Platform Engineering',
+  //     status: 'Completed',
+  //     changesCount: 1
+  //   },
+  //   {
+  //     id: 'REL-2026-09',
+  //     version: 'v4.13.0-rc1',
+  //     title: 'Supply Chain Forecast Model UAT Validation Deployment',
+  //     type: 'Major Release',
+  //     environment: 'UAT',
+  //     scheduledDate: '2026-08-10',
+  //     timeWindow: '09:00 AM - 12:00 PM EST',
+  //     owner: 'Supply Chain SME Team',
+  //     status: 'Pending Approval',
+  //     changesCount: 8
+  //   }
+  // ];
 
   return (
     <div className="min-h-screen bg-[#F4F7FC] text-slate-800 font-sans pb-16 antialiased">

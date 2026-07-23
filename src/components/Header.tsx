@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, type ComponentType } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { 
   ChevronDown, 
   Menu, 
@@ -43,7 +43,7 @@ interface HeaderProps {
 }
 
 export default function Header({ onNavigate }: HeaderProps) {
-  const location = useLocation();
+  // const location = useLocation();
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileDropdownOpen, setMobileDropdownOpen] = useState<string | null>(null);
