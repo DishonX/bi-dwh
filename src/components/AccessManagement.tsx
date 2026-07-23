@@ -50,14 +50,14 @@ export const AccessManagement: React.FC = () => {
           ),
           icon: <Users className="w-6 h-6 text-emerald-600" />,
           notes: [
-            'Bulk access requests should be routed through Qlik Support.',
-            'Provide complete business justification.',
-            'Access changes require approval.',
-            'User receives confirmation after provisioning.'
+            'For Bulk User Access Requests and for S3 access, users should raise a request to Qlik Support.',
+            'For Platform-Level Access (Qlik, Snowflake, Talend and AWS development-related access), requests should be routed through Qlik Support. ',
+            // 'Access changes require approval.',
+            // 'User receives confirmation after provisioning.'
           ],
           sla: [
-            { definition: 'Service Requests', hours: '24 Hours' },
-            { definition: 'Access Queries', hours: '48 Hours' }
+            { definition: 'User access related request / Service Requests', hours: '24 Hours' },
+            { definition: 'End user needs guidance, User access related queries', hours: '48 Hours' }
           ],
           accessTypes: [
             'Professional User',
@@ -81,15 +81,15 @@ export const AccessManagement: React.FC = () => {
             </div>
           ),
           icon: <Snowflake className="w-6 h-6 text-sky-600" />,
-          notes: [
-            'Account roles require manager and security custodian approval.',
-            'Provide database/schema name and required privilege level (Read/Write/Admin).',
-            'Production data access requires secondary MFA verification.',
-            'User receives confirmation after role provisioning.'
+           notes: [
+            'For Bulk User Access Requests and for S3 access, users should raise a request to Qlik Support.',
+            'For Platform-Level Access (Qlik, Snowflake, Talend and AWS development-related access), requests should be routed through Qlik Support. ',
+            // 'Access changes require approval.',
+            // 'User receives confirmation after provisioning.'
           ],
           sla: [
-            { definition: 'Service Requests', hours: '12 Hours' },
-            { definition: 'Access Queries', hours: '24 Hours' }
+            { definition: 'User access related request / Service Requests', hours: '12 Hours' },
+            { definition: 'End user needs guidance, User access related queries', hours: '24 Hours' }
           ],
           accessTypes: [
             'Read-Only (ANALYTICS_ROLE)',
@@ -113,15 +113,15 @@ export const AccessManagement: React.FC = () => {
             </div>
           ),
           icon: <Share2 className="w-6 h-6 text-rose-600" />,
-          notes: [
-            'Production job execution rights require Senior Lead approval.',
-            'TAC project access requires specific Git repository permissions.',
-            'Access changes require lead developer sign-off.',
-            'User receives confirmation after environment provisioning.'
+                    notes: [
+            'For Bulk User Access Requests and for S3 access, users should raise a request to Qlik Support.',
+            'For Platform-Level Access (Qlik, Snowflake, Talend and AWS development-related access), requests should be routed through Qlik Support. ',
+            // 'Access changes require approval.',
+            // 'User receives confirmation after provisioning.'
           ],
           sla: [
-            { definition: 'Service Requests', hours: '24 Hours' },
-            { definition: 'Access Queries', hours: '36 Hours' }
+            { definition: 'User access related request / Service Requests', hours: '24 Hours' },
+            { definition: 'End user needs guidance, User access related queries', hours: '36 Hours' }
           ],
           accessTypes: [
             'Developer Access (TAC)',
@@ -223,9 +223,9 @@ export const AccessManagement: React.FC = () => {
               <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-white drop-shadow-xs">
                 {platformInfo.title}
               </h2>
-              <p className="text-white/85 text-xs sm:text-sm mt-1.5 font-medium max-w-xl">
+              {/* <p className="text-white/85 text-xs sm:text-sm mt-1.5 font-medium max-w-xl">
                 {platformInfo.description}
-              </p>
+              </p> */}
             </div>
 
             {/* Brand Cloud Badge on Right */}
@@ -259,9 +259,9 @@ export const AccessManagement: React.FC = () => {
                 {/* Step Title & Subtitle */}
                 <h4 className="font-bold text-slate-800 text-xs sm:text-sm">Submit Request</h4>
                 <p className="text-slate-500 text-[11px] sm:text-xs mt-1 min-h-[28px] sm:min-h-[32px] leading-tight">
-                  {activePlatform === 'qlik' && 'In Qlik Support'}
-                  {activePlatform === 'snowflake' && 'In Snowflake Portal'}
-                  {activePlatform === 'talend' && 'In Talend Support Desk'}
+                  {activePlatform === 'qlik' && 'In ServiceNow'}
+                  {activePlatform === 'snowflake' && 'In ServiceNow'}
+                  {activePlatform === 'talend' && 'In Qlik Support'}
                 </p>
 
                 {/* Tag Badge */}
@@ -285,7 +285,7 @@ export const AccessManagement: React.FC = () => {
                   <ClipboardCheck className="w-5 h-5 sm:w-6 sm:h-6" />
                 </div>
 
-                <h4 className="font-bold text-slate-800 text-xs sm:text-sm">Collect Inputs</h4>
+                <h4 className="font-bold text-slate-800 text-xs sm:text-sm">Collect all required Inputs and </h4>
                 <p className="text-slate-500 text-[11px] sm:text-xs mt-1 min-h-[28px] sm:min-h-[32px] leading-tight">Obtain Approval</p>
 
                 <span className="mt-3 inline-block px-3 py-0.5 sm:py-1 bg-blue-50/80 text-blue-600 rounded-full text-[10px] sm:text-xs font-medium">
@@ -308,11 +308,11 @@ export const AccessManagement: React.FC = () => {
                   <UserCog className="w-5 h-5 sm:w-6 sm:h-6" />
                 </div>
 
-                <h4 className="font-bold text-slate-800 text-xs sm:text-sm">Add / Remove</h4>
+                <h4 className="font-bold text-slate-800 text-xs sm:text-sm">Add / Update / Remove</h4>
                 <p className="text-slate-500 text-[11px] sm:text-xs mt-1 min-h-[28px] sm:min-h-[32px] leading-tight">
                   {activePlatform === 'qlik' && 'User Access'}
-                  {activePlatform === 'snowflake' && 'Role Provisioning'}
-                  {activePlatform === 'talend' && 'Project Assignment'}
+                  {activePlatform === 'snowflake' && 'User Access'}
+                  {activePlatform === 'talend' && 'User Access'}
                 </p>
 
                 <span className="mt-3 inline-block px-3 py-0.5 sm:py-1 bg-blue-50/80 text-blue-600 rounded-full text-[10px] sm:text-xs font-medium">
@@ -420,7 +420,7 @@ export const AccessManagement: React.FC = () => {
           </div>
 
           {/* Footer Contact Support Alert */}
-          <div className="bg-[#EBF3FE] border border-blue-100/80 rounded-xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 sm:gap-0 text-sm text-[#1D70F5]">
+          {/* <div className="bg-[#EBF3FE] border border-blue-100/80 rounded-xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 sm:gap-0 text-sm text-[#1D70F5]">
             <div className="flex items-center gap-2.5 font-medium">
               <Info className="w-4 h-4 shrink-0 text-[#1D70F5]" />
               <span>For any questions, contact the support team.</span>
@@ -432,7 +432,7 @@ export const AccessManagement: React.FC = () => {
             >
               Contact Support →
             </button>
-          </div>
+          </div> */}
 
         </div>
       </div>

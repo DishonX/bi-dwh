@@ -14,7 +14,8 @@ import {
   Database,
   PhoneCall,
   Layers,
-  CalendarCheck2
+  CalendarCheck2,
+  Home
 } from "lucide-react";
 
 // Types for navigation items
@@ -48,17 +49,6 @@ export default function Header({ onNavigate }: HeaderProps) {
   const [mobileDropdownOpen, setMobileDropdownOpen] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
   const headerRef = useRef<HTMLDivElement>(null);
-
-  // Helper to check if a navigation item (or any of its dropdown items) is currently active
-  const isItemActive = (item: NavItem) => {
-    if (item.to) {
-      return location.pathname === item.to;
-    }
-    if (item.dropdownItems) {
-      return item.dropdownItems.some((sub) => sub.to === location.pathname);
-    }
-    return false;
-  };
 
   // Close dropdowns on clicking outside
   useEffect(() => {
@@ -95,11 +85,19 @@ export default function Header({ onNavigate }: HeaderProps) {
   // Navigation config with vibrant colorful icons
   const navigationItems: NavItem[] = [
     {
+      id: "home",
+      label: "Home",
+      icon: Home,
+      iconBg: "bg-blue-100 text-blue-600 border border-blue-200/80",
+      iconColor: "text-blue-600",
+      to: "/"
+    },
+    {
       id: "Operations",
       label: "Operations",
       icon: Layers,
-      iconBg: "bg-blue-100 text-blue-600 border border-blue-200/80",
-      iconColor: "text-blue-600",
+      iconBg: "bg-purple-100 text-purple-700 border border-purple-300/80",
+      iconColor: "text-purple-700",
       dropdownItems: [
         {
           title: "Access Management",
@@ -210,7 +208,7 @@ export default function Header({ onNavigate }: HeaderProps) {
             </div>
             <div className="flex flex-col">
               <span className="font-extrabold text-lg sm:text-xl tracking-tight text-slate-900 group-hover:text-blue-600 transition-colors duration-200">
-                BI Operations
+                BI DWH Operations
               </span>
               <span className="text-[11px] font-semibold text-slate-400 tracking-wide uppercase -mt-0.5 hidden xs:block">
                 Enterprise Data Governance
@@ -223,7 +221,6 @@ export default function Header({ onNavigate }: HeaderProps) {
             {navigationItems.map((item) => {
               const hasDropdown = !!item.dropdownItems;
               const isOpen = activeDropdown === item.id;
-              const isActive = isItemActive(item);
               const ItemIcon = item.icon;
 
               return (
@@ -234,7 +231,7 @@ export default function Header({ onNavigate }: HeaderProps) {
                       aria-expanded={isOpen}
                       aria-haspopup="true"
                       className={`px-3.5 py-2 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-blue-500/30 cursor-pointer ${
-                        isOpen || isActive
+                        isOpen
                           ? "text-blue-700 bg-blue-50 border border-blue-200/90 shadow-2xs font-bold"
                           : "text-slate-700 hover:text-blue-600 hover:bg-blue-50/60"
                       }`}
@@ -247,7 +244,7 @@ export default function Header({ onNavigate }: HeaderProps) {
                       <span>{item.label}</span>
                       <ChevronDown 
                         className={`w-4 h-4 transition-transform duration-300 ${
-                          isOpen ? "rotate-180 text-blue-600" : isActive ? "text-blue-600" : "text-slate-400"
+                          isOpen ? "rotate-180 text-blue-600" : "text-slate-400"
                         }`} 
                       />
                     </button>
@@ -255,11 +252,7 @@ export default function Header({ onNavigate }: HeaderProps) {
                     <NavLink
                       to={item.to || "/"}
                       onClick={() => handleLinkClick(item.to || "/")}
-                      className={({ isActive: isLinkActive }) => `px-3.5 py-2 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-blue-500/30 ${
-                        isLinkActive
-                          ? "text-blue-700 bg-blue-50 border border-blue-200/90 shadow-2xs font-bold"
-                          : "text-slate-700 hover:text-blue-600 hover:bg-blue-50/60"
-                      }`}
+                      className="px-3.5 py-2 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-blue-500/30 text-slate-700 hover:text-blue-600 hover:bg-blue-50/60"
                     >
                       {ItemIcon && (
                         <div className={`p-1 rounded-md shrink-0 flex items-center justify-center transition-colors ${item.iconBg || "bg-rose-100 text-rose-600"}`}>
@@ -281,33 +274,21 @@ export default function Header({ onNavigate }: HeaderProps) {
                             key={subItem.title}
                             to={subItem.to}
                             onClick={() => handleLinkClick(subItem.to)}
-                            className={({ isActive: isSubActive }) => `flex items-center gap-3 px-3 py-2.5 rounded-xl text-left transition-all duration-200 group focus:outline-none focus:ring-2 focus:ring-blue-500/20 ${
-                              isSubActive
-                                ? "bg-blue-50 text-blue-950 font-bold border border-blue-200/80"
-                                : "hover:bg-slate-50 text-slate-700 hover:text-blue-600"
-                            }`}
+                            className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-left transition-all duration-200 group focus:outline-none focus:ring-2 focus:ring-blue-500/20 hover:bg-slate-50 text-slate-700 hover:text-blue-600"
                           >
-                            {({ isActive: isSubActive }) => (
-                              <>
-                                <div className={`p-2 rounded-lg transition-all duration-200 shrink-0 ${
-                                  isSubActive
-                                    ? "bg-blue-600 text-white shadow-xs shadow-blue-500/30"
-                                    : subItem.iconBg || "bg-blue-50 text-blue-600 group-hover:bg-blue-600 group-hover:text-white"
-                                }`}>
-                                  <SubIcon className="w-4 h-4" />
-                                </div>
-                                <div className="flex-1 min-w-0 flex items-center justify-between gap-1.5">
-                                  <span className={`text-sm font-bold ${isSubActive ? "text-blue-900" : "text-slate-800 group-hover:text-blue-600"}`}>
-                                    {subItem.title}
-                                  </span>
-                                  {subItem.badge && (
-                                    <span className="text-[9px] px-1.5 py-0.5 rounded font-extrabold bg-amber-100 text-amber-800 border border-amber-300">
-                                      {subItem.badge}
-                                    </span>
-                                  )}
-                                </div>
-                              </>
-                            )}
+                            <div className={`p-2 rounded-lg transition-all duration-200 shrink-0 ${subItem.iconBg || "bg-blue-50 text-blue-600 group-hover:bg-blue-600 group-hover:text-white"}`}>
+                              <SubIcon className="w-4 h-4" />
+                            </div>
+                            <div className="flex-1 min-w-0 flex items-center justify-between gap-1.5">
+                              <span className="text-sm font-bold text-slate-800 group-hover:text-blue-600">
+                                {subItem.title}
+                              </span>
+                              {/* {subItem.badge && (
+                                <span className="text-[9px] px-1.5 py-0.5 rounded font-extrabold bg-amber-100 text-amber-800 border border-amber-300">
+                                  {subItem.badge}
+                                </span>
+                              )} */}
+                            </div>
                           </NavLink>
                         );
                       })}
@@ -381,31 +362,19 @@ export default function Header({ onNavigate }: HeaderProps) {
                                 key={subItem.title}
                                 to={subItem.to}
                                 onClick={() => handleLinkClick(subItem.to)}
-                                className={({ isActive }) => `w-full flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-left transition-colors ${
-                                  isActive
-                                    ? "bg-blue-100/80 text-blue-900 font-bold"
-                                    : "text-slate-700 hover:text-blue-600 hover:bg-white"
-                                }`}
+                                className="w-full flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-left transition-colors text-slate-700 hover:text-blue-600 hover:bg-white"
                               >
-                                {({ isActive }) => (
-                                  <>
-                                    <div className={`p-1.5 rounded-md shrink-0 ${
-                                      isActive 
-                                        ? "bg-blue-600 text-white" 
-                                        : subItem.iconBg || "bg-blue-50 text-blue-600"
-                                    }`}>
-                                      <SubIcon className="w-4 h-4" />
-                                    </div>
-                                    <div className="flex-1 min-w-0 flex items-center justify-between gap-1.5">
-                                      <span className="text-xs font-bold">{subItem.title}</span>
-                                      {subItem.badge && (
-                                        <span className="text-[9px] px-1.5 py-0.2 rounded font-extrabold bg-amber-100 text-amber-800 border border-amber-200">
-                                          {subItem.badge}
-                                        </span>
-                                      )}
-                                    </div>
-                                  </>
-                                )}
+                                <div className={`p-1.5 rounded-md shrink-0 ${subItem.iconBg || "bg-blue-50 text-blue-600"}`}>
+                                  <SubIcon className="w-4 h-4" />
+                                </div>
+                                <div className="flex-1 min-w-0 flex items-center justify-between gap-1.5">
+                                  <span className="text-xs font-bold">{subItem.title}</span>
+                                  {/* {subItem.badge && (
+                                    <span className="text-[9px] px-1.5 py-0.2 rounded font-extrabold bg-amber-100 text-amber-800 border border-amber-200">
+                                      {subItem.badge}
+                                    </span>
+                                  )} */}
+                                </div>
                               </NavLink>
                             );
                           })}
@@ -416,11 +385,7 @@ export default function Header({ onNavigate }: HeaderProps) {
                     <NavLink
                       to={item.to || "/"}
                       onClick={() => handleLinkClick(item.to || "/")}
-                      className={({ isActive }) => `w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-left text-sm font-bold transition-colors ${
-                        isActive
-                          ? "bg-blue-50 text-blue-700 border border-blue-200/80"
-                          : "text-slate-800 hover:bg-slate-50"
-                      }`}
+                      className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-left text-sm font-bold transition-colors text-slate-800 hover:bg-slate-50"
                     >
                       {ItemIcon && (
                         <div className={`p-1.5 rounded-lg shrink-0 flex items-center justify-center ${item.iconBg || "bg-rose-100 text-rose-600"}`}>

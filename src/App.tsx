@@ -11,6 +11,9 @@ import Reportanincident from './components/Reportanincident';
 import ReleaseMangement from './components/ReleaseMangement';
 import InventoryData from './components/InventoryData';
 import Sox from './components/Sox';
+import ReleaseCalendar from './components/ReleaseCalendar';
+import ScrollToTop from './components/ScrollToTop';
+import Footer from './components/Footer';
 
 // import Home from './components/Home/Home'
 
@@ -21,6 +24,7 @@ function App() {
     <>
  
     <BrowserRouter>
+    <ScrollToTop/>
       <Header/>
         <Routes>
           <Route path="/access-management" element={<AccessManagement />} />
@@ -32,8 +36,10 @@ function App() {
           <Route path="/release_management" element={<ReleaseMangement/>} />
           <Route path="/data-inventory" element={<InventoryData/>} />
           <Route path="/sox-audit" element={<Sox/>} />
+          <Route path="/releasecalendar" element={<ReleaseCalendar/>} />
 
         </Routes>
+        <Footer/>
     </BrowserRouter>
     </>
   )

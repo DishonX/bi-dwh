@@ -301,8 +301,9 @@ export default function Home({ onNavigate }: BiDwhOperationsProps) {
                 <ChevronRight className="w-4 h-4 text-blue-200 group-hover:translate-x-1 transition-transform" />
               </NavLink>
 
-              <button
-                onClick={() => onNavigate?.('release')}
+              <NavLink
+              to='releasecalendar'
+                // onClick={() => onNavigate?.('release')}
                 className="w-full flex items-center justify-between p-3.5 bg-gradient-to-r from-teal-600 via-emerald-600 to-emerald-700 hover:from-teal-700 hover:to-emerald-800 text-white rounded-xl text-xs font-bold shadow-md shadow-emerald-500/20 transition group cursor-pointer border border-teal-500/30"
               >
                 <div className="flex items-center gap-3">
@@ -312,10 +313,11 @@ export default function Home({ onNavigate }: BiDwhOperationsProps) {
                   <span>Upcoming Releases</span>
                 </div>
                 <ChevronRight className="w-4 h-4 text-emerald-200 group-hover:translate-x-1 transition-transform" />
-              </button>
+              </NavLink>
 
-              <button
-                onClick={() => onNavigate?.('release')}
+              <NavLink
+                to='/releasecalendar'
+                // onClick={() => onNavigate?.('release')}
                 className="w-full flex items-center justify-between p-3.5 bg-gradient-to-r from-purple-600 via-violet-600 to-indigo-700 hover:from-purple-700 hover:to-violet-800 text-white rounded-xl text-xs font-bold shadow-md shadow-purple-500/20 transition group cursor-pointer border border-purple-500/30"
               >
                 <div className="flex items-center gap-3">
@@ -325,7 +327,7 @@ export default function Home({ onNavigate }: BiDwhOperationsProps) {
                   <span>Previous Releases</span>
                 </div>
                 <ChevronRight className="w-4 h-4 text-purple-200 group-hover:translate-x-1 transition-transform" />
-              </button>
+              </NavLink>
             </div>
 
             {/* Operations SLA & Live Pipeline Status Card */}

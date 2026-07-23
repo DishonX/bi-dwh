@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import {
   ShieldAlert,
   Users,
-  Mail,
+  // Mail,
   Copy,
   Check,
-  MapPin,
+  // MapPin,
   AlertTriangle,
   UserCheck,
   Search,
@@ -46,33 +46,7 @@ export const EmergencyContact: React.FC = () => {
     setTimeout(() => setCopiedEmail(null), 2000);
   };
 
-  // Exact Severity Guidelines data from user image
-  const severityGuidelines: SeverityItem[] = [
-    {
-      level: 'P1',
-      severity: 'P1 - Critical',
-      definition: 'Production down, major business impact',
-      contact: 'Tech & Operations Leads & Delivery Manager Immediately'
-    },
-    {
-      level: 'P2',
-      severity: 'P2 - High',
-      definition: 'Significant functionality impacted',
-      contact: 'Tech & Operations Lead'
-    },
-    {
-      level: 'P3',
-      severity: 'P3 - Medium',
-      definition: 'Limited business impact',
-      contact: 'Operations Lead during business hours'
-    },
-    {
-      level: 'P4',
-      severity: 'P4 - Low',
-      definition: 'Minor issue or enhancement request',
-      contact: 'Normal support process'
-    }
-  ];
+
 
   // Exact Contact Details data from user image
   const contactDetails: ContactItem[] = [

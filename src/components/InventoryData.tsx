@@ -1,32 +1,36 @@
-import  { useState } from 'react';
+import React, { useState } from 'react';
 import {
   LayoutDashboard,
   Database,
   Search,
-  // Filter,
-  // PlusCircle,
+  Filter,
+  PlusCircle,
   ExternalLink,
   CheckCircle2,
-  // AlertTriangle,
+  AlertTriangle,
   Clock,
-  // ShieldCheck,
-  // Server,
-  // Layers,
-  // FileText,
-  // UserCheck,
-  // Tag,
-  // BarChart3,
-  // RefreshCw,
-  // Eye,
+  ShieldCheck,
+  Server,
+  Layers,
+  FileText,
+  UserCheck,
+  Tag,
+  BarChart3,
+  RefreshCw,
+  Eye,
   ChevronRight,
   X,
   TrendingUp,
-  // Table,
-  // Cpu,
-  // Lock,
-  // Sparkles,
-  // Zap,
-  // Info
+  Table,
+  Cpu,
+  Lock,
+  Sparkles,
+  Zap,
+  Info,
+  Globe,
+  MapPin,
+  Building2,
+  Flag
 } from 'lucide-react';
 
 interface DashboardAsset {
@@ -43,6 +47,7 @@ interface DashboardAsset {
   monthlyUsers: number;
   upstreamTables: string[];
   url: string;
+  geo?: 'US' | 'EMEA' | 'Japan';
 }
 
 interface DataPipelineAsset {
@@ -61,18 +66,19 @@ interface DataPipelineAsset {
 }
 
 export default function InventoryData() {
-  const [activeTab, setActiveTab] = useState<'dashboards' | 'data_assets'>('dashboards');
+  const [activeTab, setActiveTab] = useState<'dashboards_by_geo' | 'dashboards_and_data_assets_grid'>('dashboards_by_geo');
   
   // Dashboard state & filters
   const [dashSearch, setDashSearch] = useState('');
   const [dashDomainFilter, setDashDomainFilter] = useState('All');
   const [dashPlatformFilter, setDashPlatformFilter] = useState('All');
-  const [selectedDashboard, setSelectedDashboard] = useState<DashboardAsset | null>(null);
+  const [geoFilter, setGeoFilter] = useState<'All' | 'US' | 'EMEA' | 'Japan'>('All');
+  const [geoViewMode, setGeoViewMode] = useState<'columns' | 'table'>('columns');
 
   // Data Assets state & filters
   const [dataSearch, setDataSearch] = useState('');
   const [dataTypeFilter, setDataTypeFilter] = useState('All');
-  const [selectedDataAsset, setSelectedDataAsset] = useState<DataPipelineAsset | null>(null);
+  const [gridAssetCategory, setGridAssetCategory] = useState<'All' | 'Dashboards' | 'Data Assets'>('All');
 
   // Registration Modal State
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
@@ -83,97 +89,300 @@ export default function InventoryData() {
     setTimeout(() => setToastMessage(null), 3500);
   };
 
-  // Sample Dashboards Catalog Data
-  const dashboards: DashboardAsset[] = [
+  // Geo Dashboards Data for US, EMEA, Japan with clean dummy data
+  const regionalDashboards: DashboardAsset[] = [
+    // US REGION
     {
-      id: 'DASH-BI-001',
-      title: 'Commercial Executive Sales & Target Performance',
-      description: 'Global commercial product performance, target achievement rates, territory breakdown, and prescription volume analytics.',
+      id: 'DASH-US-001',
+      title: 'Sales Performance Overview',
+      description: 'US commercial sales performance, quarterly revenue tracking, product volume, and territory breakdown.',
       domain: 'Commercial',
       platform: 'Power BI',
-      owner: 'Commercial Analytics Lead',
+      owner: 'US Commercial Analytics Lead',
       certified: true,
       securityLevel: 'Confidential',
       lastRefresh: '2026-07-22 04:00 AM EST',
       refreshSLA: '100% Compliant',
-      monthlyUsers: 340,
-      upstreamTables: ['fact_commercial_sales_daily', 'dim_healthcare_provider', 'dim_territory_hierarchy'],
-      url: 'https://powerbi.enterprise.insmed.com/reports/commercial-exec'
+      monthlyUsers: 420,
+      upstreamTables: ['fact_us_sales_daily', 'dim_us_territory_master'],
+      url: 'https://analytics.enterprise.com/reports/us-sales-overview',
+      geo: 'US'
     },
     {
-      id: 'DASH-BI-002',
-      title: 'Medical Affairs Thought Leader & Trial Tracker',
-      description: 'Key Opinion Leader engagement metrics, medical inquiry fulfillment, and clinical trial site monitoring dashboard.',
-      domain: 'Medical Affairs',
+      id: 'DASH-US-002',
+      title: 'Executive KPI Summary',
+      description: 'US high-level executive performance summary, key operational metrics, and growth forecasts.',
+      domain: 'Commercial',
       platform: 'Power BI',
-      owner: 'Medical Operations SME',
+      owner: 'US VP Commercial Operations',
       certified: true,
       securityLevel: 'Confidential',
       lastRefresh: '2026-07-22 05:30 AM EST',
       refreshSLA: '100% Compliant',
-      monthlyUsers: 185,
-      upstreamTables: ['fact_kol_engagements', 'dim_medical_inquiry', 'fact_trial_milestones'],
-      url: 'https://powerbi.enterprise.insmed.com/reports/medical-affairs'
+      monthlyUsers: 510,
+      upstreamTables: ['fact_us_exec_revenue_daily', 'dim_us_territory_master'],
+      url: 'https://analytics.enterprise.com/reports/us-executive-summary',
+      geo: 'US'
     },
     {
-      id: 'DASH-BI-003',
-      title: 'Global Supply Chain Inventory & Batch Traceability',
-      description: 'Real-time pharmaceutical warehouse inventory, batch expiration alerts, cold chain monitoring, and fulfillment SLA analytics.',
-      domain: 'Supply Chain',
+      id: 'DASH-US-003',
+      title: 'Customer Experience Analytics',
+      description: 'US customer satisfaction metrics, support response times, and sentiment tracking.',
+      domain: 'Medical Affairs',
       platform: 'Tableau',
-      owner: 'Supply Chain BI Team',
-      certified: true,
-      securityLevel: 'Restricted',
-      lastRefresh: '2026-07-22 02:15 AM EST',
-      refreshSLA: '100% Compliant',
-      monthlyUsers: 210,
-      upstreamTables: ['fact_inventory_snapshot', 'dim_batch_lot', 'dim_distribution_center'],
-      url: 'https://tableau.enterprise.insmed.com/views/supply-chain-traceability'
-    },
-    {
-      id: 'DASH-BI-004',
-      title: 'Financial Revenue Recognition & Cost Allocation',
-      description: 'GAAP revenue recognition, gross-to-net adjustment forecasts, departmental OPEX variance, and BI DWH cost allocation.',
-      domain: 'Finance',
-      platform: 'Power BI',
-      owner: 'Financial Planning & Analysis',
+      owner: 'US Customer Experience Lead',
       certified: true,
       securityLevel: 'Restricted',
       lastRefresh: '2026-07-21 11:00 PM EST',
       refreshSLA: '100% Compliant',
-      monthlyUsers: 95,
-      upstreamTables: ['fact_gl_transactions', 'fact_g2n_accruals', 'dim_cost_center'],
-      url: 'https://powerbi.enterprise.insmed.com/reports/finance-g2n'
+      monthlyUsers: 180,
+      upstreamTables: ['fact_us_csat_events', 'dim_us_customer_catalog'],
+      url: 'https://analytics.enterprise.com/reports/us-customer-experience',
+      geo: 'US'
     },
     {
-      id: 'DASH-BI-005',
-      title: 'R&D Early Pipeline Milestone & Compound Tracking',
-      description: 'Pre-clinical and Phase I/II trial timeline tracking, compound toxicity scores, and laboratory resource utilization.',
-      domain: 'R&D',
-      platform: 'ThoughtSpot',
-      owner: 'R&D Informatics Lead',
-      certified: false,
-      securityLevel: 'Confidential',
-      lastRefresh: '2026-07-22 06:00 AM EST',
-      refreshSLA: '100% Compliant',
-      monthlyUsers: 140,
-      upstreamTables: ['fact_lab_experiments', 'dim_compound_registry'],
-      url: 'https://thoughtspot.enterprise.insmed.com/pinboards/rd-pipeline'
-    },
-    {
-      id: 'DASH-BI-006',
-      title: 'Enterprise Audit & Regulatory Compliance Monitor',
-      description: '21 CFR Part 11 audit trail logs, data access entitlement reviews, and GxP validation compliance monitoring.',
-      domain: 'Compliance',
+      id: 'DASH-US-004',
+      title: 'Field Operations Tracker',
+      description: 'US field team performance, regional coverage, account visits, and activity completion rates.',
+      domain: 'Commercial',
       platform: 'Power BI',
-      owner: 'Audit & Compliance Officer',
+      owner: 'US Field Operations SME',
       certified: true,
-      securityLevel: 'Restricted',
+      securityLevel: 'Confidential',
+      lastRefresh: '2026-07-22 02:15 AM EST',
+      refreshSLA: '100% Compliant',
+      monthlyUsers: 340,
+      upstreamTables: ['fact_us_field_calls', 'dim_us_account_master'],
+      url: 'https://analytics.enterprise.com/reports/us-field-operations',
+      geo: 'US'
+    },
+    {
+      id: 'DASH-US-005',
+      title: 'Marketing Campaign ROI',
+      description: 'US digital marketing campaigns, channel engagement, lead conversion rates, and acquisition cost.',
+      domain: 'Commercial',
+      platform: 'ThoughtSpot',
+      owner: 'US Marketing Analytics Lead',
+      certified: true,
+      securityLevel: 'Confidential',
       lastRefresh: '2026-07-22 01:00 AM EST',
       refreshSLA: '100% Compliant',
-      monthlyUsers: 60,
-      upstreamTables: ['fact_system_access_logs', 'dim_compliance_policy'],
-      url: 'https://powerbi.enterprise.insmed.com/reports/audit-gxp'
+      monthlyUsers: 220,
+      upstreamTables: ['fact_us_campaign_metrics', 'dim_us_channel_registry'],
+      url: 'https://analytics.enterprise.com/reports/us-marketing-campaigns',
+      geo: 'US'
+    },
+    {
+      id: 'DASH-US-006',
+      title: 'Supply Chain & Logistics',
+      description: 'US inventory levels, fulfillment accuracy, carrier lead times, and warehouse stock tracking.',
+      domain: 'Supply Chain',
+      platform: 'Power BI',
+      owner: 'US Supply Chain Lead',
+      certified: true,
+      securityLevel: 'Restricted',
+      lastRefresh: '2026-07-22 03:00 AM EST',
+      refreshSLA: '100% Compliant',
+      monthlyUsers: 295,
+      upstreamTables: ['fact_us_warehouse_stock', 'dim_us_fulfillment_center'],
+      url: 'https://analytics.enterprise.com/reports/us-supply-chain',
+      geo: 'US'
+    },
+
+    // EMEA REGION
+    {
+      id: 'DASH-EMEA-001',
+      title: 'EMEA Regional Sales Summary',
+      description: 'Pan-European commercial revenue, distributor metrics, currency variance, and country trends.',
+      domain: 'Commercial',
+      platform: 'Power BI',
+      owner: 'EMEA Commercial Director',
+      certified: true,
+      securityLevel: 'Confidential',
+      lastRefresh: '2026-07-22 06:00 AM CET',
+      refreshSLA: '100% Compliant',
+      monthlyUsers: 410,
+      upstreamTables: ['fact_emea_sales_ledger', 'dim_emea_distributor'],
+      url: 'https://analytics.enterprise.com/reports/emea-sales-summary',
+      geo: 'EMEA'
+    },
+    {
+      id: 'DASH-EMEA-002',
+      title: 'EMEA Activity Report',
+      description: 'EMEA regional operations, field activities, regional meetings, and client interaction logs.',
+      domain: 'Medical Affairs',
+      platform: 'Power BI',
+      owner: 'EMEA Operations Director',
+      certified: true,
+      securityLevel: 'Confidential',
+      lastRefresh: '2026-07-22 03:30 AM CET',
+      refreshSLA: '100% Compliant',
+      monthlyUsers: 310,
+      upstreamTables: ['fact_emea_activity_monthly', 'dim_emea_country_master'],
+      url: 'https://analytics.enterprise.com/reports/emea-activity-report',
+      geo: 'EMEA'
+    },
+    {
+      id: 'DASH-EMEA-003',
+      title: 'EMEA Operations & Logistics',
+      description: 'EMEA warehouse inventory, distribution hub logistics, shipment status, and transit times.',
+      domain: 'Supply Chain',
+      platform: 'Power BI',
+      owner: 'EMEA Supply Chain Lead',
+      certified: true,
+      securityLevel: 'Restricted',
+      lastRefresh: '2026-07-22 01:45 AM CET',
+      refreshSLA: '100% Compliant',
+      monthlyUsers: 195,
+      upstreamTables: ['fact_emea_inventory', 'dim_emea_warehouse_nodes'],
+      url: 'https://analytics.enterprise.com/reports/emea-operations',
+      geo: 'EMEA'
+    },
+    {
+      id: 'DASH-EMEA-004',
+      title: 'EMEA Financial Performance',
+      description: 'European financial reporting, regional P&L, budget utilization, and operating expense analysis.',
+      domain: 'Finance',
+      platform: 'ThoughtSpot',
+      owner: 'EMEA Finance Lead',
+      certified: true,
+      securityLevel: 'Confidential',
+      lastRefresh: '2026-07-21 10:15 PM CET',
+      refreshSLA: '100% Compliant',
+      monthlyUsers: 280,
+      upstreamTables: ['fact_emea_pnl_monthly', 'dim_emea_cost_center'],
+      url: 'https://analytics.enterprise.com/reports/emea-financials',
+      geo: 'EMEA'
+    },
+    {
+      id: 'DASH-EMEA-005',
+      title: 'EU Regulatory Compliance',
+      description: 'European regulatory compliance monitoring, audit tracking, and policy adherence reports.',
+      domain: 'Compliance',
+      platform: 'Tableau',
+      owner: 'EU Regulatory Affairs SME',
+      certified: true,
+      securityLevel: 'Confidential',
+      lastRefresh: '2026-07-22 05:00 AM CET',
+      refreshSLA: '100% Compliant',
+      monthlyUsers: 165,
+      upstreamTables: ['fact_eu_regulatory_logs', 'dim_eu_policy_framework'],
+      url: 'https://analytics.enterprise.com/reports/eu-regulatory-compliance',
+      geo: 'EMEA'
+    },
+    {
+      id: 'DASH-EMEA-006',
+      title: 'Pan-European Revenue Tracker',
+      description: 'Pan-European product pricing, market access status, revenue targets, and regional growth.',
+      domain: 'Finance',
+      platform: 'ThoughtSpot',
+      owner: 'EMEA Market Access SME',
+      certified: true,
+      securityLevel: 'Restricted',
+      lastRefresh: '2026-07-21 09:30 PM CET',
+      refreshSLA: '100% Compliant',
+      monthlyUsers: 140,
+      upstreamTables: ['fact_emea_revenue_targets', 'dim_country_pricing'],
+      url: 'https://analytics.enterprise.com/reports/pan-european-revenue',
+      geo: 'EMEA'
+    },
+
+    // JAPAN REGION
+    {
+      id: 'DASH-JP-001',
+      title: 'APAC Sales Performance',
+      description: 'Japan and APAC commercial sales performance, distributor orders, and volume trends.',
+      domain: 'Commercial',
+      platform: 'Power BI',
+      owner: 'Japan Commercial Analytics Lead',
+      certified: true,
+      securityLevel: 'Confidential',
+      lastRefresh: '2026-07-22 09:00 AM JST',
+      refreshSLA: '100% Compliant',
+      monthlyUsers: 380,
+      upstreamTables: ['fact_jp_wholesaler_sales', 'dim_jp_pricing_list'],
+      url: 'https://analytics.enterprise.com/reports/apac-sales-performance',
+      geo: 'Japan'
+    },
+    {
+      id: 'DASH-JP-002',
+      title: 'Japan Regional Overview',
+      description: 'Territory-level performance, regional sales targets, adoption rates, and quarterly goals.',
+      domain: 'Commercial',
+      platform: 'Power BI',
+      owner: 'Japan Operations Manager',
+      certified: true,
+      securityLevel: 'Confidential',
+      lastRefresh: '2026-07-22 08:30 AM JST',
+      refreshSLA: '100% Compliant',
+      monthlyUsers: 290,
+      upstreamTables: ['fact_jp_regional_performance', 'dim_jp_region_master'],
+      url: 'https://analytics.enterprise.com/reports/japan-regional-overview',
+      geo: 'Japan'
+    },
+    {
+      id: 'DASH-JP-003',
+      title: 'Customer Service Metrics',
+      description: 'Japan client support resolution times, inquiry tracking, and service quality scores.',
+      domain: 'Medical Affairs',
+      platform: 'ThoughtSpot',
+      owner: 'Japan Service Quality Lead',
+      certified: true,
+      securityLevel: 'Confidential',
+      lastRefresh: '2026-07-22 07:00 AM JST',
+      refreshSLA: '100% Compliant',
+      monthlyUsers: 175,
+      upstreamTables: ['fact_jp_support_tickets', 'dim_jp_client_registry'],
+      url: 'https://analytics.enterprise.com/reports/japan-customer-service',
+      geo: 'Japan'
+    },
+    {
+      id: 'DASH-JP-004',
+      title: 'Japan Executive Summary',
+      description: 'Executive overview of Japan branch metrics, financial performance, and key milestones.',
+      domain: 'Commercial',
+      platform: 'Power BI',
+      owner: 'Japan General Manager',
+      certified: true,
+      securityLevel: 'Confidential',
+      lastRefresh: '2026-07-22 08:00 AM JST',
+      refreshSLA: '100% Compliant',
+      monthlyUsers: 210,
+      upstreamTables: ['fact_jp_exec_kpi_summary', 'dim_jp_market_forecast'],
+      url: 'https://analytics.enterprise.com/reports/japan-executive-summary',
+      geo: 'Japan'
+    },
+    {
+      id: 'DASH-JP-005',
+      title: 'Japan Inventory & Distribution',
+      description: 'Wholesaler inventory levels, supply logistics, warehouse stock, and delivery lead times.',
+      domain: 'Supply Chain',
+      platform: 'Power BI',
+      owner: 'Japan Logistics SME',
+      certified: true,
+      securityLevel: 'Restricted',
+      lastRefresh: '2026-07-22 06:30 AM JST',
+      refreshSLA: '100% Compliant',
+      monthlyUsers: 160,
+      upstreamTables: ['fact_jp_wholesaler_stocks', 'dim_jp_distribution_nodes'],
+      url: 'https://analytics.enterprise.com/reports/japan-inventory-distribution',
+      geo: 'Japan'
+    },
+    {
+      id: 'DASH-JP-006',
+      title: 'Partner & Client Engagement',
+      description: 'Key client interaction logs, institutional partner meetings, and regional account engagement.',
+      domain: 'Medical Affairs',
+      platform: 'Tableau',
+      owner: 'Japan Partner Relations Director',
+      certified: true,
+      securityLevel: 'Confidential',
+      lastRefresh: '2026-07-22 08:15 AM JST',
+      refreshSLA: '100% Compliant',
+      monthlyUsers: 150,
+      upstreamTables: ['fact_jp_client_engagements', 'dim_jp_partner_accounts'],
+      url: 'https://analytics.enterprise.com/reports/japan-partner-engagement',
+      geo: 'Japan'
     }
   ];
 
@@ -265,15 +474,21 @@ export default function InventoryData() {
     }
   ];
 
-  // Filtering Dashboards
-  const filteredDashboards = dashboards.filter((dash) => {
+  // Filtering Regional Dashboards
+  const filteredRegionalDashboards = regionalDashboards.filter((dash) => {
     const matchesSearch = dash.title.toLowerCase().includes(dashSearch.toLowerCase()) ||
                           dash.id.toLowerCase().includes(dashSearch.toLowerCase()) ||
-                          dash.owner.toLowerCase().includes(dashSearch.toLowerCase());
+                          dash.owner.toLowerCase().includes(dashSearch.toLowerCase()) ||
+                          dash.domain.toLowerCase().includes(dashSearch.toLowerCase());
     const matchesDomain = dashDomainFilter === 'All' || dash.domain === dashDomainFilter;
     const matchesPlatform = dashPlatformFilter === 'All' || dash.platform === dashPlatformFilter;
-    return matchesSearch && matchesDomain && matchesPlatform;
+    const matchesGeo = geoFilter === 'All' || dash.geo === geoFilter;
+    return matchesSearch && matchesDomain && matchesPlatform && matchesGeo;
   });
+
+  const usDashboards = filteredRegionalDashboards.filter(d => d.geo === 'US');
+  const emeaDashboards = filteredRegionalDashboards.filter(d => d.geo === 'EMEA');
+  const japanDashboards = filteredRegionalDashboards.filter(d => d.geo === 'Japan');
 
   // Filtering Data Assets
   const filteredDataAssets = dataAssets.filter((asset) => {
@@ -301,20 +516,20 @@ export default function InventoryData() {
         {/* <div className="absolute top-[-30px] left-12 w-64 h-64 bg-sky-300/40 rounded-full blur-2xl pointer-events-none"></div> */}
         {/* <div className="absolute bottom-[-30px] right-12 w-64 h-64 bg-blue-300/40 rounded-full blur-2xl pointer-events-none"></div> */}
 
-        <div className="mt-6 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="max-w-7xl mt-6 mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="bg-gradient-to-r from-sky-200/60 via-blue-200/50 to-indigo-200/60 backdrop-blur-xl border border-sky-300/70 rounded-2xl p-5 sm:p-7 shadow-md shadow-sky-500/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
             
             {/* Branding & Header */}
             <div className="flex items-center gap-3.5">
-              <div className="p-3 bg-blue-600/15 border border-blue-400/30 rounded-xl text-blue-700 shadow-inner">
-                <LayoutDashboard className="w-6 h-6 sm:w-8 sm:h-8" />
+              <div className="p-3.5 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-2xl text-white shadow-md shadow-blue-500/20">
+                <LayoutDashboard className="w-7 h-7 sm:w-8 sm:h-8" />
               </div>
               <div>
-                <h1 className="text-2xl sm:text-3xl font-extrabold text-[#1D70F5] tracking-tight">
+                <h1 className="text-2xl sm:text-3xl font-extrabold text-blue-600 tracking-tight">
                   Inventory of Dashboards & Data Assets
                 </h1>
-                <p className="text-blue-900/80 text-xs sm:text-sm mt-1 font-medium">
-                  Centralized Enterprise Catalog, Data Lineage & Governance Asset Register
+                <p className="text-blue-600/90 text-xs sm:text-sm mt-1 font-medium">
+                  Centralized Enterprise Catalog, Data Lineage & Regional BI Governance Register
                 </p>
               </div>
             </div>
@@ -324,7 +539,7 @@ export default function InventoryData() {
       {/* </div> */}
 
       {/* Main Content Area */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 sm:mt-8 space-y-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 sm:mt-8 space-y-6">
         
         {/* OVERVIEW CARD */}
         <div className="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-6 sm:p-8 space-y-4">
@@ -333,89 +548,73 @@ export default function InventoryData() {
           </h2>
           <div className="space-y-3 text-slate-600 text-sm sm:text-base leading-relaxed font-normal">
             <p>
-              The Insmed Enterprise BI Data Catalog provides a single source of truth for all production BI dashboards, executive Power BI reports, data warehouse schema tables, semantic models, and ETL data pipelines.
+              The Insmed Enterprise BI Data Catalog provides a single source of truth for all production BI dashboards, executive Power BI reports, regional analytics, data warehouse schema tables, semantic models, and ETL data pipelines.
             </p>
             <p>
-              This asset inventory enables strict governance, end-to-end data lineage tracking, certification status monitoring, access control levels, and SLA assurance across business domains.
+              This asset inventory enables strict governance, end-to-end data lineage tracking, certification status monitoring, access control levels, and SLA assurance across business domains and geographic regions (US, EMEA, Japan).
             </p>
           </div>
         </div>
 
         {/* MODERN SEGMENTED TAB BUTTONS */}
-        <div className="inline-flex p-1.5 bg-slate-200/70 backdrop-blur-md rounded-2xl border border-slate-300/70 shadow-inner gap-1">
+        <div className="inline-flex p-1.5 bg-slate-200/70 backdrop-blur-md rounded-2xl border border-slate-300/70 shadow-inner gap-1 flex-wrap">
           <button
-            onClick={() => setActiveTab('dashboards')}
+            onClick={() => setActiveTab('dashboards_by_geo')}
             className={`flex items-center gap-2.5 px-6 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all duration-200 cursor-pointer ${
-              activeTab === 'dashboards'
+              activeTab === 'dashboards_by_geo'
                 ? 'bg-[#1D70F5] text-white shadow-md shadow-blue-500/30 ring-1 ring-white/20 scale-[1.02]'
                 : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/80'
             }`}
           >
-            <LayoutDashboard className="w-4 h-4" />
-            <span>Dashboards & Reports</span>
+            <Globe className="w-4 h-4" />
+            <span>Dashboards by Geo</span>
           </button>
 
           <button
-            onClick={() => setActiveTab('data_assets')}
+            onClick={() => setActiveTab('dashboards_and_data_assets_grid')}
             className={`flex items-center gap-2.5 px-6 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all duration-200 cursor-pointer ${
-              activeTab === 'data_assets'
+              activeTab === 'dashboards_and_data_assets_grid'
                 ? 'bg-[#1D70F5] text-white shadow-md shadow-blue-500/30 ring-1 ring-white/20 scale-[1.02]'
                 : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/80'
             }`}
           >
             <Database className="w-4 h-4" />
-            <span>Data Assets & Pipelines</span>
+            <span>Dashboards and Data Assets Grid</span>
           </button>
         </div>
 
-        {/* TAB 1: DASHBOARDS & REPORTS CATALOG */}
-        {activeTab === 'dashboards' && (
-          <div className="space-y-6">
+        {/* TAB 1: DASHBOARDS BY GEO (ENHANCED 3-COLUMN REGIONAL TABLE) */}
+        {activeTab === 'dashboards_by_geo' && (
+          <div className="space-y-5">
             
-            {/* KPI Metrics Strip */}
-            {/* <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <div className="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-2xs space-y-1">
-                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Total Dashboards</span>
-                <div className="text-2xl font-black text-slate-900">42 Cataloged</div>
-                <span className="text-[11px] text-emerald-600 font-bold flex items-center gap-1">
-                  <TrendingUp className="w-3 h-3" /> +4 added this month
-                </span>
-              </div>
-
-              <div className="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-2xs space-y-1">
-                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Certified Production</span>
-                <div className="text-2xl font-black text-blue-600">36 Verified</div>
-                <span className="text-[11px] text-slate-500 font-medium">85.7% Certification Rate</span>
-              </div>
-
-              <div className="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-2xs space-y-1">
-                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Active Monthly Users</span>
-                <div className="text-2xl font-black text-indigo-600">1,240 Viewers</div>
-                <span className="text-[11px] text-slate-500 font-medium">Across 6 Domains</span>
-              </div>
-
-              <div className="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-2xs space-y-1">
-                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Refresh SLA Status</span>
-                <div className="text-2xl font-black text-emerald-600">99.2% On-Time</div>
-                <span className="text-[11px] text-emerald-600 font-bold">Daily Auto-Refresh</span>
-              </div>
-            </div> */}
-
-            {/* Filter & Search Bar */}
-            {/* <div className="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-5 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+            {/* Filter & Search Controls */}
+            <div className="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-4 sm:p-5 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
               
               <div className="relative flex-1">
                 <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
                 <input
                   type="text"
-                  placeholder="Search dashboard title, ID, or SME owner..."
+                  placeholder="Search dashboard title, ID, or SME lead..."
                   value={dashSearch}
                   onChange={(e) => setDashSearch(e.target.value)}
                   className="w-full pl-10 pr-4 py-2 text-xs sm:text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-hidden focus:ring-2 focus:ring-blue-500 font-medium"
                 />
               </div>
 
-              <div className="flex flex-wrap items-center gap-3">
+              <div className="flex flex-wrap items-center gap-2.5">
+                <div>
+                  <select
+                    value={geoFilter}
+                    onChange={(e) => setGeoFilter(e.target.value as any)}
+                    className="px-3 py-2 text-xs sm:text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-hidden focus:ring-2 focus:ring-blue-500 cursor-pointer font-bold text-slate-700"
+                  >
+                    <option value="All">All Regions</option>
+                    <option value="US">US Region</option>
+                    <option value="EMEA">EMEA Region</option>
+                    <option value="Japan">Japan Region</option>
+                  </select>
+                </div>
+
                 <div>
                   <select
                     value={dashDomainFilter}
@@ -427,416 +626,412 @@ export default function InventoryData() {
                     <option value="Medical Affairs">Medical Affairs</option>
                     <option value="Supply Chain">Supply Chain</option>
                     <option value="Finance">Finance</option>
-                    <option value="R&D">R&D</option>
                     <option value="Compliance">Compliance</option>
                   </select>
                 </div>
+              </div>
 
-                <div>
-                  <select
-                    value={dashPlatformFilter}
-                    onChange={(e) => setDashPlatformFilter(e.target.value)}
-                    className="px-3 py-2 text-xs sm:text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-hidden focus:ring-2 focus:ring-blue-500 cursor-pointer font-semibold text-slate-700"
-                  >
-                    <option value="All">All Platforms</option>
-                    <option value="Power BI">Power BI</option>
-                    <option value="Tableau">Tableau</option>
-                    <option value="ThoughtSpot">ThoughtSpot</option>
-                  </select>
+            </div>
+
+            {geoViewMode === 'columns' ? (
+              /* 3-COLUMN REGIONAL TABLE CONTAINER WITH SOLID BLUE HEADER MATCHING ATTACHED IMAGE */
+              <div className="rounded-2xl border border-slate-200 shadow-sm overflow-hidden bg-white">
+                
+                {/* SOLID BLUE HEADER ROW (US | EMEA | JAPAN) */}
+                <div className="bg-[#1D70F5] grid grid-cols-1 lg:grid-cols-3 divide-y lg:divide-y-0 lg:divide-x divide-blue-400/50 text-white font-bold text-sm">
+                  <div className="py-3 px-5 flex items-center justify-between">
+                    <span className="tracking-wide uppercase font-extrabold text-sm">US</span>
+                  </div>
+                  <div className="py-3 px-5 flex items-center justify-between">
+                    <span className="tracking-wide uppercase font-extrabold text-sm">EMEA</span>
+                  </div>
+                  <div className="py-3 px-5 flex items-center justify-between">
+                    <span className="tracking-wide uppercase font-extrabold text-sm">JAPAN</span>
+                  </div>
+                </div>
+
+                {/* THREE CLEAN TABLE COLUMNS */}
+                <div className="grid grid-cols-1 lg:grid-cols-3 divide-y lg:divide-y-0 lg:divide-x divide-slate-200 bg-white min-h-[380px]">
+                  
+                  {/* COLUMN 1: US */}
+                  <div className="divide-y divide-slate-100 flex flex-col">
+                    {usDashboards.map((dash) => (
+                      <div
+                        key={dash.id}
+                        className="px-4 py-3.5 hover:bg-slate-50/60 transition-colors flex items-center justify-between gap-3 text-slate-800"
+                      >
+                        <div className="flex items-center gap-2.5 min-w-0">
+                          <span className="font-medium text-sm sm:text-[13px] text-slate-900 truncate">
+                            {dash.title}
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+
+                    {usDashboards.length === 0 && (
+                      <div className="text-center py-12 text-xs text-slate-400 font-medium">
+                        No US dashboards found.
+                      </div>
+                    )}
+                  </div>
+
+                  {/* COLUMN 2: EMEA */}
+                  <div className="divide-y divide-slate-100 flex flex-col">
+                    {emeaDashboards.map((dash) => (
+                      <div
+                        key={dash.id}
+                        className="px-4 py-3.5 hover:bg-slate-50/60 transition-colors flex items-center justify-between gap-3 text-slate-800"
+                      >
+                        <div className="flex items-center gap-2.5 min-w-0">
+                          <span className="font-medium text-sm sm:text-[13px] text-slate-900 truncate">
+                            {dash.title}
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+
+                    {emeaDashboards.length === 0 && (
+                      <div className="text-center py-12 text-xs text-slate-400 font-medium">
+                        No EMEA dashboards found.
+                      </div>
+                    )}
+                  </div>
+
+                  {/* COLUMN 3: JAPAN */}
+                  <div className="divide-y divide-slate-100 flex flex-col">
+                    {japanDashboards.map((dash) => (
+                      <div
+                        key={dash.id}
+                        className="px-4 py-3.5 hover:bg-slate-50/60 transition-colors flex items-center justify-between gap-3 text-slate-800"
+                      >
+                        <div className="flex items-center gap-2.5 min-w-0">
+                          <span className="font-medium text-sm sm:text-[13px] text-slate-900 truncate">
+                            {dash.title}
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+
+                    {japanDashboards.length === 0 && (
+                      <div className="text-center py-12 text-xs text-slate-400 font-medium">
+                        No Japan dashboards found.
+                      </div>
+                    )}
+                  </div>
+
                 </div>
               </div>
+            ) : (
+              /* CONSOLIDATED LIST TABLE VIEW FOR GEO DASHBOARDS */
+              <div className="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left border-collapse">
+                    <thead>
+                      <tr className="bg-slate-50/80 border-b border-slate-200 text-[11px] font-extrabold uppercase text-slate-400 tracking-wider">
+                        <th className="py-3.5 px-5">Region</th>
+                        <th className="py-3.5 px-4">Dashboard Identifier & Title</th>
+                        <th className="py-3.5 px-4">Business Domain</th>
+                        <th className="py-3.5 px-4">BI Platform</th>
+                        <th className="py-3.5 px-4">SME Lead Owner</th>
+                        <th className="py-3.5 px-4">Certification</th>
+                        <th className="py-3.5 px-4">Active Viewers</th>
+                        <th className="py-3.5 px-4">Last SLA Refresh</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100 text-xs sm:text-sm">
+                      {filteredRegionalDashboards.map((dash) => (
+                        <tr
+                          key={dash.id}
+                          className="hover:bg-slate-50/50 transition-colors"
+                        >
+                          <td className="py-4 px-5 whitespace-nowrap">
+                            {dash.geo === 'US' && (
+                              <span className="px-2.5 py-1 rounded-lg text-xs font-black bg-blue-100 text-blue-800 border border-blue-200">
+                                US
+                              </span>
+                            )}
+                            {dash.geo === 'EMEA' && (
+                              <span className="px-2.5 py-1 rounded-lg text-xs font-black bg-indigo-100 text-indigo-800 border border-indigo-200">
+                                EMEA
+                              </span>
+                            )}
+                            {dash.geo === 'Japan' && (
+                              <span className="px-2.5 py-1 rounded-lg text-xs font-black bg-emerald-100 text-emerald-800 border border-emerald-200">
+                                Japan
+                              </span>
+                            )}
+                          </td>
 
-            </div> */}
-
-            {/* Dashboard Asset Table View */}
-            <div className="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
-              <div className="overflow-x-auto">
-                <table className="w-full text-left border-collapse">
-                  <thead>
-                    <tr className="bg-slate-50/80 border-b border-slate-200 text-[11px] font-extrabold uppercase text-slate-400 tracking-wider">
-                      <th className="py-3.5 px-5">Dashboard Identifier & Name</th>
-                      <th className="py-3.5 px-4">Domain</th>
-                      <th className="py-3.5 px-4">Platform</th>
-                      <th className="py-3.5 px-4">SME Lead</th>
-                      <th className="py-3.5 px-4">Certification</th>
-                      <th className="py-3.5 px-4">Monthly Users</th>
-                      <th className="py-3.5 px-4">Refresh SLA</th>
-                      <th className="py-3.5 px-5 text-right">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-100 text-xs sm:text-sm">
-                    {filteredDashboards.map((dash) => (
-                      <tr
-                        key={dash.id}
-                        onClick={() => setSelectedDashboard(dash)}
-                        className="hover:bg-blue-50/50 transition-colors cursor-pointer group"
-                      >
-                        <td className="py-4 px-5">
-                          <div className="space-y-0.5 max-w-md">
-                            <div className="flex items-center gap-2">
-                              <span className="text-[11px] font-mono font-bold text-slate-600 bg-slate-100 px-2 py-0.5 rounded-md">
+                          <td className="py-4 px-4 max-w-xs">
+                            <div className="space-y-1">
+                              <span className="text-[10px] font-mono font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md border border-blue-100 inline-block">
                                 {dash.id}
                               </span>
+                              <span className="font-bold text-slate-900 block leading-snug">
+                                {dash.title}
+                              </span>
                             </div>
-                            <span className="font-bold text-slate-900 group-hover:text-[#1D70F5] transition-colors block">
-                              {dash.title}
+                          </td>
+
+                          <td className="py-4 px-4 whitespace-nowrap">
+                            <span className="px-2.5 py-1 rounded-md text-xs font-semibold bg-slate-100 text-slate-700">
+                              {dash.domain}
                             </span>
-                            <span className="text-[11px] text-slate-500 line-clamp-1">
-                              {dash.description}
+                          </td>
+
+                          <td className="py-4 px-4 whitespace-nowrap">
+                            <span className="px-2.5 py-1 rounded-md text-xs font-bold bg-blue-50 text-blue-700 border border-blue-100">
+                              {dash.platform}
                             </span>
-                          </div>
-                        </td>
+                          </td>
 
-                        <td className="py-4 px-4">
-                          <span className="font-bold text-slate-700 bg-slate-100 border border-slate-200/70 px-2.5 py-1 rounded-lg text-xs">
-                            {dash.domain}
-                          </span>
-                        </td>
+                          <td className="py-4 px-4 whitespace-nowrap font-medium text-slate-700">
+                            {dash.owner}
+                          </td>
 
-                        <td className="py-4 px-4">
-                          <span className="font-bold text-blue-700 bg-blue-50 border border-blue-200/70 px-2.5 py-1 rounded-lg text-xs">
-                            {dash.platform}
-                          </span>
-                        </td>
-
-                        <td className="py-4 px-4">
-                          <span className="font-semibold text-slate-800">{dash.owner}</span>
-                        </td>
-
-                        <td className="py-4 px-4">
-                          {dash.certified ? (
-                            <span className="inline-flex items-center gap-1 text-[11px] font-extrabold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-full">
-                              <CheckCircle2 className="w-3 h-3 text-emerald-600" />
+                          <td className="py-4 px-4 whitespace-nowrap">
+                            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-extrabold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
                               Certified
                             </span>
-                          ) : (
-                            <span className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-700 bg-amber-50 border border-amber-200 px-2.5 py-0.5 rounded-full">
-                              <Clock className="w-3 h-3 text-amber-600" />
-                              In Review
-                            </span>
-                          )}
-                        </td>
+                          </td>
 
-                        <td className="py-4 px-4 font-extrabold text-indigo-600">
-                          {dash.monthlyUsers} Viewers
-                        </td>
+                          <td className="py-4 px-4 whitespace-nowrap font-bold text-indigo-600 font-mono">
+                            {dash.monthlyUsers}
+                          </td>
 
-                        <td className="py-4 px-4">
-                          <span className="px-2.5 py-0.5 rounded-md text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100">
-                            {dash.refreshSLA}
-                          </span>
-                        </td>
+                          <td className="py-4 px-4 whitespace-nowrap text-xs font-semibold text-slate-500">
+                            {dash.lastRefresh}
+                          </td>
+                        </tr>
+                      ))}
 
-                        <td className="py-4 px-5 text-right">
-                          <span className="inline-flex items-center gap-1 text-xs font-bold text-[#1D70F5] group-hover:translate-x-0.5 transition-transform">
-                            <span>Details</span>
-                            <ChevronRight className="w-4 h-4" />
-                          </span>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                      {filteredRegionalDashboards.length === 0 && (
+                        <tr>
+                          <td colSpan={8} className="py-12 text-center text-slate-400 text-xs font-medium">
+                            No regional dashboards match the specified search and filter criteria.
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
               </div>
-            </div>
+            )}
 
           </div>
         )}
 
-        {/* TAB 2: DATA ASSETS & PIPELINES CATALOG */}
-        {activeTab === 'data_assets' && (
+        {/* TAB 2: DASHBOARDS AND DATA ASSETS GRID (ALL MODERN TABLES) */}
+        {activeTab === 'dashboards_and_data_assets_grid' && (
           <div className="space-y-6">
             
-        
-            {/* <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <div className="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-2xs space-y-1">
-                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Managed Data Tables</span>
-                <div className="text-2xl font-black text-slate-900">128 Schema Objects</div>
-                <span className="text-[11px] text-blue-600 font-bold">In PostgreSQL DWH</span>
-              </div>
-
-              <div className="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-2xs space-y-1">
-                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Data Quality Score</span>
-                <div className="text-2xl font-black text-emerald-600">99.1% Average</div>
-                <span className="text-[11px] text-slate-500 font-medium">Automated DQ Rules</span>
-              </div>
-
-              <div className="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-2xs space-y-1">
-                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Total Storage Footprint</span>
-                <div className="text-2xl font-black text-indigo-600">320 GB</div>
-                <span className="text-[11px] text-slate-500 font-medium">Compressed DWH Tables</span>
-              </div>
-
-              <div className="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-2xs space-y-1">
-                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Active ETL Pipelines</span>
-                <div className="text-2xl font-black text-purple-600">24 Pipelines</div>
-                <span className="text-[11px] text-emerald-600 font-bold">0 Failed Runs</span>
-              </div>
-            </div>
-
-        
-            <div className="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-5 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+            {/* Filter & Sub-category Selector */}
+            <div className="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-4 sm:p-5 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+              
               <div className="relative flex-1">
                 <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
                 <input
                   type="text"
-                  placeholder="Search table name, schema, or ID..."
+                  placeholder="Search table name, report title, or schema..."
                   value={dataSearch}
                   onChange={(e) => setDataSearch(e.target.value)}
                   className="w-full pl-10 pr-4 py-2 text-xs sm:text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-hidden focus:ring-2 focus:ring-blue-500 font-medium"
                 />
               </div>
 
-              <div>
-                <select
-                  value={dataTypeFilter}
-                  onChange={(e) => setDataTypeFilter(e.target.value)}
-                  className="px-3 py-2 text-xs sm:text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-hidden focus:ring-2 focus:ring-blue-500 cursor-pointer font-semibold text-slate-700"
-                >
-                  <option value="All">All Asset Types</option>
-                  <option value="Fact Table">Fact Table</option>
-                  <option value="Dimension">Dimension</option>
-                  <option value="Semantic Model">Semantic Model</option>
-                  <option value="Staging Pipeline">Staging Pipeline</option>
-                  <option value="Analytical View">Analytical View</option>
-                </select>
-              </div>
-            </div> */}
 
-            {/* Data Assets Table View */}
-            <div className="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
-              <div className="overflow-x-auto">
-                <table className="w-full text-left border-collapse">
-                  <thead>
-                    <tr className="bg-slate-50/80 border-b border-slate-200 text-[11px] font-extrabold uppercase text-slate-400 tracking-wider">
-                      <th className="py-3.5 px-5">Asset Identifier</th>
-                      <th className="py-3.5 px-4">Schema & Engine</th>
-                      <th className="py-3.5 px-4">Type</th>
-                      <th className="py-3.5 px-4">Row Count</th>
-                      <th className="py-3.5 px-4">Frequency</th>
-                      <th className="py-3.5 px-4">DQ Score</th>
-                      <th className="py-3.5 px-4">Connected Reports</th>
-                      <th className="py-3.5 px-5 text-right">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-100 text-xs sm:text-sm">
-                    {filteredDataAssets.map((asset) => (
-                      <tr
-                        key={asset.id}
-                        onClick={() => setSelectedDataAsset(asset)}
-                        className="hover:bg-blue-50/50 transition-colors cursor-pointer group"
-                      >
-                        <td className="py-4 px-5">
-                          <div className="space-y-0.5">
-                            <span className="font-bold text-slate-900 group-hover:text-[#1D70F5] transition-colors block">
-                              {asset.name}
-                            </span>
-                            <span className="text-[11px] font-mono text-slate-400">
-                              {asset.id} • {asset.domain}
-                            </span>
-                          </div>
-                        </td>
 
-                        <td className="py-4 px-4">
-                          <div className="space-y-0.5">
-                            <span className="font-semibold text-slate-700 block">{asset.schema}</span>
-                            <span className="text-[11px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md inline-block">
-                              {asset.engine}
-                            </span>
-                          </div>
-                        </td>
+            </div>
 
-                        <td className="py-4 px-4">
-                          <span className="px-2.5 py-1 rounded-full text-[11px] font-bold bg-slate-100 text-slate-700 border border-slate-200">
-                            {asset.type}
-                          </span>
-                        </td>
+            {/* Comprehensive Modern Tables */}
+            <div className="space-y-6">
+              
+              {/* Dashboards Table */}
+              {(gridAssetCategory === 'All' || gridAssetCategory === 'Dashboards') && (
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between px-1">
+                    <h3 className="font-extrabold text-slate-900 text-lg flex items-center gap-2">
+                      <LayoutDashboard className="w-5 h-5 text-blue-600" />
+                      <span>Enterprise BI Dashboards & Reports</span>
+                    </h3>
+                    <span className="text-xs font-bold text-slate-500">
+                      {regionalDashboards.length} Production Reports
+                    </span>
+                  </div>
 
-                        <td className="py-4 px-4 font-mono font-semibold text-slate-800">
-                          {asset.rowCount}
-                        </td>
+                  <div className="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-left border-collapse">
+                        <thead>
+                          <tr className="bg-slate-50/80 border-b border-slate-200 text-[11px] font-extrabold uppercase text-slate-400 tracking-wider">
+                            <th className="py-3.5 px-5">Region</th>
+                            <th className="py-3.5 px-4">Dashboard Title & ID</th>
+                            <th className="py-3.5 px-4">Domain</th>
+                            <th className="py-3.5 px-4">Platform</th>
+                            <th className="py-3.5 px-4">SME Owner</th>
+                            <th className="py-3.5 px-4">Active Viewers</th>
+                            <th className="py-3.5 px-4">SLA Refresh</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-slate-100 text-xs sm:text-sm">
+                          {regionalDashboards
+                            .filter(d => d.title.toLowerCase().includes(dataSearch.toLowerCase()) || d.id.toLowerCase().includes(dataSearch.toLowerCase()))
+                            .map((dash) => (
+                              <tr
+                                key={dash.id}
+                                className="hover:bg-slate-50/50 transition-colors"
+                              >
+                                <td className="py-4 px-5 whitespace-nowrap">
+                                  {dash.geo === 'US' && (
+                                    <span className="px-2.5 py-1 rounded-lg text-xs font-black bg-blue-100 text-blue-800 border border-blue-200">
+                                      US
+                                    </span>
+                                  )}
+                                  {dash.geo === 'EMEA' && (
+                                    <span className="px-2.5 py-1 rounded-lg text-xs font-black bg-indigo-100 text-indigo-800 border border-indigo-200">
+                                      EMEA
+                                    </span>
+                                  )}
+                                  {dash.geo === 'Japan' && (
+                                    <span className="px-2.5 py-1 rounded-lg text-xs font-black bg-emerald-100 text-emerald-800 border border-emerald-200">
+                                      Japan
+                                    </span>
+                                  )}
+                                </td>
 
-                        <td className="py-4 px-4">
-                          <span className="px-2.5 py-0.5 rounded-md text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100">
-                            {asset.frequency}
-                          </span>
-                        </td>
+                                <td className="py-4 px-4 max-w-xs">
+                                  <div className="space-y-1">
+                                    <span className="font-bold text-slate-900 block">
+                                      {dash.title}
+                                    </span>
+                                    <span className="text-[10px] font-mono font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md inline-block">
+                                      {dash.id}
+                                    </span>
+                                  </div>
+                                </td>
 
-                        <td className="py-4 px-4">
-                          <div className="flex items-center gap-1.5 font-bold text-emerald-600">
-                            <CheckCircle2 className="w-3.5 h-3.5" />
-                            <span>{asset.qualityScore}%</span>
-                          </div>
-                        </td>
+                                <td className="py-4 px-4 whitespace-nowrap">
+                                  <span className="px-2.5 py-1 rounded-md text-xs font-semibold bg-slate-100 text-slate-700">
+                                    {dash.domain}
+                                  </span>
+                                </td>
 
-                        <td className="py-4 px-4">
-                          <span className="font-extrabold text-indigo-600 bg-indigo-50 px-2.5 py-0.5 rounded-lg border border-indigo-100">
-                            {asset.downstreamDashboardsCount} Dashboards
-                          </span>
-                        </td>
+                                <td className="py-4 px-4 whitespace-nowrap">
+                                  <span className="px-2.5 py-1 rounded-md text-xs font-bold bg-blue-50 text-blue-700 border border-blue-100">
+                                    {dash.platform}
+                                  </span>
+                                </td>
 
-                        <td className="py-4 px-5 text-right">
-                          <span className="inline-flex items-center gap-1 text-xs font-bold text-[#1D70F5] group-hover:translate-x-0.5 transition-transform">
-                            <span>Details</span>
-                            <ChevronRight className="w-4 h-4" />
-                          </span>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                                <td className="py-4 px-4 whitespace-nowrap font-medium text-slate-700">
+                                  {dash.owner}
+                                </td>
+
+                                <td className="py-4 px-4 whitespace-nowrap font-bold text-indigo-600 font-mono">
+                                  {dash.monthlyUsers}
+                                </td>
+
+                                <td className="py-4 px-4 whitespace-nowrap text-xs font-semibold text-slate-500">
+                                  {dash.lastRefresh}
+                                </td>
+                              </tr>
+                            ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Data Assets Table */}
+              {(gridAssetCategory === 'All' || gridAssetCategory === 'Data Assets') && (
+                <div className="space-y-3 pt-4">
+                  <div className="flex items-center justify-between px-1">
+                    <h3 className="font-extrabold text-slate-900 text-lg flex items-center gap-2">
+                      <Database className="w-5 h-5 text-indigo-600" />
+                      <span>Data Warehouse Schemas & Pipelines</span>
+                    </h3>
+                    <span className="text-xs font-bold text-slate-500">
+                      {filteredDataAssets.length} Managed Tables
+                    </span>
+                  </div>
+
+                  <div className="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-left border-collapse">
+                        <thead>
+                          <tr className="bg-slate-50/80 border-b border-slate-200 text-[11px] font-extrabold uppercase text-slate-400 tracking-wider">
+                            <th className="py-3.5 px-5">Asset Identifier</th>
+                            <th className="py-3.5 px-4">Schema & Engine</th>
+                            <th className="py-3.5 px-4">Type</th>
+                            <th className="py-3.5 px-4">Row Count</th>
+                            <th className="py-3.5 px-4">Frequency</th>
+                            <th className="py-3.5 px-4">DQ Score</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-slate-100 text-xs sm:text-sm">
+                          {filteredDataAssets.map((asset) => (
+                            <tr
+                              key={asset.id}
+                              className="hover:bg-slate-50/50 transition-colors"
+                            >
+                              <td className="py-4 px-5">
+                                <div className="space-y-0.5">
+                                  <span className="font-bold text-slate-900 block">
+                                    {asset.name}
+                                  </span>
+                                  <span className="text-[11px] font-mono text-slate-400">
+                                    {asset.id} • {asset.domain}
+                                  </span>
+                                </div>
+                              </td>
+
+                              <td className="py-4 px-4">
+                                <div className="space-y-0.5">
+                                  <span className="font-semibold text-slate-700 block">{asset.schema}</span>
+                                  <span className="text-[11px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md inline-block">
+                                    {asset.engine}
+                                  </span>
+                                </div>
+                              </td>
+
+                              <td className="py-4 px-4">
+                                <span className="px-2.5 py-1 rounded-full text-[11px] font-bold bg-slate-100 text-slate-700 border border-slate-200">
+                                  {asset.type}
+                                </span>
+                              </td>
+
+                              <td className="py-4 px-4 font-mono font-semibold text-slate-800">
+                                {asset.rowCount}
+                              </td>
+
+                              <td className="py-4 px-4">
+                                <span className="px-2.5 py-0.5 rounded-md text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100">
+                                  {asset.frequency}
+                                </span>
+                              </td>
+
+                              <td className="py-4 px-4">
+                                <div className="flex items-center gap-1.5 font-bold text-emerald-600">
+                                  <CheckCircle2 className="w-3.5 h-3.5" />
+                                  <span>{asset.qualityScore}%</span>
+                                </div>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              )}
+
             </div>
 
           </div>
         )}
 
       </div>
-
-      {/* DASHBOARD DETAIL MODAL */}
-      {selectedDashboard && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs">
-          <div className="bg-white rounded-2xl max-w-xl w-full p-6 space-y-5 shadow-2xl relative">
-            <button
-              onClick={() => setSelectedDashboard(null)}
-              className="absolute top-4 right-4 p-1.5 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-100 transition cursor-pointer"
-            >
-              <X className="w-5 h-5" />
-            </button>
-
-            <div className="space-y-1">
-              <div className="flex items-center gap-2">
-                <span className="text-xs font-mono font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md">
-                  {selectedDashboard.id}
-                </span>
-                <span className="text-xs font-bold text-purple-700 bg-purple-50 px-2 py-0.5 rounded-md">
-                  {selectedDashboard.domain}
-                </span>
-              </div>
-              <h3 className="text-xl font-bold text-slate-900">
-                {selectedDashboard.title}
-              </h3>
-            </div>
-
-            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed bg-slate-50 p-3.5 rounded-xl border border-slate-200/80">
-              {selectedDashboard.description}
-            </p>
-
-            <div className="grid grid-cols-2 gap-3 text-xs">
-              <div className="p-3 bg-slate-50 rounded-xl border border-slate-200">
-                <span className="text-slate-400 block font-medium">BI Platform</span>
-                <span className="font-bold text-slate-800">{selectedDashboard.platform}</span>
-              </div>
-              <div className="p-3 bg-slate-50 rounded-xl border border-slate-200">
-                <span className="text-slate-400 block font-medium">SME Owner</span>
-                <span className="font-bold text-slate-800">{selectedDashboard.owner}</span>
-              </div>
-              <div className="p-3 bg-slate-50 rounded-xl border border-slate-200">
-                <span className="text-slate-400 block font-medium">Security Level</span>
-                <span className="font-bold text-amber-700">{selectedDashboard.securityLevel}</span>
-              </div>
-              <div className="p-3 bg-slate-50 rounded-xl border border-slate-200">
-                <span className="text-slate-400 block font-medium">Last SLA Refresh</span>
-                <span className="font-bold text-emerald-600">{selectedDashboard.lastRefresh}</span>
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <span className="text-xs font-bold text-slate-700 block">Upstream Data Warehouse Lineage Tables:</span>
-              <div className="flex flex-wrap gap-1.5">
-                {selectedDashboard.upstreamTables.map((tbl) => (
-                  <span key={tbl} className="text-xs font-mono bg-blue-50 text-blue-700 border border-blue-200 px-2.5 py-1 rounded-lg">
-                    {tbl}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            <div className="pt-3 flex items-center justify-between border-t border-slate-100">
-              <a
-                href={selectedDashboard.url}
-                target="_blank"
-                rel="noreferrer"
-                className="flex items-center gap-1.5 px-4 py-2 bg-[#1D70F5] hover:bg-blue-600 text-white font-semibold text-xs rounded-xl transition cursor-pointer shadow-sm"
-              >
-                <span>Launch Report</span>
-                <ExternalLink className="w-3.5 h-3.5" />
-              </a>
-
-              <button
-                onClick={() => setSelectedDashboard(null)}
-                className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs rounded-xl transition cursor-pointer"
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* DATA ASSET DETAIL MODAL */}
-      {selectedDataAsset && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs">
-          <div className="bg-white rounded-2xl max-w-xl w-full p-6 space-y-5 shadow-2xl relative">
-            <button
-              onClick={() => setSelectedDataAsset(null)}
-              className="absolute top-4 right-4 p-1.5 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-100 transition cursor-pointer"
-            >
-              <X className="w-5 h-5" />
-            </button>
-
-            <div className="space-y-1">
-              <div className="flex items-center gap-2">
-                <span className="text-xs font-mono font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md">
-                  {selectedDataAsset.id}
-                </span>
-                <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md">
-                  {selectedDataAsset.type}
-                </span>
-              </div>
-              <h3 className="text-xl font-bold font-mono text-slate-900">
-                {selectedDataAsset.name}
-              </h3>
-            </div>
-
-            <div className="grid grid-cols-2 gap-3 text-xs bg-slate-50 p-4 rounded-xl border border-slate-200">
-              <div>
-                <span className="text-slate-400 block font-medium">Schema Path</span>
-                <span className="font-bold text-slate-800">{selectedDataAsset.schema}</span>
-              </div>
-              <div>
-                <span className="text-slate-400 block font-medium">Database Engine</span>
-                <span className="font-bold text-blue-700">{selectedDataAsset.engine}</span>
-              </div>
-              <div>
-                <span className="text-slate-400 block font-medium">Total Row Count</span>
-                <span className="font-bold text-slate-800">{selectedDataAsset.rowCount}</span>
-              </div>
-              <div>
-                <span className="text-slate-400 block font-medium">Table Size</span>
-                <span className="font-bold text-slate-800">{selectedDataAsset.sizeGb}</span>
-              </div>
-              <div>
-                <span className="text-slate-400 block font-medium">ETL Refresh Frequency</span>
-                <span className="font-bold text-emerald-600">{selectedDataAsset.frequency}</span>
-              </div>
-              <div>
-                <span className="text-slate-400 block font-medium">Data Quality Index</span>
-                <span className="font-bold text-emerald-600">{selectedDataAsset.qualityScore}% Passed</span>
-              </div>
-            </div>
-
-            <div className="pt-2 flex justify-end">
-              <button
-                onClick={() => setSelectedDataAsset(null)}
-                className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs rounded-xl transition cursor-pointer"
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* REGISTER ASSET MODAL */}
       {isRegisterModalOpen && (
