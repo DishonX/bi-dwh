@@ -135,19 +135,19 @@ export const EmergencyContact: React.FC = () => {
                 <h1 className="text-2xl sm:text-3xl font-extrabold text-blue-600 tracking-tight">
                   Emergency Contact
                 </h1>
-                <p className="text-blue-600/90 text-xs sm:text-sm mt-1 font-medium">
+                {/* <p className="text-blue-600/90 text-xs sm:text-sm mt-1 font-medium">
                   Severity Guidelines, Operational Contacts & IT Manager Escalation Pathways
-                </p>
+                </p> */}
               </div>
             </div>
 
-            <div className="flex items-center gap-3 bg-white/80 backdrop-blur-md px-4 py-2.5 rounded-xl border border-sky-200 shadow-2xs">
+            {/* <div className="flex items-center gap-3 bg-white/80 backdrop-blur-md px-4 py-2.5 rounded-xl border border-sky-200 shadow-2xs">
               <UserCheck className="w-5 h-5 text-blue-600" />
               <div className="text-xs">
                 <span className="font-bold text-slate-800 block">7 Key Contacts</span>
                 <span className="text-slate-500">4 Onsite • 3 Offshore</span>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       {/* </div> */}
@@ -165,9 +165,9 @@ export const EmergencyContact: React.FC = () => {
               <h2 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
                 Severity Guidelines
               </h2>
-              <p className="text-slate-500 text-xs sm:text-sm font-normal">
+              {/* <p className="text-slate-500 text-xs sm:text-sm font-normal">
                 Standardized definitions and immediate contact protocol based on incident impact
-              </p>
+              </p> */}
             </div>
           </div>
 
@@ -318,9 +318,9 @@ export const EmergencyContact: React.FC = () => {
                 <h2 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
                   Contact Details
                 </h2>
-                <p className="text-slate-500 text-xs sm:text-sm font-normal">
+                {/* <p className="text-slate-500 text-xs sm:text-sm font-normal">
                   Primary delivery and technical leads for BI & Data platform operations
-                </p>
+                </p> */}
               </div>
             </div>
 
@@ -472,9 +472,9 @@ export const EmergencyContact: React.FC = () => {
               <h2 className="text-xl sm:text-2xl font-bold text-[#1D70F5] tracking-tight">
                 IT Manager
               </h2>
-              <p className="text-slate-500 text-xs sm:text-sm font-normal">
+              {/* <p className="text-slate-500 text-xs sm:text-sm font-normal">
                 Executive escalation contacts for unblocked critical resolution
-              </p>
+              </p> */}
             </div>
           </div>
 

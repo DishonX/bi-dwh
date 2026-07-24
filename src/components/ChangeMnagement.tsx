@@ -41,38 +41,38 @@ import {
 } from 'lucide-react';
 
 
-// Custom high-fidelity Insmed logo matching the official design
-  const InsmedLogo = () => (
-    <div className="flex flex-col items-center justify-center select-none py-0.5">
-      <div className="flex items-center gap-0.5 justify-center mb-0.5">
-        <span className="w-1.5 h-1.5 rounded-full bg-[#00b050]" />
-        <span className="w-1.5 h-1.5 rounded-full bg-[#00a2ed]" />
-        <span className="w-1.5 h-1.5 rounded-full bg-purple-500" />
-      </div>
-      <span className="text-xs font-bold tracking-tight text-[#1b365d] font-sans">
-        insmed
-      </span>
-    </div>
-  );
+// // Custom high-fidelity Insmed logo matching the official design
+//   const InsmedLogo = () => (
+//     <div className="flex flex-col items-center justify-center select-none py-0.5">
+//       <div className="flex items-center gap-0.5 justify-center mb-0.5">
+//         <span className="w-1.5 h-1.5 rounded-full bg-[#00b050]" />
+//         <span className="w-1.5 h-1.5 rounded-full bg-[#00a2ed]" />
+//         <span className="w-1.5 h-1.5 rounded-full bg-purple-500" />
+//       </div>
+//       <span className="text-xs font-bold tracking-tight text-[#1b365d] font-sans">
+//         insmed
+//       </span>
+//     </div>
+//   );
 
-  // Exact Connector Components that span the absolute gap width and touch the borders perfectly
-  const ConnectorRight = ({ width }: { width: number }) => (
-    <div 
-      style={{ width: `${width}px` }} 
-      className="h-[2px] bg-[#00a2ed] relative flex-shrink-0 self-center"
-    >
-      <div className="absolute right-0 top-1/2 -translate-y-1/2 border-t-[5px] border-t-transparent border-b-[5px] border-b-transparent border-l-[8px] border-l-[#00a2ed]" />
-    </div>
-  );
+//   // Exact Connector Components that span the absolute gap width and touch the borders perfectly
+//   const ConnectorRight = ({ width }: { width: number }) => (
+//     <div 
+//       style={{ width: `${width}px` }} 
+//       className="h-[2px] bg-[#00a2ed] relative flex-shrink-0 self-center"
+//     >
+//       <div className="absolute right-0 top-1/2 -translate-y-1/2 border-t-[5px] border-t-transparent border-b-[5px] border-b-transparent border-l-[8px] border-l-[#00a2ed]" />
+//     </div>
+//   );
 
-  const ConnectorLeft = ({ width }: { width: number }) => (
-    <div 
-      style={{ width: `${width}px` }} 
-      className="h-[2px] bg-[#00a2ed] relative flex-shrink-0 self-center"
-    >
-      <div className="absolute left-0 top-1/2 -translate-y-1/2 border-t-[5px] border-t-transparent border-b-[5px] border-b-transparent border-r-[8px] border-r-[#00a2ed]" />
-    </div>
-  );
+  // const ConnectorLeft = ({ width }: { width: number }) => (
+  //   <div 
+  //     style={{ width: `${width}px` }} 
+  //     className="h-[2px] bg-[#00a2ed] relative flex-shrink-0 self-center"
+  //   >
+  //     <div className="absolute left-0 top-1/2 -translate-y-1/2 border-t-[5px] border-t-transparent border-b-[5px] border-b-transparent border-r-[8px] border-r-[#00a2ed]" />
+  //   </div>
+  // );
 
 
 export const ChangeMnagement: React.FC = () => {
@@ -164,9 +164,9 @@ export const ChangeMnagement: React.FC = () => {
                 <h1 className="text-2xl sm:text-3xl font-extrabold text-blue-600 tracking-tight">
                   Change Management
                 </h1>
-                <p className="text-blue-600/90 text-xs sm:text-sm mt-1 font-medium">
+                {/* <p className="text-blue-600/90 text-xs sm:text-sm mt-1 font-medium">
                   Controlled Release Governance & Enterprise Change Control
-                </p>
+                </p> */}
               </div>
             </div>
 

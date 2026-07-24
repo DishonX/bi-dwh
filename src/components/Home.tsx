@@ -86,9 +86,9 @@ export default function Home( ) {
                 <h1 className="text-2xl sm:text-3xl font-extrabold text-[#1D70F5] tracking-tight">
                   BI DWH Operations
                 </h1>
-                <p className="text-blue-900/80 text-xs sm:text-sm mt-1 font-medium">
+                {/* <p className="text-blue-900/80 text-xs sm:text-sm mt-1 font-medium">
                   Insmed's Dedicated Technology & Data Platform Hub
-                </p>
+                </p> */}
               </div>
             </div>
 
@@ -106,13 +106,13 @@ export default function Home( ) {
           {/* Left Column: What areas we serve (8 cols) */}
           <div className="lg:col-span-8 bg-white rounded-2xl border border-slate-200/90 shadow-sm p-6 sm:p-8 space-y-6">
             <div className="border-b border-slate-100 pb-4">
-              <div className="flex items-center gap-2 text-[#1D70F5] font-bold text-xs uppercase tracking-wider">
+              <div className="flex items-center gap-2 text-[#1D70F5] font-bold text-sm uppercase tracking-wider">
                 <Layers className="w-4 h-4" />
-                <span>Service Ecosystem</span>
+                <span>What areas we serve</span>
               </div>
-              <h2 className="text-xl font-extrabold text-slate-900 mt-1">
+              {/* <h2 className="text-xl font-extrabold text-slate-900 mt-1">
                 What areas we serve
-              </h2>
+              </h2> */}
             </div>
 
             <p className="text-sm text-slate-600 leading-relaxed">
@@ -354,13 +354,13 @@ export default function Home( ) {
         {/* Section 3: What we do (Icon Logos) */}
         <div className="bg-white rounded-2xl border border-slate-200/90 shadow-sm p-6 sm:p-8 space-y-6">
           <div className="border-b border-slate-100 pb-4">
-            <div className="flex items-center gap-2 text-[#1D70F5] font-bold text-xs uppercase tracking-wider">
+            <div className="flex items-center gap-2 text-[#1D70F5] font-bold text-sm uppercase tracking-wider">
               <CheckCircle2 className="w-4 h-4" />
-              <span>Capabilities</span>
+              <h1>What we do</h1>
             </div>
-            <h2 className="text-xl font-extrabold text-slate-900 mt-1">
+            {/* <h2 className="text-xl font-extrabold text-slate-900 mt-1">
               What we do
-            </h2>
+            </h2> */}
           </div>
 
           <p className="text-sm text-slate-600 leading-relaxed">
@@ -390,13 +390,13 @@ export default function Home( ) {
         {/* Section 4: How can you reach us */}
         <div className="bg-white rounded-2xl border border-slate-200/90 shadow-sm p-6 sm:p-8 space-y-6">
           <div className="border-b border-slate-100 pb-4">
-            <div className="flex items-center gap-2 text-[#1D70F5] font-bold text-xs uppercase tracking-wider">
+            <div className="flex items-center gap-2 text-[#1D70F5] font-bold text-sm uppercase tracking-wider">
               <Headphones className="w-4 h-4" />
-              <span>Contact & Escalation</span>
+              <span> How can you reach us</span>
             </div>
-            <h2 className="text-xl font-extrabold text-slate-900 mt-1">
+            {/* <h2 className="text-xl font-extrabold text-slate-900 mt-1">
               How can you reach us
-            </h2>
+            </h2> */}
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5 pt-1">

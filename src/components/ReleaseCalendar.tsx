@@ -2,22 +2,22 @@ import React, { useState, useMemo } from 'react';
 import { 
   Calendar as CalendarIcon, 
   CheckCircle2, 
-  Clock, 
+//   Clock, 
   Plus, 
   ChevronRight, 
   ChevronLeft,
-  UserCheck, 
+//   UserCheck, 
   X,
-  Share2,
-  Link2,
-  FileSpreadsheet,
-  Settings2,
-  Info,
-  Search,
-  ListFilter,
-  Layers,
-  Sparkles,
-  Tag
+//   Share2,
+//   Link2,
+//   FileSpreadsheet,
+//   Settings2,
+//   Info,
+//   Search,
+//   ListFilter,
+//   Layers,
+//   Sparkles,
+//   Tag
 } from 'lucide-react';
 
 export interface CalendarEvent {
@@ -1627,19 +1627,19 @@ export default function ReleaseCalendar() {
   const [currentYear, setCurrentYear] = useState<number>(2026);
   const [currentMonthIndex, setCurrentMonthIndex] = useState<number>(6); // Default: July (index 6)
   const [selectedDateStr, setSelectedDateStr] = useState<string>('2026-07-02');
-  const [searchQuery, setSearchQuery] = useState<string>('');
-  const [selectedEnvFilter, setSelectedEnvFilter] = useState<string>('ALL');
+  const [searchQuery, _setSearchQuery] = useState<string>('');
+  const [selectedEnvFilter, _setSelectedEnvFilter] = useState<string>('ALL');
   const [isNewReleaseModalOpen, setIsNewReleaseModalOpen] = useState(false);
   const [viewMode, setViewMode] = useState<'calendar' | 'table'>('calendar');
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   // New Form State
   const [newTitle, setNewTitle] = useState('');
-  const [newVersion, setNewVersion] = useState('v4.19.0');
-  const [newEnv, setNewEnv] = useState<'PROD' | 'UAT' | 'QA'>('PROD');
+  const [newVersion, _setNewVersion] = useState('v4.19.0');
+  const [newEnv, _setNewEnv] = useState<'PROD' | 'UAT' | 'QA'>('PROD');
   const [newDate, setNewDate] = useState('2026-07-15');
-  const [newTime, setNewTime] = useState('02:00 AM - 04:00 AM EST');
-  const [newOwner, setNewOwner] = useState('BI Operations');
+  const [newTime, _setNewTime] = useState('02:00 AM - 04:00 AM EST');
+  const [newOwner, _setNewOwner] = useState('BI Operations');
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
@@ -1816,9 +1816,9 @@ export default function ReleaseCalendar() {
                 <h1 className="text-2xl sm:text-3xl font-extrabold text-blue-600 tracking-tight">
                   Release Calendar
                 </h1>
-                <p className="text-blue-600/90 text-xs sm:text-sm mt-1 font-medium">
+                {/* <p className="text-blue-600/90 text-xs sm:text-sm mt-1 font-medium">
                   Scheduled Release Windows, Production Deployments & Governance Schedule
-                </p>
+                </p> */}
               </div>
             </div>
 

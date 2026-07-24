@@ -209,9 +209,9 @@ export const Reportanincident: React.FC = () => {
                 <h1 className="text-2xl sm:text-3xl font-extrabold text-blue-600 tracking-tight">
                   Report an Incident
                 </h1>
-                <p className="text-blue-600/90 text-xs sm:text-sm mt-1 font-medium">
+                {/* <p className="text-blue-600/90 text-xs sm:text-sm mt-1 font-medium">
                   IT Service Disruption Governance & Incident Response
-                </p>
+                </p> */}
               </div>
             </div>
 
@@ -273,7 +273,7 @@ export const Reportanincident: React.FC = () => {
               <h3 className="text-lg sm:text-xl font-bold text-[#1D70F5] tracking-tight">
                 Incident Management Process
               </h3>
-              <p className="text-xs text-slate-500 mt-0.5">End-to-end incident lifecycle and escalation workflow</p>
+              {/* <p className="text-xs text-slate-500 mt-0.5">End-to-end incident lifecycle and escalation workflow</p> */}
             </div>
 
             {/* Sleek Modern Workflow Pipeline */}
@@ -288,7 +288,7 @@ export const Reportanincident: React.FC = () => {
               <h3 className="text-lg sm:text-xl font-bold text-[#1D70F5] tracking-tight">
                 Service lease agreement (SLA)
               </h3>
-              <p className="text-xs text-slate-500 mt-0.5">Response and resolution target timelines by severity</p>
+              {/* <p className="text-xs text-slate-500 mt-0.5">Response and resolution target timelines by severity</p> */}
             </div>
 
             {/* Modern Refined SLA Table */}

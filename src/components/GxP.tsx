@@ -86,11 +86,11 @@ export default function GxP() {
               <div>
                 <h1 className="text-2xl sm:text-3xl font-extrabold text-blue-600 tracking-tight flex items-center gap-2">
                   <span>GxP</span>
-                  <span className="text-xs bg-blue-100 text-blue-700 px-2.5 py-0.5 rounded-full font-bold">Validated System</span>
+                  {/* <span className="text-xs bg-blue-100 text-blue-700 px-2.5 py-0.5 rounded-full font-bold">Validated System</span> */}
                 </h1>
-                <p className="text-blue-600/90 text-xs sm:text-sm mt-1 font-medium">
+                {/* <p className="text-blue-600/90 text-xs sm:text-sm mt-1 font-medium">
                   GxP Validated Environment & Regulatory Quality Compliance
-                </p>
+                </p> */}
               </div>
             </div>
 
@@ -111,12 +111,12 @@ export default function GxP() {
           <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-blue-100/70 via-indigo-50/40 to-transparent rounded-bl-full pointer-events-none"></div>
 
           <div className="relative z-10 space-y-5">
-            <div className="flex items-center gap-2.5 text-blue-600 font-bold text-xs uppercase tracking-wider">
+            {/* <div className="flex items-center gap-2.5 text-blue-600 font-bold text-xs uppercase tracking-wider">
               <div className="p-1.5 bg-blue-100 rounded-lg text-blue-600">
                 <ShieldCheck className="w-4 h-4" />
               </div>
               <span>Regulatory Quality Framework</span>
-            </div>
+            </div> */}
 
             <h2 className="text-xl sm:text-2xl font-extrabold text-blue-600 tracking-tight">
               GxP Validated Platform
@@ -169,9 +169,9 @@ export default function GxP() {
             <h2 className="text-xl sm:text-2xl font-extrabold text-blue-600 tracking-tight">
               Purpose & Usage:
             </h2>
-            <span className="text-xs font-bold text-slate-400 bg-slate-100 px-3 py-1 rounded-full">
+            {/* <span className="text-xs font-bold text-slate-400 bg-slate-100 px-3 py-1 rounded-full">
               5 Core Objectives
-            </span>
+            </span> */}
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -189,9 +189,9 @@ export default function GxP() {
                       <div className={`p-3 ${item.colorBg} ${item.colorText} rounded-2xl border ${item.colorBorder} shadow-2xs group-hover:scale-105 transition duration-200`}>
                         <IconComponent className="w-5 h-5" />
                       </div>
-                      <span className={`text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-lg ${item.badgeBg}`}>
+                      {/* <span className={`text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-lg ${item.badgeBg}`}>
                         {item.tag}
-                      </span>
+                      </span> */}
                     </div>
 
                     <p className="text-slate-800 text-xs sm:text-sm font-semibold leading-relaxed">

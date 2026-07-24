@@ -3,37 +3,27 @@ import {
   BarChart3,
   Snowflake,
   Share2,
-  FileText,
-  ClipboardCheck,
-  UserCog,
-  MessageSquare,
-  CheckSquare,
   Info,
   Clock,
   Users,
   X,
+  HelpCircle,
   // CheckCircle2,
-  HelpCircle
+  ShieldCheck,
+  // Send,
+  ExternalLink,
+  // ChevronRight
 } from 'lucide-react';
 
-import one from '../assets/qlikchart.png'
-import two from '../assets/snowflake.png'
-import three from '../assets/talendflowchart.png'
-
+import one from '../assets/qlikchart.png';
+import two from '../assets/snowflake.png';
+import three from '../assets/talendflowchart.png';
 
 export type PlatformType = 'qlik' | 'snowflake' | 'talend';
 
 export const AccessManagement: React.FC = () => {
   const [activePlatform, setActivePlatform] = useState<PlatformType>('qlik');
   const [isSupportModalOpen, setIsSupportModalOpen] = useState(false);
-  // const [toastMessage, setToastMessage] = useState<string | null>(null);
-
-  // const showToast = (msg: string) => {
-  //   setToastMessage(msg);
-  //   setTimeout(() => {
-  //     setToastMessage(null);
-  //   }, 4000);
-  // };
 
   // Content configuration based on platform
   const getPlatformDetails = () => {
@@ -55,11 +45,10 @@ export const AccessManagement: React.FC = () => {
             </div>
           ),
           icon: <Users className="w-6 h-6 text-emerald-600" />,
+          requestUrl: 'https://insmed.service-now.com/it?id=sc_cat_item&sys_id=83464e331bd1b5509595a60bbc4bcb98&sysparm_category=e6c9f36e1bd582109595a60bbc4bcb62',
           notes: [
             'For Bulk User Access Requests and for S3 access, users should raise a request to Qlik Support.',
-            'For Platform-Level Access (Qlik, Snowflake, Talend and AWS development-related access), requests should be routed through Qlik Support. ',
-            // 'Access changes require approval.',
-            // 'User receives confirmation after provisioning.'
+            'For Platform-Level Access (Qlik, Snowflake, Talend and AWS development-related access), requests should be routed through Qlik Support.'
           ],
           sla: [
             { definition: 'User access related request / Service Requests', hours: '24 Hours' },
@@ -75,7 +64,7 @@ export const AccessManagement: React.FC = () => {
 
       case 'snowflake':
         return {
-            image: two,
+          image: two,
           title: 'Snowflake Access',
           description: 'Raise requests for Snowflake warehouse roles, database privileges, and user access.',
           bannerGradient: 'bg-gradient-to-r from-[#091E3A] via-[#0076C5] to-[#29B5E8]',
@@ -88,11 +77,10 @@ export const AccessManagement: React.FC = () => {
             </div>
           ),
           icon: <Snowflake className="w-6 h-6 text-sky-600" />,
-           notes: [
+          requestUrl: 'https://insmed.service-now.com/it?id=sc_cat_item&sys_id=67ffbbf787ac0754ee2bca29cebb3568&sysparm_category=e6c9f36e1bd582109595a60bbc4bcb62',
+          notes: [
             'For Bulk User Access Requests and for S3 access, users should raise a request to Qlik Support.',
-            'For Platform-Level Access (Qlik, Snowflake, Talend and AWS development-related access), requests should be routed through Qlik Support. ',
-            // 'Access changes require approval.',
-            // 'User receives confirmation after provisioning.'
+            'For Platform-Level Access (Qlik, Snowflake, Talend and AWS development-related access), requests should be routed through Qlik Support.'
           ],
           sla: [
             { definition: 'User access related request / Service Requests', hours: '12 Hours' },
@@ -121,11 +109,10 @@ export const AccessManagement: React.FC = () => {
             </div>
           ),
           icon: <Share2 className="w-6 h-6 text-rose-600" />,
-                    notes: [
+          requestUrl: null,
+          notes: [
             'For Bulk User Access Requests and for S3 access, users should raise a request to Qlik Support.',
-            'For Platform-Level Access (Qlik, Snowflake, Talend and AWS development-related access), requests should be routed through Qlik Support. ',
-            // 'Access changes require approval.',
-            // 'User receives confirmation after provisioning.'
+            'For Platform-Level Access (Qlik, Snowflake, Talend and AWS development-related access), requests should be routed through Qlik Support.'
           ],
           sla: [
             { definition: 'User access related request / Service Requests', hours: '24 Hours' },
@@ -146,32 +133,33 @@ export const AccessManagement: React.FC = () => {
   return (
     <div className="min-h-screen bg-[#F4F7FC] text-slate-800 font-sans pb-16 antialiased">
       {/* Light Blue Glassmorphism Hero Top Header */}
-      {/* <div className="relative bg-gradient-to-r from-sky-100/90 via-blue-100/80 to-indigo-100/90 border-b border-sky-200/80 pt-6 sm:pt-8 pb-8 sm:pb-10 shadow-xs overflow-hidden"> */}
-        {/* Soft Ambient Light Glows */}
-        {/* <div className="absolute top-[-30px] left-12 w-64 h-64 bg-sky-300/40 rounded-full blur-2xl pointer-events-none"></div> */}
-        {/* <div className="absolute bottom-[-30px] right-12 w-64 h-64 bg-blue-300/40 rounded-full blur-2xl pointer-events-none"></div> */}
-
-        <div className="max-w-7xl mx-auto px-4 mt-6 sm:px-6 lg:px-8 relative z-10">
-          <div className="bg-gradient-to-r from-sky-200/60 via-blue-200/50 to-indigo-200/60 backdrop-blur-xl border border-sky-300/70 rounded-2xl p-5 sm:p-7 shadow-md shadow-sky-500/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
-            
-            {/* Title & Branding */}
-            <div className="flex items-center gap-3.5">
-              <div className="p-3.5 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-2xl text-white shadow-md shadow-blue-500/20">
-                <BarChart3 className="w-7 h-7 sm:w-8 sm:h-8" />
-              </div>
-              <div>
-                <h1 className="text-2xl sm:text-3xl font-extrabold text-blue-600 tracking-tight">
-                  Access Management
-                </h1>
-                <p className="text-blue-600/90 text-xs sm:text-sm mt-1 font-medium">
-                  Enterprise User Authorization & Governance Portal
-                </p>
-              </div>
+      <div className="max-w-7xl mx-auto px-4 mt-6 sm:px-6 lg:px-8 relative z-10">
+        <div className="bg-gradient-to-r from-sky-200/60 via-blue-200/50 to-indigo-200/60 backdrop-blur-xl border border-sky-300/70 rounded-2xl p-5 sm:p-7 shadow-md shadow-sky-500/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
+          {/* Title & Branding */}
+          <div className="flex items-center gap-3.5">
+            <div className="p-3.5 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-2xl text-white shadow-md shadow-blue-500/20">
+              <BarChart3 className="w-7 h-7 sm:w-8 sm:h-8" />
             </div>
-
+            <div>
+              <h1 className="text-2xl sm:text-3xl font-extrabold text-blue-600 tracking-tight">
+                Access Management
+              </h1>
+              {/* <p className="text-blue-600/90 text-xs sm:text-sm mt-1 font-medium">
+                Enterprise User Authorization & Governance Portal
+              </p> */}
+            </div>
           </div>
+
+          {/* Quick Support Action Button */}
+          {/* <button
+            onClick={() => setIsSupportModalOpen(true)}
+            className="flex items-center gap-2 px-4 py-2.5 bg-white/90 hover:bg-white text-blue-700 hover:text-blue-800 rounded-xl font-semibold text-xs sm:text-sm shadow-xs border border-blue-200/80 transition-all duration-200 cursor-pointer self-start md:self-auto"
+          >
+            <HelpCircle className="w-4 h-4 text-blue-600" />
+            <span>Support Desk</span>
+          </button> */}
         </div>
-      {/* </div> */}
+      </div>
 
       {/* Top Tab Navigation */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 sm:mt-8 relative z-20">
@@ -231,9 +219,9 @@ export const AccessManagement: React.FC = () => {
               <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-white drop-shadow-xs">
                 {platformInfo.title}
               </h2>
-              {/* <p className="text-white/85 text-xs sm:text-sm mt-1.5 font-medium max-w-xl">
+              <p className="text-white/90 text-xs sm:text-sm mt-2 font-medium max-w-xl">
                 {platformInfo.description}
-              </p> */}
+              </p>
             </div>
 
             {/* Brand Cloud Badge on Right */}
@@ -241,6 +229,40 @@ export const AccessManagement: React.FC = () => {
               {platformInfo.badgeLogo}
             </div>
           </div>
+
+          {/* ServiceNow Direct Access Request Link Box */}
+          {platformInfo.requestUrl ? (
+            <div className="bg-[#F8FAFC] border border-blue-200/80 rounded-2xl p-6 sm:p-7 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-5 transition-all">
+              <div className="flex items-center gap-4 text-center sm:text-left">
+                <div className="p-3 bg-blue-100/90 text-[#1D70F5] rounded-2xl shrink-0 hidden sm:block">
+                  <ShieldCheck className="w-7 h-7" />
+                </div>
+                <div>
+                  <h3 className="font-extrabold text-slate-900 text-lg sm:text-xl">
+                    {platformInfo.title} Request Form
+                  </h3>
+                  <p className="text-xs sm:text-sm text-slate-600 font-medium mt-1">
+                    Click the button below to open the official ServiceNow access request catalog item in a new tab.
+                  </p>
+                </div>
+              </div>
+
+              <a
+                href={platformInfo.requestUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto px-7 py-3.5 bg-[#1D70F5] hover:bg-blue-700 active:bg-blue-800 text-white font-bold rounded-xl text-sm shadow-md shadow-blue-500/25 flex items-center justify-center gap-2.5 transition-all duration-200 hover:scale-[1.02] cursor-pointer whitespace-nowrap shrink-0"
+              >
+                <span>Raise Access Request</span>
+                <ExternalLink className="w-4 h-4" />
+              </a>
+            </div>
+          ) : (
+            <div className="bg-slate-50 border border-slate-200/80 rounded-2xl p-5 text-center text-slate-600 text-xs sm:text-sm">
+              <span className="font-semibold text-slate-800">Note for Talend Access: </span>
+              Direct self-service request form is not available for Talend. Please route platform-level access requests through Qlik Support.
+            </div>
+          )}
 
           {/* Section: ACCESS REQUEST PROCESS */}
           <div className="space-y-8">
@@ -250,13 +272,14 @@ export const AccessManagement: React.FC = () => {
               </h3>
             </div>
 
-            {/* Process Step Cards in a single line */}
-                  <img
-            src={platformInfo.image}
-            alt={`${platformInfo.title} process`}
-            className="w-full h-auto object-contain"
-          />
-                {/* <img src={one}/> */}
+            {/* Process Step Image */}
+            <div className="overflow-hidden rounded-xl border border-slate-200/80 bg-slate-50/50 p-2 shadow-xs">
+              <img
+                src={platformInfo.image}
+                alt={`${platformInfo.title} process`}
+                className="w-full h-auto max-h-[480px] object-contain mx-auto rounded-lg"
+              />
+            </div>
           </div>
 
           {/* Key Notes & SLA Side-by-Side Grid */}
@@ -314,21 +337,22 @@ export const AccessManagement: React.FC = () => {
           {/* <div className="bg-[#EBF3FE] border border-blue-100/80 rounded-xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 sm:gap-0 text-sm text-[#1D70F5]">
             <div className="flex items-center gap-2.5 font-medium">
               <Info className="w-4 h-4 shrink-0 text-[#1D70F5]" />
-              <span>For any questions, contact the support team.</span>
+              <span>For any platform access questions or bulk provisioning, contact the support team.</span>
             </div>
 
             <button
               onClick={() => setIsSupportModalOpen(true)}
-              className="text-xs font-bold underline hover:text-blue-800 transition cursor-pointer self-end sm:self-auto"
+              className="text-xs font-bold underline hover:text-blue-800 transition cursor-pointer self-end sm:self-auto flex items-center gap-1"
             >
-              Contact Support →
+              <span>Contact Support</span>
+              <ExternalLink className="w-3 h-3" />
             </button>
           </div> */}
 
         </div>
       </div>
 
-      {/* --- MODAL 2: Support Team Contact Modal --- */}
+      {/* --- MODAL: Support Team Contact Modal --- */}
       {isSupportModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-xs">
           <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 relative border border-slate-100">
@@ -366,21 +390,13 @@ export const AccessManagement: React.FC = () => {
 
             <button
               onClick={() => setIsSupportModalOpen(false)}
-              className="w-full py-2 bg-slate-800 text-white rounded-lg text-xs font-semibold hover:bg-slate-900 transition"
+              className="w-full py-2 bg-slate-800 text-white rounded-lg text-xs font-semibold hover:bg-slate-900 transition cursor-pointer"
             >
               Close
             </button>
           </div>
         </div>
       )}
-
-      {/* --- TOAST NOTIFICATION --- */}
-      {/* {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 bg-slate-900 text-white text-xs font-medium px-4 py-3 rounded-xl shadow-xl flex items-center gap-2 border border-slate-800 animate-bounce">
-          <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-          <span>{toastMessage}</span>
-        </div>
-      )} */}
     </div>
   );
 };

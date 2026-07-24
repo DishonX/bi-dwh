@@ -1,4 +1,5 @@
 import  { useState } from 'react';
+import release from '../assets/release.png'
 import { 
   Rocket, 
   Calendar as CalendarIcon, 
@@ -19,18 +20,18 @@ import {
   // AlertCircle,
   // Tag,
   // ArrowUpRight,
-  ArrowRight,
-  ArrowLeft,
-  ArrowDown,
+  // ArrowRight,
+  // ArrowLeft,
+  // ArrowDown,
   // Code,
   // Eye,
   // MessageSquare,
   X,
-  Share2,
-  Link2,
-  FileSpreadsheet,
-  Settings2,
-  Info
+  // Share2,
+  // Link2,
+  // FileSpreadsheet,
+  // Settings2,
+  // Info
 } from 'lucide-react';
 
 interface ReleaseItem {
@@ -287,9 +288,9 @@ export default function ReleaseMangement() {
                 <h1 className="text-2xl sm:text-3xl font-extrabold text-blue-600 tracking-tight">
                   Release Management
                 </h1>
-                <p className="text-blue-600/90 text-xs sm:text-sm mt-1 font-medium">
-                  Controlled Release Governance & Enterprise Deployments
-                </p>
+                  {/* <p className="text-blue-600/90 text-xs sm:text-sm mt-1 font-medium">
+                    Controlled Release Governance & Enterprise Deployments
+                  </p> */}
               </div>
             </div>
           </div>
@@ -349,159 +350,16 @@ export default function ReleaseMangement() {
                 <h2 className="text-xl sm:text-2xl font-bold text-[#1D70F5] tracking-tight">
                   Release Process
                 </h2>
-                <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
+                {/* <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
                   End-to-End Enterprise Deployment & Governance Workflow
-                </p>
+                </p> */}
               </div>
               <span className="text-xs font-semibold text-blue-700 bg-blue-50 border border-blue-100 px-3 py-1 rounded-full">
                 8 Sequential Lifecycle Stages
               </span>
             </div>
 
-            {/* FLOWCHART VIEW */}
-            <div className="hidden lg:block space-y-8 py-2">
-              <div className="grid grid-cols-4 gap-4 relative">
-                <div className="relative">
-                  <div className="h-full bg-white border-2 border-blue-500/80 rounded-xl p-5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between items-center text-center group min-h-[140px]">
-                    <div className="space-y-1">
-                      <span className="text-[10px] font-extrabold uppercase tracking-wider text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md">Step 01</span>
-                      <h3 className="text-base font-bold text-slate-900 mt-1">SIT</h3>
-                    </div>
-                    <span className="text-sm font-semibold text-[#1D70F5] mt-3">Development Team</span>
-                  </div>
-                  <div className="absolute top-1/2 -right-4 -translate-y-1/2 z-10 flex items-center justify-center w-8 h-8 rounded-full bg-blue-100 text-blue-600 border border-blue-200 shadow-xs">
-                    <ArrowRight className="w-4 h-4" />
-                  </div>
-                </div>
-
-                <div className="relative">
-                  <div className="h-full bg-white border-2 border-blue-500/80 rounded-xl p-5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between items-center text-center group min-h-[140px]">
-                    <div className="space-y-1">
-                      <span className="text-[10px] font-extrabold uppercase tracking-wider text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md">Step 02</span>
-                      <h3 className="text-base font-bold text-slate-900 mt-1">UAT Deployment</h3>
-                    </div>
-                    <span className="text-sm font-semibold text-[#1D70F5] mt-3">Admin</span>
-                  </div>
-                  <div className="absolute top-1/2 -right-4 -translate-y-1/2 z-10 flex items-center justify-center w-8 h-8 rounded-full bg-blue-100 text-blue-600 border border-blue-200 shadow-xs">
-                    <ArrowRight className="w-4 h-4" />
-                  </div>
-                </div>
-
-                <div className="relative">
-                  <div className="h-full bg-white border-2 border-blue-500/80 rounded-xl p-5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between items-center text-center group min-h-[140px]">
-                    <div className="space-y-1">
-                      <span className="text-[10px] font-extrabold uppercase tracking-wider text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md">Step 03</span>
-                      <h3 className="text-base font-bold text-slate-900 mt-1">UAT Review</h3>
-                    </div>
-                    <span className="text-sm font-semibold text-[#1D70F5] mt-3">User</span>
-                  </div>
-                  <div className="absolute top-1/2 -right-4 -translate-y-1/2 z-10 flex items-center justify-center w-8 h-8 rounded-full bg-blue-100 text-blue-600 border border-blue-200 shadow-xs">
-                    <ArrowRight className="w-4 h-4" />
-                  </div>
-                </div>
-
-                <div className="relative">
-                  <div className="h-full bg-white border-2 border-blue-500/80 rounded-xl p-5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between items-center text-center group min-h-[140px]">
-                    <div className="space-y-1">
-                      <span className="text-[10px] font-extrabold uppercase tracking-wider text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md">Step 04</span>
-                      <h3 className="text-base font-bold text-slate-900 mt-1">UAT Signoff</h3>
-                    </div>
-                    <span className="text-sm font-semibold text-[#1D70F5] mt-3">User</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex justify-end pr-[11%] -my-2">
-                <div className="flex items-center justify-center w-9 h-9 rounded-full bg-blue-50 text-blue-600 border border-blue-200 shadow-xs">
-                  <ArrowDown className="w-5 h-5" />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-4 gap-4 relative">
-                <div className="relative">
-                  <div className="h-full bg-white border-2 border-blue-500/80 rounded-xl p-5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between items-center text-center group min-h-[160px]">
-                    <div className="space-y-1">
-                      <span className="text-[10px] font-extrabold uppercase tracking-wider text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md">Step 08</span>
-                      <h3 className="text-xs sm:text-sm font-bold text-slate-900 leading-snug mt-1">
-                        Communicate to User, Sign off, Close the Ticket & Update ServiceNow
-                      </h3>
-                    </div>
-                    <span className="text-sm font-semibold text-[#1D70F5] mt-3">Operations Team</span>
-                  </div>
-                </div>
-
-                <div className="relative">
-                  <div className="h-full bg-white border-2 border-blue-500/80 rounded-xl p-5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between items-center text-center group min-h-[160px]">
-                    <div className="space-y-1">
-                      <span className="text-[10px] font-extrabold uppercase tracking-wider text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md">Step 07</span>
-                      <h3 className="text-base font-bold text-slate-900 mt-1">Smoke Testing</h3>
-                    </div>
-                    <span className="text-sm font-semibold text-[#1D70F5] mt-3">Operations Team</span>
-                  </div>
-                  <div className="absolute top-1/2 -left-4 -translate-y-1/2 z-10 flex items-center justify-center w-8 h-8 rounded-full bg-blue-100 text-blue-600 border border-blue-200 shadow-xs">
-                    <ArrowLeft className="w-4 h-4" />
-                  </div>
-                </div>
-
-                <div className="relative">
-                  <div className="h-full bg-white border-2 border-blue-500/80 rounded-xl p-5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between items-center text-center group min-h-[160px]">
-                    <div className="space-y-1">
-                      <span className="text-[10px] font-extrabold uppercase tracking-wider text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md">Step 06</span>
-                      <h3 className="text-base font-bold text-slate-900 mt-1">Prod Deployment</h3>
-                    </div>
-                    <span className="text-sm font-semibold text-[#1D70F5] mt-3">Admin</span>
-                  </div>
-                  <div className="absolute top-1/2 -left-4 -translate-y-1/2 z-10 flex items-center justify-center w-8 h-8 rounded-full bg-blue-100 text-blue-600 border border-blue-200 shadow-xs">
-                    <ArrowLeft className="w-4 h-4" />
-                  </div>
-                </div>
-
-                <div className="relative">
-                  <div className="h-full bg-white border-2 border-blue-500/80 rounded-xl p-5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between items-center text-center group min-h-[160px]">
-                    <div className="space-y-1">
-                      <span className="text-[10px] font-extrabold uppercase tracking-wider text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md">Step 05</span>
-                      <h3 className="text-xs sm:text-sm font-bold text-slate-900 leading-snug mt-1">
-                        Prepare PROD Deployment Document and get a review from team member
-                      </h3>
-                    </div>
-                    <span className="text-sm font-semibold text-[#1D70F5] mt-3">Operations Team</span>
-                  </div>
-                  <div className="absolute top-1/2 -left-4 -translate-y-1/2 z-10 flex items-center justify-center w-8 h-8 rounded-full bg-blue-100 text-blue-600 border border-blue-200 shadow-xs">
-                    <ArrowLeft className="w-4 h-4" />
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* MOBILE VIEW */}
-            <div className="grid lg:hidden grid-cols-1 sm:grid-cols-2 gap-4">
-              {[
-                { step: '01', title: 'SIT', team: 'Development Team' },
-                { step: '02', title: 'UAT Deployment', team: 'Admin' },
-                { step: '03', title: 'UAT Review', team: 'User' },
-                { step: '04', title: 'UAT Signoff', team: 'User' },
-                { step: '05', title: 'Prepare PROD Deployment Document and get a review from team member', team: 'Operations Team' },
-                { step: '06', title: 'Prod Deployment', team: 'Admin' },
-                { step: '07', title: 'Smoke Testing', team: 'Operations Team' },
-                { step: '08', title: 'Communicate to User, Sign off, Close the Ticket & Update ServiceNow', team: 'Operations Team' }
-              ].map((item) => (
-                <div key={item.step} className="bg-white border-2 border-blue-500/80 rounded-xl p-5 shadow-2xs space-y-3 flex flex-col justify-between">
-                  <div className="space-y-1">
-                    <span className="text-[10px] font-extrabold uppercase tracking-wider text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md">
-                      Step {item.step}
-                    </span>
-                    <h3 className="text-sm font-bold text-slate-900 mt-1">
-                      {item.title}
-                    </h3>
-                  </div>
-                  <div className="pt-2 border-t border-slate-100">
-                    <span className="text-xs font-semibold text-[#1D70F5]">
-                      {item.team}
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
+              <img src={release}/>
 
           </div>
         )}
@@ -510,54 +368,7 @@ export default function ReleaseMangement() {
         {activeTab === 'calendar' && (
           <div className="space-y-5">
             {/* TOP TOOLBAR CARD */}
-            <div className="bg-white rounded-2xl border border-slate-200/90 p-3.5 sm:p-4 shadow-xs flex flex-wrap items-center justify-between gap-3">
-              <div className="flex flex-wrap items-center gap-2">
-                <button
-                  onClick={() => setIsNewReleaseModalOpen(true)}
-                  className="bg-[#1D70F5] hover:bg-blue-600 text-white font-bold px-4 py-2 rounded-xl text-xs sm:text-sm transition flex items-center gap-1.5 shadow-sm shadow-blue-500/20 cursor-pointer"
-                >
-                  <Plus className="w-4 h-4 stroke-[2.5]" />
-                  <span>Add new item</span>
-                </button>
-
-                <button
-                  onClick={() => showToast('Share link generated and copied to clipboard!')}
-                  className="bg-white hover:bg-slate-50 border border-slate-200/90 text-slate-700 font-semibold px-3.5 py-2 rounded-xl text-xs sm:text-sm transition flex items-center gap-1.5 cursor-pointer"
-                >
-                  <Share2 className="w-4 h-4 text-slate-500" />
-                  <span>Share</span>
-                </button>
-
-                <button
-                  onClick={() => showToast('Calendar deep link copied to clipboard!')}
-                  className="bg-white hover:bg-slate-50 border border-slate-200/90 text-slate-700 font-semibold px-3.5 py-2 rounded-xl text-xs sm:text-sm transition flex items-center gap-1.5 cursor-pointer"
-                >
-                  <Link2 className="w-4 h-4 text-slate-500" />
-                  <span>Copy link</span>
-                </button>
-
-                <button
-                  onClick={() => showToast('Exporting July 2026 Release Schedule to Excel...')}
-                  className="bg-white hover:bg-slate-50 border border-slate-200/90 text-slate-700 font-semibold px-3.5 py-2 rounded-xl text-xs sm:text-sm transition flex items-center gap-1.5 cursor-pointer"
-                >
-                  <FileSpreadsheet className="w-4 h-4 text-slate-500" />
-                  <span>Export to Excel</span>
-                </button>
-
-                <button
-                  onClick={() => showToast('Automated release notification workflows configured.')}
-                  className="bg-white hover:bg-slate-50 border border-slate-200/90 text-slate-700 font-semibold px-3.5 py-2 rounded-xl text-xs sm:text-sm transition flex items-center gap-1.5 cursor-pointer"
-                >
-                  <Settings2 className="w-4 h-4 text-slate-500" />
-                  <span>Workflows</span>
-                </button>
-              </div>
-
-              <div className="flex items-center gap-1.5 text-xs sm:text-sm font-bold text-slate-600 pr-1">
-                <span>Release calendar 2026</span>
-                <Info className="w-4 h-4 text-slate-400 cursor-pointer hover:text-slate-600 transition" />
-              </div>
-            </div>
+   
 
             {/* MAIN TWO-COLUMN LAYOUT: CALENDAR GRID & DAY DETAILS SIDEBAR */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
