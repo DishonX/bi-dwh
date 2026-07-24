@@ -579,7 +579,7 @@ export default function InventoryData() {
             }`}
           >
             <Database className="w-4 h-4" />
-            <span>Dashboards and Data Assets Grid</span>
+            <span> Data Assets Grid</span>
           </button>
         </div>
 

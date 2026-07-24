@@ -16,6 +16,11 @@ import {
   HelpCircle
 } from 'lucide-react';
 
+import one from '../assets/qlikchart.png'
+import two from '../assets/snowflake.png'
+import three from '../assets/talendflowchart.png'
+
+
 export type PlatformType = 'qlik' | 'snowflake' | 'talend';
 
 export const AccessManagement: React.FC = () => {
@@ -35,6 +40,7 @@ export const AccessManagement: React.FC = () => {
     switch (activePlatform) {
       case 'qlik':
         return {
+          image: one,
           title: 'Qlik Access',
           description: 'Raise requests for Qlik user access, stream publishing, and license authorizations.',
           bannerGradient: 'bg-gradient-to-r from-[#004D25] via-[#00873D] to-[#00A84B]',
@@ -69,6 +75,7 @@ export const AccessManagement: React.FC = () => {
 
       case 'snowflake':
         return {
+            image: two,
           title: 'Snowflake Access',
           description: 'Raise requests for Snowflake warehouse roles, database privileges, and user access.',
           bannerGradient: 'bg-gradient-to-r from-[#091E3A] via-[#0076C5] to-[#29B5E8]',
@@ -101,6 +108,7 @@ export const AccessManagement: React.FC = () => {
 
       case 'talend':
         return {
+          image: three,
           title: 'Talend Access',
           description: 'Raise requests for Talend TAC/Management Console access, project permissions, and deployment rights.',
           bannerGradient: 'bg-gradient-to-r from-[#20102B] via-[#E93E3A] to-[#FF6B35]',
@@ -243,129 +251,12 @@ export const AccessManagement: React.FC = () => {
             </div>
 
             {/* Process Step Cards in a single line */}
-            <div className="flex flex-row items-center justify-between gap-1.5 sm:gap-3 overflow-x-auto pt-6 pb-4 px-1 scrollbar-none w-full">
-              {/* Step 01 */}
-              <div className="flex-1 min-w-[130px] sm:min-w-0 relative flex flex-col items-center bg-white border border-slate-200 rounded-2xl p-3.5 sm:p-5 pt-7 sm:pt-8 text-center shadow-xs hover:border-blue-300 transition-all group">
-                {/* Number Badge */}
-                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#1D70F5] text-white text-xs font-extrabold flex items-center justify-center shadow-md z-10">
-                  01
-                </div>
-
-                {/* Step Icon */}
-                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
-                  <FileText className="w-5 h-5 sm:w-6 sm:h-6" />
-                </div>
-
-                {/* Step Title & Subtitle */}
-                <h4 className="font-bold text-slate-800 text-xs sm:text-sm">Submit Request</h4>
-                <p className="text-slate-500 text-[11px] sm:text-xs mt-1 min-h-[28px] sm:min-h-[32px] leading-tight">
-                  {activePlatform === 'qlik' && 'In ServiceNow'}
-                  {activePlatform === 'snowflake' && 'In ServiceNow'}
-                  {activePlatform === 'talend' && 'In Qlik Support'}
-                </p>
-
-                {/* Tag Badge */}
-                <span className="mt-3 inline-block px-3 py-0.5 sm:py-1 bg-blue-50/80 text-blue-600 rounded-full text-[10px] sm:text-xs font-medium">
-                  User
-                </span>
-              </div>
-
-              {/* Arrow Connector 1 */}
-              <div className="text-blue-400 font-bold text-sm sm:text-lg shrink-0 px-0.5 select-none">
-                →
-              </div>
-
-              {/* Step 02 */}
-              <div className="flex-1 min-w-[130px] sm:min-w-0 relative flex flex-col items-center bg-white border border-slate-200 rounded-2xl p-3.5 sm:p-5 pt-7 sm:pt-8 text-center shadow-xs hover:border-blue-300 transition-all group">
-                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#1D70F5] text-white text-xs font-extrabold flex items-center justify-center shadow-md z-10">
-                  02
-                </div>
-
-                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
-                  <ClipboardCheck className="w-5 h-5 sm:w-6 sm:h-6" />
-                </div>
-
-                <h4 className="font-bold text-slate-800 text-xs sm:text-sm">Collect all required Inputs and </h4>
-                <p className="text-slate-500 text-[11px] sm:text-xs mt-1 min-h-[28px] sm:min-h-[32px] leading-tight">Obtain Approval</p>
-
-                <span className="mt-3 inline-block px-3 py-0.5 sm:py-1 bg-blue-50/80 text-blue-600 rounded-full text-[10px] sm:text-xs font-medium">
-                  Admin
-                </span>
-              </div>
-
-              {/* Arrow Connector 2 */}
-              <div className="text-blue-400 font-bold text-sm sm:text-lg shrink-0 px-0.5 select-none">
-                →
-              </div>
-
-              {/* Step 03 */}
-              <div className="flex-1 min-w-[130px] sm:min-w-0 relative flex flex-col items-center bg-white border border-slate-200 rounded-2xl p-3.5 sm:p-5 pt-7 sm:pt-8 text-center shadow-xs hover:border-blue-300 transition-all group">
-                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#1D70F5] text-white text-xs font-extrabold flex items-center justify-center shadow-md z-10">
-                  03
-                </div>
-
-                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
-                  <UserCog className="w-5 h-5 sm:w-6 sm:h-6" />
-                </div>
-
-                <h4 className="font-bold text-slate-800 text-xs sm:text-sm">Add / Update / Remove</h4>
-                <p className="text-slate-500 text-[11px] sm:text-xs mt-1 min-h-[28px] sm:min-h-[32px] leading-tight">
-                  {activePlatform === 'qlik' && 'User Access'}
-                  {activePlatform === 'snowflake' && 'User Access'}
-                  {activePlatform === 'talend' && 'User Access'}
-                </p>
-
-                <span className="mt-3 inline-block px-3 py-0.5 sm:py-1 bg-blue-50/80 text-blue-600 rounded-full text-[10px] sm:text-xs font-medium">
-                  Admin
-                </span>
-              </div>
-
-              {/* Arrow Connector 3 */}
-              <div className="text-blue-400 font-bold text-sm sm:text-lg shrink-0 px-0.5 select-none">
-                →
-              </div>
-
-              {/* Step 04 */}
-              <div className="flex-1 min-w-[130px] sm:min-w-0 relative flex flex-col items-center bg-white border border-slate-200 rounded-2xl p-3.5 sm:p-5 pt-7 sm:pt-8 text-center shadow-xs hover:border-blue-300 transition-all group">
-                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#1D70F5] text-white text-xs font-extrabold flex items-center justify-center shadow-md z-10">
-                  04
-                </div>
-
-                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
-                  <MessageSquare className="w-5 h-5 sm:w-6 sm:h-6" />
-                </div>
-
-                <h4 className="font-bold text-slate-800 text-xs sm:text-sm">Communicate</h4>
-                <p className="text-slate-500 text-[11px] sm:text-xs mt-1 min-h-[28px] sm:min-h-[32px] leading-tight">To User</p>
-
-                <span className="mt-3 inline-block px-3 py-0.5 sm:py-1 bg-blue-50/80 text-blue-600 rounded-full text-[10px] sm:text-xs font-medium">
-                  Admin
-                </span>
-              </div>
-
-              {/* Arrow Connector 4 */}
-              <div className="text-blue-400 font-bold text-sm sm:text-lg shrink-0 px-0.5 select-none">
-                →
-              </div>
-
-              {/* Step 05 */}
-              <div className="flex-1 min-w-[130px] sm:min-w-0 relative flex flex-col items-center bg-white border border-slate-200 rounded-2xl p-3.5 sm:p-5 pt-7 sm:pt-8 text-center shadow-xs hover:border-blue-300 transition-all group">
-                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#1D70F5] text-white text-xs font-extrabold flex items-center justify-center shadow-md z-10">
-                  05
-                </div>
-
-                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
-                  <CheckSquare className="w-5 h-5 sm:w-6 sm:h-6" />
-                </div>
-
-                <h4 className="font-bold text-slate-800 text-xs sm:text-sm">Sign Off</h4>
-                <p className="text-slate-500 text-[11px] sm:text-xs mt-1 min-h-[28px] sm:min-h-[32px] leading-tight">Close Ticket</p>
-
-                <span className="mt-3 inline-block px-3 py-0.5 sm:py-1 bg-blue-50/80 text-blue-600 rounded-full text-[10px] sm:text-xs font-medium">
-                  Admin
-                </span>
-              </div>
-            </div>
+                  <img
+            src={platformInfo.image}
+            alt={`${platformInfo.title} process`}
+            className="w-full h-auto object-contain"
+          />
+                {/* <img src={one}/> */}
           </div>
 
           {/* Key Notes & SLA Side-by-Side Grid */}

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import inc from '../assets/reportinc.png'
 import {
   AlertTriangle,
   ShieldAlert,
@@ -277,105 +278,7 @@ export const Reportanincident: React.FC = () => {
 
             {/* Sleek Modern Workflow Pipeline */}
             <div className="bg-slate-50/70 border border-slate-200/80 rounded-2xl p-6 sm:p-8 overflow-x-auto shadow-xs">
-              <div className="min-w-[880px] flex items-center justify-between gap-4 py-4">
-                
-                {/* Step 1: Start Node */}
-                <div className="w-56 bg-white border-2 border-[#1D70F5] rounded-2xl p-4 text-center shadow-sm relative group">
-                  <div className="bg-[#1D2A68] text-white text-[11px] font-extrabold tracking-wider uppercase py-1 px-5 rounded-full inline-block absolute -top-3.5 left-1/2 -translate-x-1/2 shadow-xs border border-white">
-                    START
-                  </div>
-                  <div className="mt-3 text-xs font-bold text-slate-800 leading-snug">
-                    Tickets (ServiceNow) | Email
-                  </div>
-                  <div className="mt-3">
-                    <span className="inline-block px-4 py-0.5 bg-blue-50 text-[#1D70F5] rounded-full text-xs font-semibold border border-blue-200">
-                      User
-                    </span>
-                  </div>
-                </div>
-
-                {/* Connector Arrow 1 */}
-                <div className="shrink-0 px-1">
-                  <svg className="w-12 h-6 text-[#1D70F5]" viewBox="0 0 50 16" fill="none">
-                    <line x1="2" y1="8" x2="40" y2="8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                    <path d="M48 8L38 4V12L48 8Z" fill="currentColor" />
-                  </svg>
-                </div>
-
-                {/* Step 2: Acknowledge & Triage */}
-                <div className="w-56 bg-white border border-slate-300 rounded-2xl p-4 text-center shadow-sm">
-                  <div className="text-xs font-bold text-slate-900 leading-snug">
-                    Acknowledge and Triage
-                  </div>
-                  <div className="mt-4">
-                    <span className="inline-block px-4 py-0.5 bg-blue-50 text-[#1D70F5] rounded-full text-xs font-semibold border border-blue-200">
-                      Operations Team
-                    </span>
-                  </div>
-                </div>
-
-                {/* Connector Arrow 2 */}
-                <div className="shrink-0 px-1">
-                  <svg className="w-12 h-6 text-[#1D70F5]" viewBox="0 0 50 16" fill="none">
-                    <line x1="2" y1="8" x2="40" y2="8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                    <path d="M48 8L38 4V12L48 8Z" fill="currentColor" />
-                  </svg>
-                </div>
-
-                {/* Step 3: Classification Router */}
-                <div className="w-60 bg-white border border-slate-300 rounded-2xl p-4 text-center shadow-sm">
-                  <div className="text-xs font-bold text-slate-900 leading-snug">
-                    If Incident or Change request
-                  </div>
-                  <div className="mt-4">
-                    <span className="inline-block px-4 py-0.5 bg-blue-50 text-[#1D70F5] rounded-full text-xs font-semibold border border-blue-200">
-                      Operations Team
-                    </span>
-                  </div>
-                </div>
-
-                {/* Split Arrows & Labels */}
-                <div className="flex flex-col justify-between h-48 py-1 shrink-0">
-                  {/* Top Branch Label */}
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs font-bold text-slate-700 bg-slate-200/90 border border-slate-300 px-3 py-1 rounded-lg">
-                      Incident
-                    </span>
-                    <svg className="w-10 h-5 text-[#1D70F5]" viewBox="0 0 40 16" fill="none">
-                      <line x1="2" y1="8" x2="30" y2="8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                      <path d="M38 8L28 4V12L38 8Z" fill="currentColor" />
-                    </svg>
-                  </div>
-
-                  {/* Bottom Branch Label */}
-                  <div className="flex items-center gap-2">
-                    <span className="text-[10px] font-semibold text-slate-700 bg-slate-200/90 border border-slate-300 px-2.5 py-1.5 rounded-lg max-w-[150px] text-center leading-tight">
-                      Enhancement / New Development / Or LOE ≥ 40 hours
-                    </span>
-                    <svg className="w-10 h-5 text-[#1D70F5]" viewBox="0 0 40 16" fill="none">
-                      <line x1="2" y1="8" x2="30" y2="8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                      <path d="M38 8L28 4V12L38 8Z" fill="currentColor" />
-                    </svg>
-                  </div>
-                </div>
-
-                {/* Dual Output Destinations */}
-                <div className="flex flex-col justify-between h-56 w-64 shrink-0">
-                  {/* Operations Team Box */}
-                  <div className="bg-white border-2 border-blue-200 rounded-2xl p-4 text-center shadow-sm">
-                    <div className="text-xs font-bold text-slate-900">Incident</div>
-                    <div className="text-xs text-[#1D70F5] font-bold mt-1">Operations Team</div>
-                    <div className="text-[10px] text-slate-500 italic mt-0.5">(Incident Management Process)</div>
-                  </div>
-
-                  {/* Development Team Box */}
-                  <div className="bg-white border-2 border-blue-200 rounded-2xl p-4 text-center shadow-sm">
-                    <div className="text-xs font-bold text-[#1D70F5]">Development Team</div>
-                    <div className="text-[10px] text-[#1D70F5] font-semibold italic mt-1">(Change Control Process)</div>
-                  </div>
-                </div>
-
-              </div>
+                <img src={inc}/>
             </div>
           </div>
 
