@@ -1289,13 +1289,13 @@ export default function InventoryData() {
               {/* 1. SNOWFLAKE DATA ASSETS TABLE */}
               <div className="space-y-3">
                 <div className="flex items-center justify-between px-1">
-                  <h3 className="font-extrabold text-slate-900 text-lg flex items-center gap-2">
+                  {/* <h3 className="font-extrabold text-slate-900 text-lg flex items-center gap-2">
                     <Database className="w-5 h-5 text-blue-600" />
                     <span>Snowflake Data Warehouse & Storage Assets</span>
-                  </h3>
-                  <span className="text-xs font-bold text-slate-500 bg-slate-100 px-3 py-1 rounded-full border border-slate-200">
+                  </h3> */}
+                  {/* <span className="text-xs font-bold text-slate-500 bg-slate-100 px-3 py-1 rounded-full border border-slate-200">
                     {filteredSnowflakeAssets.length} Registered Tables
-                  </span>
+                  </span> */}
                 </div>
 
                 <div className="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">

@@ -33,6 +33,7 @@ import {
   // Settings2,
   // Info
 } from 'lucide-react';
+import DRCalendar from './DRCalendar';
 
 interface ReleaseItem {
   id: string;
@@ -209,7 +210,7 @@ export default function ReleaseMangement() {
     { dateNum: 1, month: 'next', displayDayName: 'Sat, Aug 1', fullDate: '2026-08-01' }
   ];
 
-  const selectedDayObj = calendarDays.find(d => d.displayDayName === selectedDayName) || calendarDays[3];
+  // const selectedDayObj = calendarDays.find(d => d.displayDayName === selectedDayName) || calendarDays[3];
 
   // Sample Release Calendar Process List
   // const releases: ReleaseItem[] = [
@@ -369,215 +370,7 @@ export default function ReleaseMangement() {
           <div className="space-y-5">
             {/* TOP TOOLBAR CARD */}
    
-
-            {/* MAIN TWO-COLUMN LAYOUT: CALENDAR GRID & DAY DETAILS SIDEBAR */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
-              
-              {/* LEFT COLUMN: MONTH VIEW CALENDAR GRID (8 COLS) */}
-              <div className="lg:col-span-8 bg-white rounded-2xl border border-slate-200/90 p-5 sm:p-6 space-y-5 shadow-xs">
-                
-                {/* CALENDAR HEADER & MONTH NAV */}
-                <div className="flex flex-wrap items-center justify-between gap-3 pb-1">
-                  <div className="flex items-center gap-3">
-                    <button
-                      onClick={() => setSelectedDayName('Wed, Jul 1')}
-                      className="px-3.5 py-1.5 text-xs font-bold text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition cursor-pointer shadow-2xs"
-                    >
-                      Today
-                    </button>
-                    <div className="flex items-center gap-1">
-                      <button className="p-1.5 rounded-lg text-slate-500 hover:text-slate-800 hover:bg-slate-100 transition cursor-pointer">
-                        <ChevronLeft className="w-4 h-4" />
-                      </button>
-                      <button className="p-1.5 rounded-lg text-slate-500 hover:text-slate-800 hover:bg-slate-100 transition cursor-pointer">
-                        <ChevronRight className="w-4 h-4" />
-                      </button>
-                    </div>
-                    <h2 className="text-base sm:text-lg font-bold text-slate-900 tracking-tight ml-1">
-                      July 2026
-                    </h2>
-                  </div>
-
-                  <span className="text-[11px] font-bold text-blue-600 bg-blue-50/80 border border-blue-200/80 px-3 py-1 rounded-md">
-                    Active Calendar Month
-                  </span>
-                </div>
-
-                {/* CALENDAR DAYS OF WEEK HEADERS */}
-                <div className="grid grid-cols-7 gap-2 text-center text-[11px] font-bold tracking-wider text-slate-400 uppercase">
-                  <div>SUN</div>
-                  <div>MON</div>
-                  <div>TUE</div>
-                  <div>WED</div>
-                  <div>THU</div>
-                  <div>FRI</div>
-                  <div>SAT</div>
-                </div>
-
-                {/* CALENDAR 7-COLUMN MONTH GRID */}
-                <div className="grid grid-cols-7 gap-2">
-                  {calendarDays.map((dayItem, idx) => {
-                    const isSelected = dayItem.displayDayName === selectedDayName;
-                    const isPrevNext = dayItem.month !== 'current';
-                    const hasEvents = dayItem.events && dayItem.events.length > 0;
-
-                    return (
-                      <div
-                        key={idx}
-                        onClick={() => setSelectedDayName(dayItem.displayDayName)}
-                        className={`min-h-[82px] sm:min-h-[96px] rounded-xl p-2 font-bold text-xs flex flex-col justify-between transition-all cursor-pointer relative ${
-                          isPrevNext
-                            ? 'bg-slate-50/50 text-slate-300 border border-slate-100'
-                            : isSelected
-                            ? 'bg-blue-50/40 border-2 border-blue-500 shadow-2xs'
-                            : 'bg-white hover:bg-slate-50/80 border border-slate-200/90 text-slate-800'
-                        }`}
-                      >
-                        {/* TOP ROW OF DAY CELL: Date number & optional event indicator dot */}
-                        <div className="flex items-start justify-between w-full">
-                          <span className={`text-xs ${isPrevNext ? 'text-slate-300' : isSelected ? 'text-blue-700 font-extrabold' : 'text-slate-800'}`}>
-                            {dayItem.month === 'prev' && idx === 0 ? `Jun ${dayItem.dateNum}` : dayItem.month === 'next' ? `Aug ${dayItem.dateNum}` : dayItem.month === 'current' && dayItem.dateNum === 1 ? `Jul 1` : dayItem.dateNum}
-                          </span>
-
-                          {dayItem.isDot && (
-                            <span className="w-1.5 h-1.5 rounded-full bg-blue-600 shrink-0"></span>
-                          )}
-                        </div>
-
-                        {/* MIDDLE / BOTTOM: EVENT BADGES PREVIEW */}
-                        {hasEvents && dayItem.events && (
-                          <div className="space-y-1 w-full mt-1">
-                            {/* Primary Event Badge */}
-                            <div className={`text-[9.5px] font-bold px-1.5 py-0.5 rounded truncate ${
-                              dayItem.events[0].badgeType === 'green'
-                                ? 'bg-emerald-100/90 text-emerald-800 border border-emerald-200/80'
-                                : dayItem.events[0].badgeType === 'amber'
-                                ? 'bg-amber-100/90 text-amber-800 border border-amber-200/80'
-                                : 'bg-blue-100/90 text-blue-800 border border-blue-200/80'
-                            }`}>
-                              {dayItem.events[0].shortLabel}
-                            </div>
-
-                            {/* Additional Count Indicator */}
-                            {dayItem.events.length > 1 && (
-                              <div className="text-[9px] font-extrabold text-blue-600 text-right pr-0.5">
-                                + {dayItem.events.length - 1} more
-                              </div>
-                            )}
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-
-              </div>
-
-              {/* RIGHT COLUMN: SELECTED DAY SIDEBAR PANEL (4 COLS) */}
-              <div className="lg:col-span-4 bg-white rounded-2xl border border-slate-200/90 p-5 space-y-6 shadow-xs min-h-[460px] flex flex-col justify-between">
-                
-                {/* SIDEBAR HEADER */}
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-                    <div className="flex items-center gap-2">
-                      <CalendarIcon className="w-4 h-4 text-blue-600" />
-                      <h3 className="text-sm sm:text-base font-bold text-slate-900">
-                        {selectedDayName}
-                      </h3>
-                    </div>
-
-                    <button
-                      onClick={() => setSelectedDayName('Wed, Jul 1')}
-                      className="p-1 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition cursor-pointer"
-                    >
-                      <X className="w-4 h-4" />
-                    </button>
-                  </div>
-
-                  {/* CONTENT AREA: EVENT LIST OR EMPTY STATE */}
-                  {selectedDayObj && selectedDayObj.events && selectedDayObj.events.length > 0 ? (
-                    <div className="space-y-3">
-                      <span className="text-xs font-bold text-slate-500 uppercase tracking-wider block">
-                        Scheduled Events ({selectedDayObj.events.length})
-                      </span>
-
-                      {selectedDayObj.events.map((evt) => (
-                        <div
-                          key={evt.id}
-                          className="p-3.5 bg-slate-50 hover:bg-blue-50/40 rounded-xl border border-slate-200 transition-all space-y-2 group"
-                        >
-                          <div className="flex items-center justify-between">
-                            <span className="text-[10px] font-mono font-bold text-blue-600 bg-blue-100/80 px-2 py-0.5 rounded">
-                              {evt.version}
-                            </span>
-                            <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${
-                              evt.environment === 'PROD' ? 'bg-purple-100 text-purple-800' : 'bg-amber-100 text-amber-800'
-                            }`}>
-                              {evt.environment}
-                            </span>
-                          </div>
-
-                          <h4 className="text-xs font-bold text-slate-900 group-hover:text-blue-600 transition">
-                            {evt.title}
-                          </h4>
-
-                          <div className="space-y-1 text-[11px] text-slate-500 pt-1">
-                            <div className="flex items-center gap-1.5">
-                              <Clock className="w-3 h-3 text-amber-600 shrink-0" />
-                              <span>{evt.timeWindow}</span>
-                            </div>
-                            <div className="flex items-center gap-1.5">
-                              <UserCheck className="w-3 h-3 text-slate-400 shrink-0" />
-                              <span>{evt.owner}</span>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  ) : (
-                    /* EMPTY STATE MATCHING ATTACHED IMAGE EXACTLY */
-                    <div className="py-12 px-4 text-center space-y-4">
-                      {/* Hot air balloon / Empty illustration SVG */}
-                      <div className="w-24 h-24 mx-auto relative flex items-center justify-center">
-                        <svg className="w-full h-full text-slate-300" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="1.8">
-                          {/* Outer balloon ellipse */}
-                          <path d="M50 18 C34 18 24 28 24 42 C24 56 38 68 50 72 C62 68 76 56 76 42 C76 28 66 18 50 18 Z" strokeDasharray="3 3" />
-                          {/* Inner vertical oval */}
-                          <ellipse cx="50" cy="42" rx="12" ry="24" strokeDasharray="3 3" />
-                          {/* Center vertical line */}
-                          <line x1="50" y1="18" x2="50" y2="66" strokeDasharray="3 3" />
-                          {/* Basket strings */}
-                          <line x1="42" y1="68" x2="42" y2="78" />
-                          <line x1="58" y1="68" x2="58" y2="78" />
-                          {/* Basket */}
-                          <rect x="40" y="78" width="20" height="12" rx="2" strokeDasharray="2 2" />
-                          {/* Small floating circles with minus */}
-                          <circle cx="20" cy="48" r="3" />
-                          <line x1="18.5" y1="48" x2="21.5" y2="48" />
-                          <circle cx="80" cy="42" r="3" />
-                          <line x1="78.5" y1="42" x2="81.5" y2="42" />
-                        </svg>
-                      </div>
-
-                      <p className="text-sm font-semibold text-slate-400">
-                        No events for the day
-                      </p>
-                    </div>
-                  )}
-                </div>
-
-                {/* BOTTOM BUTTON: SCHEDULE RELEASE EVENT */}
-                <button
-                  onClick={() => setIsNewReleaseModalOpen(true)}
-                  className="w-full py-2.5 bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-700 font-bold text-xs rounded-xl transition flex items-center justify-center gap-1.5 cursor-pointer shadow-2xs mt-4"
-                >
-                  <Plus className="w-4 h-4 text-slate-500" />
-                  <span>Schedule Release Event</span>
-                </button>
-
-              </div>
-
-            </div>
+            <DRCalendar/>
 
           </div>
         )}
